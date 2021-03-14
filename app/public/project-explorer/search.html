@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Explorer App</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header id = "header" class = "navbar bg-primary text-white text-decoration-none">
+      <div id = "nav-right" class = "d-flex justify-items-space-between align-items-center">
+         <h1 id = "header-title">Project Explorer</h1>
+         <form id = "form" class="form-inline" name = "searchForm">
+            <input class = "form-control" type="text" name="text" placeholder="Search Projects">
+            <button class  = "btn btn-outline-light" value="Search">Search</button> 
+            <a href="#">submit</a>
+         </form>
+      </div>
+      <ul class="navbar nav  d-flex align-items-center" id="newNav">
+        <li class="nav-item">
+            <a class="nav-link" href="register.html">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+        </li>
+    </ul>
+
+    </header>
+    <main>
+        <section name = "search" class = "container mb-5 mt-4">
+            <div class = "d-flex align-items-center" id = "profileHeader">
+              <h3><strong>Project Gallery</strong></h3>
+            </div>
+            <div class = "form-row d-flex align-items-center bg-light text-secondary p-3">
+              <form class = "col  ">
+                <input type="text" name = "searchTerm" class ="form-control form-control-lg" placeholder = "Search Project, name, authors, abstract, tags">  
+              </form>
+              <div class = "col-3 d-flex align-items-center">
+                <labe class = "btn form-control col-5 form-control-md bg-light" for="searchBy" >Search by</labe>
+                <select name="searchBy" id="searchBy" class="form-control col-6 form-select form-control-lg mr-3">
+                <option value="name">Name</option>
+                </select>
+            </div>
+            <button class = "btn btn-primary btn-lg" value = "submit">Submit</button>
+          </section> 
+      <section class = "container">
+        <div class = "mt-3em d-flex align-items-center">
+          <h3 class = "mr-2em mt-3em">All Projects </h3>
+          <span class = "text-secondary">&thinsp; (0 results)</span>
+        </div>
+        <div class = "row">
+        <div class = "col-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Project title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Author 1, Author 2</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">#html</a>
+              <a href="#" class="card-link">#css</a>
+              <a href="#" class="card-link">#JavaScript</a>
+          </div>
+        </div>
+      </div>
+        <div class = "col-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Project title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Author 1, Author 2</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">#html</a>
+              <a href="#" class="card-link">#css</a>
+              <a href="#" class="card-link">#JavaScript</a>
+          </div>
+        </div>
+      </div>
+      </div>
+      </section>
+    </main>
+    <footer id = "footer" class = "container bg-light"> <span id = "footer-span" class = "text-muted"> Project Explorer &#169; 2020 &middot; &VeryThinSpace;</span> <strong> Edconnect </strong> </footer>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

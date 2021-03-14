@@ -1,0 +1,54 @@
+#header-title {
+    font-size: 1.5em;
+}
+
+#header{
+    align-items: center;
+}
+
+#form{
+    margin: 0 0.75em;
+}
+
+#form input{
+    margin: 0 0.6em;
+}
+
+#header a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 0.5em;
+}
+
+
+#container {
+    margin-top: 1em;   
+}
+
+#containerlogin {
+    margin-top: 2em;   
+}
+
+#footer {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em;
+}
+
+#profileHeader {
+    display: flex;
+    
+}
+
+#profileHeader {
+    display: flex;
+    
+}
+
+
+#searchpsearch {
+    font-size: 1em;
+}

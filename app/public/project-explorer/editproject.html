@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Explorer App</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header id = "header" class = "navbar bg-primary text-white text-decoration-none">
+      <div id = "nav-right" class = "d-flex justify-items-space-between align-items-center">
+         <h1 id = "header-title">Project Explorer</h1>
+         <form id = "form" class="form-inline" name = "name">
+           <input class = "form-control" type="text" name="name" placeholder="Search Projects">
+           <button class  = "btn btn-outline-light" value="Search">Search</button> 
+            <a href="#">submit</a>
+         </form>   
+      </div>
+      <ul class="navbar nav  d-flex align-items-center" id="newNav">
+        <li class="nav-item">
+            <a class="nav-link" href="register.html">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+        </li>
+    </ul>
+
+    </header>
+    <main>
+      <section name="project" class = "container mt-4 mb-5">
+        <h1 id = "header-title" class =" mb-5">Project 1</h1>
+           <div class = "row bg-light text-secondary">
+              <div class="col p-3 d-flex align-items-center">
+                <p><strong>Created By: <br> Ade Chris</strong></p>
+              </div>
+              <div class="col p-3 d-flex align-items-center">
+                <p><strong>Date Created: <br> 2020/08/30</strong></p>
+              </div>
+              <div class="col p-3 d-flex align-items-center">
+                <p><strong>Last Updated: <br> 2020/08/30</strong></p>
+              </div>
+              <div class="col p-3 d-flex align-items-center justify-content-end">
+                <a href = "viewproject.html" class = "btn btn-primary">View Project</a>
+              </div>
+            </div>
+            <div class = "row">
+              <div class = "col">
+                <h5>Edit Project</h5>
+                <form class = form-group>
+                  <label for = "projectName">Project Name</label>
+                  <input type="text" class = "form-control" placeholder="project 1" name="projectName" id="projectName">
+                </form>
+                <form class = form-group>
+                  <label for = "abstract">Project Abstract</label>
+                  <textarea class="form-control" placeholder="abstract" name="abstract"> </textarea>
+                </form>
+                <form class = form-group>
+                  <label for="authors">Author(s):</label>
+                  <input type="text" class = "form-control" placeholder = "Ade Chris" name="authors" />
+                </form>
+                 <form class = form-group>
+                  <label for="tags">Tag(s):</label>
+                  <input  type="text" placeholder = "#web" class = "form-control" name="tags" />
+                </form>
+              </div>
+              <div class = "col">
+                <h5>Manage Project files</h5>
+                <form class = "form-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" placeholder = "Click to open file browser" for="customFile">Choose file</label>
+                  </div>
+                </form>
+                <div class = "card">
+                  <div class="card-header"><strong>Project Files</strong></div>
+                  <p class="card-text d-flex align-items-center justify-content-center p-5 ">No files uploaded yet</p>
+                </div>
+              </div>
+            </div>
+            <button class = "btn btn-primary">Save</button>      
+      </form>
+    </main>
+    <footer id = "footer" class = "container bg-light"> <span id = "footer-span" class = "text-muted"> Project Explorer &#169; 2020 &middot; &VeryThinSpace;</span> <strong> Edconnect </strong> </footer>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

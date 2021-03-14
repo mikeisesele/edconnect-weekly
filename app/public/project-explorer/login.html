@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Explorer App</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header id = "header" class = "navbar bg-primary text-white text-decoration-none">
+      <div id = "nav-right" class = "d-flex justify-items-space-between align-items-center">
+         <h1 id = "header-title">Project Explorer</h1>
+         <form id = "form" class="form-inline" name = "searchForm">
+           <input class = "form-control" type="text" name="text" placeholder="Search Projects">
+           <button class  = "btn btn-outline-light" value="Search">Search</button> 
+            <a href="#">submit</a>
+         </form>   
+      </div>
+      <ul class="navbar nav  d-flex align-items-center" id="newNav">
+        <li class="nav-item">
+            <a class="nav-link" href="register.html">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+        </li>
+    </ul>
+
+    </header>
+    <main id = "containerlogin" class = "container">
+      <div class = "mx-auto w-75">
+        <form name="login" id = "loginForm" class = "form-group">
+          <h1>Login</h1>
+          <div id = "alert"></div>
+          <label class = "form-label">Email address:</label>
+          <input class = "form-control" placeholder = "Email address" type="email" name="email" /><br />
+          <label class = "form-label">Password:</label>
+          <input class = "form-control" placeholder="Password" type="password" name="password" /><br />
+          <button class = "btn btn-primary" type="submit" name="login">Login</button>
+        </form>
+      </div>
+      <footer id = "footer" class = "bg-light"> <span id = "footer-span" class = "text-muted"> Project Explorer &#169; 2020 &middot; &VeryThinSpace;</span> <strong> Edconnect </strong> </footer>
+    </main>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

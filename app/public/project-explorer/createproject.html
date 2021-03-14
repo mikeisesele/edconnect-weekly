@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Explorer App</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header id = "header" class = "navbar bg-primary text-white text-decoration-none">
+      <div id = "nav-right" class = "d-flex justify-items-space-between align-items-center">
+         <h1 id = "header-title">Project Explorer</h1>
+         <form id = "form" class="form-inline" name = "searchForm">
+            <input class = "form-control" type="text" name="text" placeholder="Search Projects">
+            <button class  = "btn btn-outline-light" value="Search">Search</button> 
+            <a href="#">submit</a>
+         </form>
+      </div>
+      <ul class="navbar nav  d-flex align-items-center" id="newNav">
+        <li class="nav-item">
+            <a class="nav-link" href="register.html">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+        </li>
+    </ul>
+
+    </header>
+    <main>
+        <section name = "search" class = "container mb-5 mt-4 mx-auto w-75">
+            <div>
+              <h3><strong>Submit Project</strong></h3>
+            </div>
+            <form id = "createProjectForm" class = "form-row" name="submitProject">
+              <label for="name">Project Name:</label><br /><br />
+              <input class = "form-control" type="text" name="name" placehoder = "Enter project name"/><br /><br />
+              <label for="abstract">Project Abstract:</label>
+              <textarea class =  "form-control" name="abstract"></textarea><br /><br />
+              <label for="authors">Authors:</label>
+              <input class =  "form-control" type="text" name="authors" placeholder = "enter author name separated by comma" /><br /><br />
+              <label>Tag(s):</label>
+              <input class =  "form-control" type="text" name="tags" placeholder="use # to tag project with different topics (eg #javascript, #mongodb, etc)"/><br /><br />
+              <button class = "btn btn-primary">Continue</button>
+            </form>
+      </section>
+    </main>
+    <footer id = "footer" class = "container bg-light"> <span id = "footer-span" class = "text-muted"> Project Explorer &#169; 2020 &middot; &VeryThinSpace;</span> <strong> Edconnect </strong> </footer>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
