@@ -16,7 +16,6 @@ if (window.location.href.includes('register.html')){ // check if window.location
     })
     .then(options => options.join(" ")) // map returns a ner array so we need to join them as string
     .then(options => program.innerHTML = options)
-    .catch(e => console.log(e.message))
 
     // step 4 (2)
     let graduationYear = document.getElementById("graduationYear")
@@ -43,11 +42,11 @@ if (window.location.href.includes('register.html')){ // check if window.location
     errorAlert.style.display = "none"; // hide the div display 
     
     function postData(event) {  // form submit handler
+        
         event.preventDefault();
 
         const data = new FormData(event.target);            // listen to the target form  
         const value = Object.fromEntries(data.entries()); // get values from the target form
-        console.log(value)
 
         fetch("/api/register", {        
             method: 'POST',
@@ -55,17 +54,19 @@ if (window.location.href.includes('register.html')){ // check if window.location
             headers: {
                 'Content-Type': 'application/json',
             },
-        }) // response giving error. not done --------------------------------------------
+        }) 
         .then(response => response.json())
-        .then ((res) => {
-            // step 4 [3c]
+        .then (res => {
+            //step 4 [3c]
             if (res.status === "ok") {
-                document.cookie = `uid=${res.data.id}; path=/ `; // store the id in a cookie named uid.
+
+                document.cookie = `uid=${res.data.id}; path=/`; // store the id in a cookie named uid.       
                 window.location.replace('index.html'); // redirect user to index.html page
+                
             } else if (res.status !== "ok") {
             // step 4 [3d]
-            let errors = res.errors.map(error => error)
-            errors.forEach(error => {
+                let errors = res.errors.map(error => error)
+                errors.forEach(error => {
                 errorAlert.innerHTML += `<strong>${error}</strong><br>` // loop through returned array, append answer to error div
             })
          }
@@ -84,34 +85,38 @@ if (window.location.href.includes('register.html')){ // check if window.location
 }
 
 // // step 5 - Update the Navbar.
-if (document.cookie){ // check for a coookie
-    const newNav = document.getElementById("newNav");
-
-    let cookieValue = document.cookie.split("=")
-    let uid = cookieValue[1]
+window.addEventListener('load', function(){
+    if (document.cookie){ // check for a coookie
+        const newNav = document.getElementById("newNav");
     
-    fetch(`/api/users/${uid}`, { // get data from server
-        method: 'GET',
-        header: {
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(result => result.json())
-    .then(userDetails => {
-        console.log(userDetails)
-        let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
-        newNav.innerHTML = newDisplay;
-
-        let logout = document.getElementById("logout");
-        function handleLogout(event) {
-            event.preventDefault()
-            document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.replace('index.html');
-        }
-
-        logout.addEventListener("click", handleLogout)
-    })
-}
+        let cookieValue = document.cookie
+        cookieValue = cookieValue.split('=')
+        cookieValue = cookieValue[0].split(' ')
+        uid = cookieValue[1]
+        
+        fetch(`/api/users/${uid}`, { // get data from server
+            method: 'GET',
+            header: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(result => result.json())
+        .then(userDetails => {
+            console.log(userDetails)
+            let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
+            newNav.innerHTML = newDisplay;
+    
+            let logout = document.getElementById("logout");
+            function handleLogout(event) {
+                event.preventDefault()
+                document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                window.location.replace('index.html');
+            }
+    
+            logout.addEventListener("click", handleLogout)
+        })
+    }    
+})
 
 // // step 6 - Implement Login
 if (window.location.href.includes('login.html')){
@@ -310,7 +315,6 @@ if (window.location.href.includes('viewproject.html')){
     })
     .then(response => response.json())  
     .then(response => {
-        console.log(response)
         document.getElementById("project_name").textContent = response.name
         document.getElementById("project_abstract").textContent = response.abstract
         
