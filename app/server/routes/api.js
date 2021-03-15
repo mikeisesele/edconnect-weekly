@@ -11,11 +11,9 @@ const projectsFile = path.join(__dirname, "../projects.json");
 const getFileAsJson = (file) => {
   return JSON.parse(fs.readFileSync(file));
 };
-
 const saveJsonFile = (file, data) => {
   fs.writeFileSync(file, JSON.stringify({ data }));
 };
-
 const saveUsersDb = (data) => saveJsonFile(usersFile, data);
 const saveProjectsDb = (data) => saveJsonFile(projectsFile, data);
 const users = new Users();
@@ -32,7 +30,6 @@ const getCookie = (req, name) => {
     }
   }
 };
-
 const handlePost = (success, data, errors, res) => {
   if (success) {
     res.status(200).json({ status: "ok", data });
