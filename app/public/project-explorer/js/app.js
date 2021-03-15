@@ -330,7 +330,7 @@ if (window.location.href.includes('viewproject.html')){
     })
     .then(response => response.json()) 
     .then(response => {  
-        document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstname}&nbsp;${response.lastname}</strong></p>`
+        document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstName}&nbsp;${response.lastName}</strong></p>`
     })
     })
 }
