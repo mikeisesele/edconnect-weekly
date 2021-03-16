@@ -107,7 +107,7 @@ if (document.cookie){ // check for a coookie
     })
     .then(result => result.json())
     .then(userDetails => {
-        console.log(userDetails)
+       
         let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
       newNav.innerHTML = newDisplay;
     
