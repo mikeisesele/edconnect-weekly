@@ -196,6 +196,7 @@ if (window.location.href.includes('createproject.html')){
             let errorMessage = response.errors.map(error => error)
             errorMessage.forEach(error => {
                 alertDiv.innerHTML += `<strong>${error}</strong><br>`
+                window.location.replace('login.html')
             })
 
             alertDiv.classList = "alert alert-danger" // add css classes
