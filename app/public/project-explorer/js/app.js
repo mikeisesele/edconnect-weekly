@@ -231,6 +231,7 @@ if (window.location.href.includes('createproject.html')){
 // Step 9 - Update the project list on the Home Page.
 if (window.location.href.includes('index.html')){
     let projectList = document.getElementsByClassName("showcase")
+    const project_authors = document.getElementById("project_authors");
 
     projectList[0].innerHTML = ''
 
@@ -294,7 +295,7 @@ if (window.location.href.includes('index.html')){
                 case "tags":
                     if(object[i][key].length > 1){
                         key.split(",").forEach(function(item){
-                            a.innerText += `${object[i][item]} `
+                            a.innerText += ` ${object[i][item]}  `
                         })
                         break                                
                     } else {
@@ -330,9 +331,14 @@ if (window.location.href.includes('viewproject.html')){
             document.getElementById("project_tags").textContent = `${tag} `
         })
        
-        // response.authors.forEach(person => {
-        //     document.getElementById("project_authors").textContent = `${person} `
-        // })
+        let projectTags = response.tags;
+        document.getElementById("project_tags").innerHTML = projectTags 
+
+        // let authors = response.authors.map((item) => {
+        //     return `<p class="card-text">${item}</p>`
+        // }).join("");
+        // project_authors.innerHTML = authors;
+
         let authors = response.authors.map((item) => {
             return `<p class="card-text">${item}</p>`
         }).join("");
