@@ -322,9 +322,7 @@ if (window.location.href.includes('viewproject.html')){
     const urlParams = new URLSearchParams(queryString); 
 
     const id = urlParams.get('id')  // pass in the parameter to search for in the link
-
     
-
     fetch(`/api/projects/${id}`, {
         method: 'GET',
         headers: {
@@ -353,7 +351,8 @@ if (window.location.href.includes('viewproject.html')){
     })
     .then(response => response.json()) 
     .then(response => {  
-        document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstName}&nbsp;${response.lastName}</strong></p>`
+        console.log(response)
+        document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstname}&nbsp;${response.lastname}&nbsp;</strong></p>`
     })
     }).catch(e => console.log(e))
 }
