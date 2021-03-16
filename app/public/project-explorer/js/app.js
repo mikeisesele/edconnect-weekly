@@ -168,47 +168,52 @@ if (window.location.href.includes('createproject.html')){
     
         const createProject = document.getElementById("createProjectForm") // get id of the form
 
-        let cookieValue = document.cookie.split("=")
+         // Step 8 - Restrict Project Submission to logged-in users.  
+        if (document.cookie){
+            let cookieValue = document.cookie
+            cookieValue = cookieValue.split("=")
+            cookieValue = cookieValue[1]         
 
-        // Step 8 - Restrict Project Submission to logged-in users.  
-        if (cookieValue[1] !== ""){
-        
-        function submitProject(event){
+           
+            if (cookieValue !== "undefined" || cookieValue !== ""){
+            
+                function submitProject(event){
 
-        event.preventDefault();
+                event.preventDefault();
 
-        const data = new FormData(event.target); // get target form
-        const value = Object.fromEntries(data.entries()); // get target value
-        
-        fetch("/api/projects", {
-            method: "POST",
-            body: JSON.stringify(value),
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-        
-        if(response.status === "ok"){
-            window.location.replace('index.html')
-        } else {
-            let errorMessage = response.errors.map(error => error)
-            errorMessage.forEach(error => {
-                alertDiv.innerHTML += `<strong>${error}</strong><br>`
-                window.location.replace('login.html')
+                const data = new FormData(event.target); // get target form
+                const value = Object.fromEntries(data.entries()); // get target value
+                
+                fetch("/api/projects", {
+                    method: "POST",
+                    body: JSON.stringify(value),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(response => {
+                
+                if(response.status === "ok"){
+                    window.location.replace('index.html')
+                } else {
+                    let errorMessage = response.errors.map(error => error)
+                    errorMessage.forEach(error => {
+                        alertDiv.innerHTML += `<strong>${error}</strong><br>`
+                    })
+
+                    alertDiv.classList = "alert alert-danger" // add css classes
+                    alertDiv.style.display = "block"
+
+                    setTimeout(function(){ // hide the error div and clear the contents
+                        alertDiv.style.display = "none"
+                        alertDiv.textContent =  ""
+                    }, 3000)
+                }           
             })
-
-            alertDiv.classList = "alert alert-danger" // add css classes
-            alertDiv.style.display = "block"
-
-            setTimeout(function(){ // hide the error div and clear the contents
-                alertDiv.style.display = "none"
-                alertDiv.textContent =  ""
-            }, 3000)
-        }           
-    })
-}
+        }   
+    }
+    
     } else {
         window.location.replace('login.html')
     }
