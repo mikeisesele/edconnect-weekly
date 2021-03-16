@@ -37,20 +37,27 @@ if (window.location.href.includes('register.html')){ // check if window.location
 // step 4 (3) 
 // This should handle form submissions and validation
 
-    const signupForm = document.getElementById("signupForm"); 
+    const signupForm = document.getElementById("signupForm")
     const errorAlert = document.getElementById("danger-alert")
     errorAlert.style.display = "none"; // hide the div display 
     
     function postData(event) {  // form submit handler
         
         event.preventDefault();
-
-        const data = new FormData(event.target);            // listen to the target form  
-        const value = Object.fromEntries(data.entries()); // get values from the target form
+        
+        let regInfo = {
+            firstname: document.getElementById("firstname").value,
+            lastname: document.getElementById("lastname").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            matricNumber: document.getElementById("matricNumber").value,
+            program: document.getElementById("program").value,
+            graduationYear: document.getElementById("graduationYear").value,
+        }
 
         fetch("/api/register", {        
             method: 'POST',
-            body: JSON.stringify(value),        // All form data // turn values to json format
+            body: JSON.stringify(regInfo),        // All form data // turn values to json format
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -85,38 +92,36 @@ if (window.location.href.includes('register.html')){ // check if window.location
 }
 
 // // step 5 - Update the Navbar.
-window.addEventListener('load', function(){
-    if (document.cookie){ // check for a coookie
-        const newNav = document.getElementById("newNav");
+if (document.cookie){ // check for a coookie
     
-        let cookieValue = document.cookie
-        cookieValue = cookieValue.split('=')
-        cookieValue = cookieValue[0].split(' ')
-        uid = cookieValue[1]
+    const newNav = document.getElementById("newNav");
+
+    let cookieValue = document.cookie.split('=')
+    uid = cookieValue[1]
+    
+    fetch(`/api/users/${uid}`, { // get data from server
+        method: 'GET',
+        header: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(result => result.json())
+    .then(userDetails => {
+        console.log(userDetails)
+        let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
+      newNav.innerHTML = newDisplay;
+    
+        // handle log out of user
+        let logout = document.getElementById("logout");
+        function handleLogout(event) {
+            event.preventDefault()
+            document.cookie = `uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+            window.location.replace('index.html');
+        }
+        logout.addEventListener("click", handleLogout)
         
-        fetch(`/api/users/${uid}`, { // get data from server
-            method: 'GET',
-            header: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(result => result.json())
-        .then(userDetails => {
-            console.log(userDetails)
-            let newDisplay = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${userDetails.firstname}</a></li>`
-            newNav.innerHTML = newDisplay;
-    
-            let logout = document.getElementById("logout");
-            function handleLogout(event) {
-                event.preventDefault()
-                document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                window.location.replace('index.html');
-            }
-    
-            logout.addEventListener("click", handleLogout)
-        })
-    }    
-})
+}).catch(e => console.log(e))
+}
 
 // // step 6 - Implement Login
 if (window.location.href.includes('login.html')){
@@ -149,7 +154,7 @@ if (window.location.href.includes('login.html')){
                     alert.innerHTML = "Invalid email/password";
                 }
                     
-                })
+                }).catch(e => console.log(e))
             }
         
         logInForm.addEventListener("submit", logIn)  // call the function to post the form
@@ -288,7 +293,7 @@ if (window.location.href.includes('index.html')){
         
             document.getElementsByClassName("showcase")[0].appendChild(col3Div)
         }           
-    })      
+    }).catch(e => console.log(e))      
      
 }
 
@@ -337,5 +342,5 @@ if (window.location.href.includes('viewproject.html')){
     .then(response => {  
         document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstName}&nbsp;${response.lastName}</strong></p>`
     })
-    })
+    }).catch(e => console.log(e))
 }
