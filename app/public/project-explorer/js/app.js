@@ -330,7 +330,10 @@ if (window.location.href.includes('viewproject.html')){
             document.getElementById("project_tags").textContent = `${tag} `
         })
        
-        let authors = res.authors.map((item) => {
+        // response.authors.forEach(person => {
+        //     document.getElementById("project_authors").textContent = `${person} `
+        // })
+        let authors = response.authors.map((item) => {
             return `<p class="card-text">${item}</p>`
         }).join("");
         project_authors.innerHTML = authors;
