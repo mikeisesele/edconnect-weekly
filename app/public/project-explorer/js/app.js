@@ -181,12 +181,19 @@ if (window.location.href.includes('createproject.html')){
 
                 event.preventDefault();
 
-                const data = new FormData(event.target); // get target form
-                const value = Object.fromEntries(data.entries()); // get target value
+            let tagsInput = document.getElementById("tags").value.split(",");
+            let authorsInput = document.getElementById("authors").value.split(",");
+            let projectInfo = {
+                name: document.getElementById("name").value,
+                abstract: document.getElementById("abstract").value,
+                tags: tagsInput,
+                authors: authorsInput,
+            }
+        
                 
                 fetch("/api/projects", {
                     method: "POST",
-                    body: JSON.stringify(value),
+                    body: JSON.stringify(projectInfo),
                     headers: {
                         'content-type': 'application/json'
                     }
