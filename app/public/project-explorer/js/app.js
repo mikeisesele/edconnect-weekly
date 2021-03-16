@@ -312,9 +312,6 @@ if (window.location.href.includes('index.html')){
 
 // step 10 - Update ViewProject Page.
 if (window.location.href.includes('viewproject.html')){
-    document.getElementById("project_author").textContent = ""
-    document.getElementById("project_tags").textContent = ""
-    document.getElementById("project_authors").innerHTML = ""
     document.getElementById("project_tags").style.color = 'blue'
     
     const queryString = window.location.search; // retrive the website link
@@ -323,37 +320,26 @@ if (window.location.href.includes('viewproject.html')){
 
     const id = urlParams.get('id')  // pass in the parameter to search for in the link
  
-    fetch(`/api/projects/${id}`, {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json'
-        }
-    })
+    fetch(`/api/projects/${id}`)
     .then(response => response.json())  
     .then(response => {
-        console.log(response)
         document.getElementById("project_name").textContent = response.name
         document.getElementById("project_abstract").textContent = response.abstract
         
         response.tags.forEach(tag => {
-            document.getElementById("project_tags").innerHTML += `<p>#${tag}</p>&nbsp;`
+            document.getElementById("project_tags").textContent = `${tag} `
         })
        
         response.authors.forEach(person => {
-        document.getElementById("project_authors").innerHTML += `<p>${person}</p>`
+            document.getElementById("project_authors").textContent = `${person} `
         })
 
-    // update created by
-    fetch(`/api/users/${id}`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-    })
+//    update created by
+    fetch(`/api/users/${response.createdBy}`)
     .then(response => response.json()) 
     .then(response => {  
-        console.log(response)
-        document.getElementById("project_author").innerHTML = `<p><strong>Created By: <br> ${response.firstname}&nbsp;${response.lastname}&nbsp;</strong></p>`
+        document.getElementById("project_author").innerHTML = ` <strong>Created by: <br> ${response.firstname} ${response.lastname} </strong>`                     
     })
-    }).catch(e => console.log(e))
+    .catch(e => console.log(e))
+})
 }
