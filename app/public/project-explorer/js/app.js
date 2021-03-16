@@ -330,9 +330,10 @@ if (window.location.href.includes('viewproject.html')){
             document.getElementById("project_tags").textContent = `${tag} `
         })
        
-        response.authors.forEach(person => {
-            document.getElementById("project_authors").textContent = `${person} `
-        })
+        let authors = res.authors.map((item) => {
+            return `<p class="card-text">${item}</p>`
+        }).join("");
+        project_authors.innerHTML = authors;
 
 //    update created by
     fetch(`/api/users/${response.createdBy}`)
