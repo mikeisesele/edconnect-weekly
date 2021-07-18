@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const session = require('express-session');
 const register = require("@react-ssr/express/register");
@@ -19,10 +19,10 @@ register(app).then(() => {
 });
 
 app.use(morgan('combined'));
-app.use(express.json());
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.use(session({
     secret: 'secret',

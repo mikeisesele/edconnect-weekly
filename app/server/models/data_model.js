@@ -29,11 +29,13 @@ class DataModel {
         return index;
     }
 
+
     save(obj){
         if (this.validate(obj)) {
             this.data.push(obj);
             return true;
         }
+        this.errors.push("user not saved");
         return false;
     }
 

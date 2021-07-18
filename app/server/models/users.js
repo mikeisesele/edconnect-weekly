@@ -47,6 +47,7 @@ class Users extends DataModel {
     }
 
     validate(obj){
+       
         this.errors = [];
 
         for (const property in obj) {
@@ -62,7 +63,7 @@ class Users extends DataModel {
         if (this.getByMatricNumber(obj.matricNumber)){
             this.errors.push(`A user with specified matric number already exists`);
         }
-
+        
         if(obj.password.length < 7){
             this.errors.push("Password should have at least 7 characters");
         }
