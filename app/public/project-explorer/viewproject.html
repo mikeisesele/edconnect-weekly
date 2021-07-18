@@ -1,78 +1,163 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Project Explorer App</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
-  </head>
-  <body>
-    <header id = "header" class = "navbar bg-primary text-white text-decoration-none">
-      <div id = "nav-right" class = "d-flex justify-items-space-between align-items-center">
-         <h1 id = "header-title">Project Explorer</h1>
-         <form id = "form" class="form-inline" name = "searchForm">
-           <input class = "form-control" type="text" name="text" placeholder="Search Projects">
-           <button class  = "btn btn-outline-light" value="Search">Search</button>  
-            <a href="#">submit</a>
-         </form>   
-      </div>
-      <ul class="navbar nav  d-flex align-items-center" id="newNav">
-        <li class="nav-item">
-            <a class="nav-link" href="register.html">Sign Up</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
-        </li>
-    </ul>
+<html lang="en">
 
-    </header>
-    <main>
-      <section name="project" class = "container mt-4 mb-5">
-        <h1 id = "project_name">Project 1</h1>
-           <div class = "row bg-light text-secondary">
-              <div  class="col p-3 d-flex align-items-center">
-                <p id = "project_author"><strong>Created By: <br> Ade Chris</strong></p>
-              </div>
-              <div class="col p-3 d-flex align-items-center">
-                <p><strong>Date Created: <br> 2020/08/30</strong></p>
-              </div>
-              <div class="col p-3 d-flex align-items-center">
-                <p><strong>Last Updated: <br> 2020/08/30</strong></p>
-              </div>
-              <div class="col p-3 d-flex align-items-center justify-content-end">
-                <a href  = "editproject.html" class = "btn btn-primary" type="viewProject">Edit Project</a>
-              </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">Project Explorer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <form class="form-inline" name="searchForm">
+                            <label class="sr-only" for="inlineFormInputName2">Name</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                placeholder="Search Projects">
+                            <button type="submit" class="btn  btn-outline-light mb-2">Search</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="createproject.html">Submit</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav" id="every">
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
             </div>
-            <div class = "row mt-5">
-              <div class = "col-6">
-                <h5>Project Abstract</h5>
-                <hr>
-                <p id = "project_abstract"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam excepturi veritatis esse atque dolorum iste saepe doloremque, quam quia praesentium, aperiam sit, sed aliquid. Ipsam, mollitia dolores facilis animi nulla rerum ab veniam voluptatum quos at exercitationem itaque reiciendis enim maxime corporis possimus asperiores in quasi sed, sunt delectus ea? Expedita neque dolorum quo quos odit magnam quasi, assumenda quidem incidunt quisquam nemo nihil esse odio voluptatibus nam mollitia. Laboriosam.</p>
-                <div class = form-group>
-                  <label for = "comments">Comments</label>
-                  <textarea class="form-control" placeholder="Leave a comment" name="comments"> </textarea>
+        </nav>
+    </header>
+    <br>
+
+    <main class="container">
+
+        <section>
+            <div class="row" id="project_name">
+                <h3>Project 1</h3>
+            </div>
+
+            <div class="row bg-light">
+                <div class="col-sm">
+                    <p>Created By</p>
+                    <p id="project_author">Babajide</p>
                 </div>
-                <button class = "btn btn-primary">Submit</button> 
-                <hr>
-                <p class = "text-center d-flex align-items-center justify-content-center py-2">No comments added yet</p>
-              </div>
-              <div class = "col-6">
-                <h5>Project Details</h5>
-                <div class = "card">
-                  <div class="card-header"><strong>Author(s)</strong></div>
-                  <p id = "project_authors" class="card-text py-2 px-3 text-align-center"><strong>Ade Chris</strong></p>
+                <div class="col-sm">
+                    <p>Date Created</p>
+                    <p>2021-02-11</p>
                 </div>
-                <div class = "card">
-                  <div id = "project_tags" class="card-header"><strong>#web</strong></div>
-                </div><br />
-                <div class = "card">
-                  <div class="card-header"><strong>Project Files</strong></div>
-                  <p class="card-text d-flex align-items-center justify-content-center p-3 ">No files uploaded yet</p>
+                <div class="col-sm">
+                    <p>Last Updated</p>
+                    <p>2021-02-11</p>
                 </div>
-              </div>
-            </div>   
-      </form>
+                <div class="col-sm">
+                    <div class="d-flex justify-content-end"><a href="editproject.html" class=" btn btn-primary">Edit
+                            Project</a></div>
+                </div>
+            </div>
+        </section>
+        <br>
+
+
+        <section class="row">
+            <div class="col-md-6">
+                <div>
+                    <h5>Project Abstract</h5>
+                    <p id="project_abstract">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores
+                        consequatur omnis saepe
+                        iste, aut
+                        ipsum iure necessitatibus in! Animi, necessitatibus ipsa vitae in corporis provident voluptatum
+                        rerum
+                        minus culpa quasi omnis molestias, temporibus a iusto magnam obcaecati beatae, alias pariatur? A
+                        nihil
+                        illum vel sed, quae ab mollitia doloribus expedita quo error ad, inventore, natus quisquam
+                        facere dicta
+                        quasi tenetur laborum. Assumenda omnis totam magni cumque quidem aliquid sequi repellat nobis
+                        eveniet!</p>
+
+                </div>
+                <form>
+                    <div class="mx-auto">
+                        <div class="form-group">
+                            <label for="abstract"><b>Comments</b></label>
+                            <textarea id="abstract" class="form-control" rows="5"
+                                name="abstract">Leave a comment</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <section>
+                    <h5>Project Details</h5>
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Author(s)</b>
+                        </div>
+                        <div class="card-body" id="project_authors">
+                            <p class="card-text">Oyafemi Babajide</p>
+                        </div>
+                        <div class="card-footer text-primary" id="project_tags">
+                            <b>#web</b>
+                        </div>
+                    </div>
+                </section>
+                <br>
+
+                <div class="card">
+                    <div class="card-header text-center">
+                        <b>Project files</b>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            No file uploaded yet
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
     </main>
-    <footer id = "footer" class = "container bg-light"> <span id = "footer-span" class = "text-muted"> Project Explorer &#169; 2020 &middot; &VeryThinSpace;</span> <strong> Edconnect </strong> </footer>
-    <script src="./js/app.js"></script>
-  </body>
+    <br>
+
+    <footer class="fixed-bottom">
+        <div class="container ">
+            <div class="bg-light d-flex justify-content-end align-items-center"> Project Explorer &#169 2021 .
+                <b>EdConnect</b>
+            </div>
+        </div>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
 </html>

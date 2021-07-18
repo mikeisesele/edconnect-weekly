@@ -1,79 +1,67 @@
 {
     "data": [
         {
-            "id": "uqdecg701wb",
-            "name": "edconnect",
-            "abstract": "hello this is an abstract",
-            "authors": [
-                "efe amad"
-            ],
-            "tags": [
-                "e-learning"
-            ],
-            "createdBy": "uqdecg701wb"
-        },
-        {
             "id": "phrh06zmlpo",
-            "name": "dsfksdf",
-            "abstract": "ksgnnfjsanfjisaijsai",
+            "name": "Michael Isesele",
+            "abstract": "Child trafficking and Health implications to the Nigerian child",
             "authors": [
-                "jsgd",
-                " adjgd",
-                "adjd"
+                "Michael I.O, ",
+                " David E.O, ",
+                " Maryanne Obi "
             ],
             "tags": [
-                "#justme",
-                " #gonnamakeit"
+                "#Health",
+                " #Nigeria"
             ],
-            "createdBy": "nc312i2vijj"
+            "createdBy": "Michael"
         },
         {
             "id": "qv24o0maqn",
-            "name": "Zee baby",
-            "abstract": "wgesakvfjvsks",
+            "name": "Daniel",
+            "abstract": "Technology, a tool for destruction",
             "authors": [
-                "dfgdk",
-                " sfjksd",
-                " sfjsk"
+                "Daniel O.A,",
+                " Muhammed A.A,",
+                " Faith Ola"
             ],
             "tags": [
-                "#djsdds",
-                " #dsdsd",
-                " #kosjfs"
+                "#Tech",
+                " #Peace",
+                " #War"
             ],
-            "createdBy": "nc312i2vijj"
+            "createdBy": "Daniel"
         },
         {
             "id": "yhsg0go5szp",
-            "name": "sdsdsdgfgdff",
-            "abstract": "sdhshdfvsvfsv",
+            "name": "Amina Suleman",
+            "abstract": "Economic growth and population control",
             "authors": [
-                "jhvsv",
-                "kdgilhh",
-                "sjfssk"
+                "Amina Suleman,",
+                " Khadija Sadatu,",
+                " Cynthia young"
             ],
             "tags": [
-                "#dbkd",
-                "#dfhkf",
-                "#fdjgfd"
+                "#Economy",
+                " #Growth",
+                " #Population"
             ],
-            "createdBy": "nc312i2vijj"
+            "createdBy": "Amina"
         },
         {
             "id": "kb9f9y7q5w",
-            "name": "kgrsng",
-            "abstract": "lsngslnglsngl",
+            "name": "Kingsly Blue",
+            "abstract": "Merging A.I and BlockChain",
             "authors": [
-                "dfgdk",
-                " sfjksd",
-                " sfjsk"
+                "Moses Doe,",
+                "Ethan I.U,",
+                "Dunni"
             ],
             "tags": [
-                "#djsdds",
-                " #dsdsd",
-                " #kosjfs"
+                "#AI",
+                " #block chain",
+                " #crypto"
             ],
-            "createdBy": "cssdikqe3v"
+            "createdBy": "Kingsly"
         },
         {
             "id": "evmmhchdmu",

@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, CardGroup, Jumbotron } from "react-bootstrap";
 import Layout from "./shared/Layout";
+import { useHistory } from "react-router";
+
 
 const Jumbo = () => {
+
+  let history = useHistory();
+
   return (
     <>
       <Jumbotron>
@@ -12,8 +17,8 @@ const Jumbo = () => {
           departments at your institution. You can submit your project and
           search projects submitted by others to learn from.
         </p>
-        <Button variant="primary">Get Started</Button>{" "}
-        <Button variant="secondary">Login</Button>
+        <Button variant="primary" onClick={() => history.push('/signup')}>Get Started</Button>{" "}
+        <Button variant="secondary" onClick={() => history.push('/login')}> Login </Button>
       </Jumbotron>
     </>
   );
@@ -21,7 +26,7 @@ const Jumbo = () => {
 
 const Showcase = () => {
 
-  const [projects, setProjects] = useState([]);
+const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetch("/api/projects")
