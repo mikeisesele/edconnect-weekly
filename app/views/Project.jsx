@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
-const ProjectLayout = ({ userParams }) => {
-  const { name, abstract, authors, tags, createdBy } = userParams;
+const ProjectLayout = ({ userParams, userName }) => {
+  console.log(userName);
+  const { name, abstract, authors, tags } = userParams;
   return (
     <>
       <Container>
@@ -13,7 +14,7 @@ const ProjectLayout = ({ userParams }) => {
         <Row className="bg-light">
           <Col id="project_author">
             <p>Created By</p>
-            <p>{`${ createdBy }`}</p>
+            <p>{`${userName.firstname} ${userName.lastname}`}</p>
           </Col>
 
           <Col>

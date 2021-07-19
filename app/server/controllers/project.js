@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {create, getById} = require("../services/project")
-
+const user = require("../services/user")
 
 router.get('/project', (req, res) => {    
   
@@ -50,12 +50,12 @@ router.post('/projects/submit', (req, res) => {
 
 });
 
-  
+
 router.get('/project/:id', (req, res) => {
 
     const check = getById(req.params.id)
 
-  res.render("Project", {userSession: req.session.user, userParams: check});
+  res.render("Project", {userSession: req.session.user, userParams: check, userName: user.getById(check.createdBy)});
   
 });
 
