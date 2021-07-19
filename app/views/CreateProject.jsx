@@ -57,8 +57,10 @@ const CreateProjectForm = ({ err }) => {
             />
           </Form.Group>
 
-          <Button as="input" type="submit" value="Continue" />{' '}
-          
+          {/* <Button as="input" type="submit" value="Continue" />{' '} */}
+          <Button variant="primary" type="submit" >
+            Continue
+          </Button>
         </Form>
         <br />
       </div>
