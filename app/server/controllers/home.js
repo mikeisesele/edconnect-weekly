@@ -10,15 +10,12 @@ router.get('/', (req, res) => {
   const user = req.session.user;
   
   res.render('Home', {props: projects, us: user})
-  
-
 });
 
 router.get('/logout', (req, res) => {
 
   req.session.destroy();
   res.redirect("/");
-
 });
 
 module.exports = router;

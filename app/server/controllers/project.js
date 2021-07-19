@@ -13,16 +13,7 @@ router.get('/project', (req, res) => {
     res.render("CreateProject", { err: error, us: req.session.user});
   }
 });
-
-// router.get('/project', (req, res) => { 
-//   const error = req.flash("error");      
-    
-//     res.render("CreateProject", { err: error, us: req.session.user});
-//     //!req.session.user && res.redirect("/login");
-
-// });
   
-
 router.post('/projects/submit', (req, res) => {
     const tags = req.body.tags.split(",");
     const authors = req.body.authors.split(",");
@@ -40,7 +31,6 @@ router.post('/projects/submit', (req, res) => {
   } 
   
 });
-
 
 router.get('/project/:id', (req, res) => {
 

@@ -11,7 +11,6 @@ const SERVER_PORT = process.env.SERVER_PORT;
 
 
 register(app).then(() => {
-
    app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -39,8 +38,6 @@ app.use("/", require("./controllers/home"));
 app.use("/", require("./controllers/user"));
 
 app.use("/", require("./controllers/project"));
-
-// app.use("/*", require("./controllers/error"));
 
 app.use(express.static('public'));
 
