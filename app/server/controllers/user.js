@@ -12,12 +12,13 @@ router.get('/signup', (req, res) => {
     const user = req.session.user;    
 
   res.render("Signup", {program: programs, graduationYear: graduationYears, err: error, us: user })
-
 });
 
 router.post('/signup', (req, res) => {
+  const firstname= req.body.firstName;
+ const  lastname= req.body.lastName
 
-  const {firstname, lastname, email, password, program, matricNumber, graduationYear} = req.body;
+  const {email, password, program, matricNumber, graduationYear} = req.body;
   
   const check = user.create({firstname, lastname, email, password, matricNumber, program, graduationYear});
 
