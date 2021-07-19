@@ -28,7 +28,7 @@ router.get('/projects/submit', (req, res) => {
   
 router.post('/projects/submit', (req, res) => {
 
-  
+  console.log(req.body)
 
     const tags = req.body.tags.split(",");
     const authors = req.body.authors.split(",");
@@ -39,7 +39,6 @@ router.post('/projects/submit', (req, res) => {
 
     if (check[0]){
       res.redirect("/");
-     
     }
 
     else{
@@ -48,8 +47,10 @@ router.post('/projects/submit', (req, res) => {
       res.redirect(303, '/projects/submit');
     } 
 
+
 });
 
+  
 router.get('/project/:id', (req, res) => {
 
     const check = getById(req.params.id)

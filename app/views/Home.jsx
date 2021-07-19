@@ -25,6 +25,7 @@ const Showcase = ({ props }) => {
     <>
       <CardGroup className="showcase">
         {props
+          .reverse()
           .slice(0, 4)
           .map((project) => {
 
