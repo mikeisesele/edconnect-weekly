@@ -2,8 +2,8 @@ import React from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
-const ProjectLayout = ({ dat, dat2 }) => {
-  const { name, abstract, authors, tags } = dat;
+const ProjectLayout = ({ userParams }) => {
+  const { name, abstract, authors, tags, createdBy } = userParams;
   return (
     <>
       <Container>
@@ -13,7 +13,7 @@ const ProjectLayout = ({ dat, dat2 }) => {
         <Row className="bg-light">
           <Col id="project_author">
             <p>Created By</p>
-            <p>{`${dat2.firstname} ${dat2.lastname}`}</p>
+            <p>{`${ createdBy }`}</p>
           </Col>
 
           <Col>
@@ -104,8 +104,9 @@ const ProjectLayout = ({ dat, dat2 }) => {
 };
 
 const Project = (props) => {
+  
   return (
-    <Layout us={props.us}>
+    <Layout us={props.userSession}>
       <ProjectLayout {...props} />
     </Layout>
   );
