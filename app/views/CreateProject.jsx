@@ -57,9 +57,8 @@ const CreateProjectForm = ({ err }) => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" href="/projects/submit">
-            Continue
-          </Button>
+          <Button as="input" type="submit" value="Continue" />{' '}
+          
         </Form>
         <br />
       </div>
