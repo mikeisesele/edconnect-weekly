@@ -20,7 +20,6 @@ const getById = async (id) => {
   try {
   // populate projects with data from file.
   return await Project.findById(id)
-  //return await Project.findById(id).populate(‘createdBy’)
   } catch (e) {
     console.log(e)
   }

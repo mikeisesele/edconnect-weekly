@@ -21,7 +21,7 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.ObjectId,
         required: true
     },
-}, { timeStamp: true });
+}, { timestamps: true });
 
 const Project = mongoose.model("Project", projectSchema);
 

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -28,7 +28,7 @@ app.use(session({
     secret: 'secret',
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7
-    },
+      },
     resave: true,
     saveUninitialized: false
 }));
@@ -45,12 +45,13 @@ app.use(session({
     // set up static files
     app.use(express.static('public'));
 
+    
     // listent to post
     app.listen(SERVER_PORT, () => console.log('Server listening on port ' + SERVER_PORT));
 
     mongoose.set("bufferCommands", false);
 
-  mongoose.connect(
+    mongoose.connect(
 
     process.env.MONGODB_URI, // connection string from .env file
 
@@ -71,8 +72,8 @@ app.use(session({
 
           console.log(`Connected to MongoDB @ ${process.env.MONGODB_URI}`);
 
+        }
       }
-    }
   );
 
 })

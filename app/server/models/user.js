@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema
 const crypto = require('crypto')
 
-const userSchema = new UserSchema({
+const userSchema = new UserSchema(
+  {
     firstName:  { type: String, required: true },
     lastName:  { type: String, required: true },
     email:  { type: String, required: true, unique: true },
@@ -11,8 +12,9 @@ const userSchema = new UserSchema({
     matricNumber: { type: String, required: true },
     program: { type: String },
     graduationYear: { type: String }
-},
-{   timestamp: true })
+  }, 
+  { timestamps: true }
+)
 
 userSchema.methods.setPassword = function(password) {
         if (password.length >= 7) {
