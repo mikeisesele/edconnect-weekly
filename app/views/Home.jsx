@@ -21,11 +21,12 @@ const Jumbo = () => {
 
 
 const Showcase = ({ props }) => {
+  
   return (
     <>
       <CardGroup className="showcase">
         {props
-          .reverse()
+          //.reverse()
           .slice(0, 4)
           .map((project) => {
 

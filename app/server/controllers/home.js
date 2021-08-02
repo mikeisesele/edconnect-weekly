@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
 const project = require("../services/project")
 
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 
-  const projects = project.getAll();
+  try {
+  const projects = await project.getAll();
   const user = req.session.user;
   
   res.render('Home', {props: projects, us: user})
+
+  } catch (err) {
+    console.log(err)
+  }
+
 });
 
 router.get('/logout', (req, res) => {

@@ -14,13 +14,14 @@ router.get('/signup', (req, res) => {
   res.render("Signup", {program: programs, graduationYear: graduationYears, err: error, us: user })
 });
 
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
+  
   const firstname= req.body.firstName;
- const  lastname= req.body.lastName
+  const  lastname= req.body.lastName
 
   const {email, password, program, matricNumber, graduationYear} = req.body;
-  
-  const check = user.create({firstname, lastname, email, password, matricNumber, program, graduationYear});
+   
+  const check = await user.create({firstname, lastname, email, password, matricNumber, program, graduationYear});
 
   if (check[0]){
      req.session.user = check[1];
@@ -29,8 +30,7 @@ router.post('/signup', (req, res) => {
   else{
     req.flash("error", check[1]);
     res.redirect(303, '/signup');
-  }
-      
+  }   
 });
 
 router.get("/login",(req,res)=>{
@@ -42,17 +42,16 @@ router.get("/login",(req,res)=>{
 
 })
 
-router.post("/login",(req,res)=>{
+router.post("/login", async (req,res)=>{
 
-  const {email, password} =req.body
-
-  const check = user.authenticate(email,password)
+  const { email, password } = req.body
+  
+  const check = await user.authenticate(email, password)
 
   if (check[0]){
     req.session.user = check[1];
     res.redirect("/");
-  }
-  else{
+  }  else{
     req.flash("error", check[1][0]);
     res.redirect(303, '/login');
   }

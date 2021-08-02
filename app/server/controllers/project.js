@@ -25,17 +25,15 @@ router.get('/projects/submit', (req, res) => {
 
   });
   
-  
-router.post('/projects/submit', (req, res) => {
 
-  console.log(req.body)
+router.post('/projects/submit', async (req, res) => {
 
     const tags = req.body.tags.split(",");
     const authors = req.body.authors.split(",");
     const {name, abstract} = req.body;
-    const createdBy = req.session.user.id;
+    const createdBy = req.session.user._id;
 
-    const check = create({name, abstract, authors, tags, createdBy})
+    const check = await create({name, abstract, authors, tags, createdBy})
 
     if (check[0]){
       res.redirect("/");
@@ -43,19 +41,16 @@ router.post('/projects/submit', (req, res) => {
 
     else{
       req.flash("error", check[1]);
-    
       res.redirect(303, '/projects/submit');
     } 
-
-
 });
 
+// this is an example of route handler
+router.get('/project/:id', async (req, res) => {
 
-router.get('/project/:id', (req, res) => {
+  const check = await getById(req.params.id)
 
-    const check = getById(req.params.id)
-
-  res.render("Project", {userSession: req.session.user, userParams: check, userName: user.getById(check.createdBy)});
+  res.render("Project", {userSession: req.session.user, userParams: check, userName: await user.getById(check.createdBy)});
   
 });
 

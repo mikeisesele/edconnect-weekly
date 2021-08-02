@@ -25,7 +25,7 @@ const Header = (props) => {
                 <Nav.Link id="logout" href="/logout">
                   Logout
                 </Nav.Link>
-                <Navbar.Text id="username">{`Hi ${props.us.firstname}`}</Navbar.Text>
+                <Navbar.Text id="username">{`Hi ${props.us.firstName}`}</Navbar.Text>
               </>
             ) : (
               <>

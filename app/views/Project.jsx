@@ -3,7 +3,6 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
 const ProjectLayout = ({ userParams, userName }) => {
-  console.log(userName);
   const { name, abstract, authors, tags } = userParams;
   return (
     <>
@@ -19,12 +18,12 @@ const ProjectLayout = ({ userParams, userName }) => {
 
           <Col>
             <p>Date Created</p>
-            <p>2021-02-11</p>
+            <p>{new Date(userParams.createdAt).toLocaleDateString()}</p>
           </Col>
 
           <Col>
             <p>Last Updated</p>
-            <p>2021-02-11</p>
+            <p>{new Date(userParams.createdAt).toLocaleDateString()}</p>
           </Col>
 
           <Col>
@@ -72,10 +71,10 @@ const ProjectLayout = ({ userParams, userName }) => {
                 <b>Author(s)</b>
               </Card.Header>
               <Card.Body id="project_authors">
-                {authors.map((auz) => {
+                {authors.map((item) => {
                   return (
                     <>
-                      <Card.Text key={auz}>{auz}</Card.Text>
+                      <Card.Text key={item}>{item}</Card.Text>
                     </>
                   );
                 })}
