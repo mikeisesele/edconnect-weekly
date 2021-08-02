@@ -36,7 +36,7 @@ const create = async ({
 /* Authenticate a user */
 const authenticate = async (email, password) => {
   
-  // create an object to auth a user
+    // create an object to auth a user
     const user = new User();
     user.email = email;
     user.password = password;
@@ -46,8 +46,7 @@ const authenticate = async (email, password) => {
 
     // if the user exists, check the password
     // verify the password of the user
-    return result && user.validPassword(result, result.password) ?
-     [true, result] : [false, ["Invalid email/password"]];  
+    return result && user.validPassword(result, result.password) ? [true, result] : [false, ["Invalid email/password"]];  
 };
 
 /* Return user with specified id */

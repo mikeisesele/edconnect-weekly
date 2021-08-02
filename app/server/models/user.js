@@ -28,7 +28,7 @@ userSchema.methods.setPassword = function(password) {
 };
       
 // when you have a hashed password, a combination on the correct password with that particular salt should bring the exact hash password. (here we access the password from the schema)
-userSchema.methods.validPassword = async function (userObject, password) {
+userSchema.methods.validPassword = function (userObject, password) {
     console.log(userObject)
     console.log(crypto.pbkdf2Sync(password, userObject.salt, 1000, 64, 'sha512').toString('hex'))
     console.log(password)
