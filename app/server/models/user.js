@@ -14,20 +14,17 @@ const userSchema = new UserSchema({
 },
 {   timestamp: true })
 
-userSchema.methods.setPassword = async function(password) {
-    
-    if (password.length < 7) {    
-        throw new Error('Password should have at least 7 characters')
-    } else {
-    
-        // save the salt to the user instance
-        this.salt = crypto.randomBytes(16).toString('hex')
-
-        // set the hashed password given a unique salt and a given password
-        this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+userSchema.methods.setPassword = function(password) {
+        if (password.length >= 7) {
+          this.salt = crypto.randomBytes(16).toString("hex");
+          this.password = crypto
+            .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
+            .toString("hex");
+        } else {
+          throw new Error("Password should have at least 7 characters");
     }
-}
-
+};
+      
 // when you have a hashed password, a combination on the correct password with that particular salt should bring the exact hash password. (here we access the password from the schema)
 userSchema.methods.validPassword = async function (userObject, password) {
     console.log(userObject)

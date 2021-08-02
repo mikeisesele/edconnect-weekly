@@ -10,24 +10,25 @@ const create = async ({
   matricNumber,
   program,
   graduationYear,
-}) => {
+}) => { 
+    try {
 
-  try {
+      const user = new User()
 
-    const user = new User()
-    user.firstName = firstname;
-    user.lastName = lastname;
-    user.email = email;
-    user.matricNumber = matricNumber;
-    user.program = program;
-    user.graduationYear = graduationYear;
-    user.setPassword(password);
+      user.firstName = firstname;
+      user.lastName = lastname;
+      user.email = email;
+      user.matricNumber = matricNumber;
+      user.program = program;
+      user.graduationYear = graduationYear;
+      user.setPassword(password);
+      
+      if (await user.save()) {
+        return [true, user];
+    } 
     
-    if (await user.save()) {
-      return [true, user];
-    }       
-  } catch (err) {
-    return [false, helper.translateError(err)];
+  } catch (e) {
+    return [false, helper.translateError(e)];
   } 
 };
 
@@ -45,7 +46,8 @@ const authenticate = async (email, password) => {
 
     // if the user exists, check the password
     // verify the password of the user
-    return result && user.validPassword(result, result.password)? [true, result] : [false, ["Invalid email/password"]];  
+    return result && user.validPassword(result, result.password) ?
+     [true, result] : [false, ["Invalid email/password"]];  
 };
 
 /* Return user with specified id */
