@@ -7,7 +7,7 @@ const create = async ({ name, abstract, authors, tags, createdBy }) => {
 
     const project = new Project({ name, abstract, authors, tags, createdBy });
 
-    if ( await projects.save()){
+    if ( await project.save()){
     return [true, project] 
     }
   } catch (e) { 

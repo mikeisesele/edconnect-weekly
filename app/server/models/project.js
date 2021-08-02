@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 
 
 const projectSchema = new mongoose.Schema({
-    projectName: {
+    name: {
         type: String,
         required: true
     },
-    projectAbstract: { 
+    abstract: { 
         type: String,
         required: true
     },
-    projectAuthors: {
+    authors: {
         type: [String],
         required: true
     },

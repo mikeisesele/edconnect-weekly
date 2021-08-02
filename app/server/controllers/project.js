@@ -48,6 +48,7 @@ router.post('/projects/submit', async (req, res) => {
 // this is an example of route handler
 router.get('/project/:id', async (req, res) => {
 
+  
   const check = await getById(req.params.id)
   res.render("Project", {userSession: req.session.user, userParams: check, userName: await user.getById(check.createdBy)});
   
