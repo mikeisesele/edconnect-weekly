@@ -30,6 +30,7 @@ const create = async ({
   } catch (e) {
     return [false, helper.translateError(e)];
   } 
+
 };
 
 
@@ -44,14 +45,21 @@ const authenticate = async (email, password) => {
     // use the email to find that user
     const result = await User.findOne({ email: email });
 
+  
+
     // if the user exists, check the password
     // verify the password of the user
-    return result && user.validPassword(result, result.password) ? [true, result] : [false, ["Invalid email/password"]];  
+    return result && user.validPassword(result, password) 
+    ? [true, result] 
+    : [false, ["Invalid email/password"]];  
+
+
+
 };
 
 /* Return user with specified id */
 const getById = (id) => {
-  return User.findById(id);
+    return User.findById(id);
 };
 
 /* Return all users */

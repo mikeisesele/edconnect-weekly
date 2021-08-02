@@ -33,16 +33,10 @@ router.post('/signup', async (req, res) => {
   }   
 });
 
-
-
-
-
-
 router.get("/login",(req,res)=>{
 
   const error = req.flash("error");
   const user = req.session.user; 
-
   res.render("Login", {err: error, us: user})
 
 })
@@ -50,7 +44,6 @@ router.get("/login",(req,res)=>{
 router.post("/login", async (req,res)=>{
 
   const { email, password } = req.body
-  
   const check = await user.authenticate(email, password)
 
   if (check[0]){

@@ -17,23 +17,21 @@ const userSchema = new UserSchema(
 )
 
 userSchema.methods.setPassword = function(password) {
-        if (password.length >= 7) {
-          this.salt = crypto.randomBytes(16).toString("hex");
-          this.password = crypto
-            .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
-            .toString("hex");
-        } else {
-          throw new Error("Password should have at least 7 characters");
+
+    if (password.length >= 7) {
+      this.salt = crypto.randomBytes(16).toString("hex");
+      this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, "sha512").toString("hex");
+    } else {
+      throw new Error("Password should have at least 7 characters");
     }
 };
       
 // when you have a hashed password, a combination on the correct password with that particular salt should bring the exact hash password. (here we access the password from the schema)
 userSchema.methods.validPassword = function (userObject, password) {
-    console.log(userObject)
-    console.log(crypto.pbkdf2Sync(password, userObject.salt, 1000, 64, 'sha512').toString('hex'))
-    console.log(password)
-    return( 
-        userObject.password === crypto.pbkdf2Sync(password, userObject.salt, 1000, 64, 'sha512').toString('hex'))
+  console.log(crypto.pbkdf2Sync(password, userObject.salt, 1000, 64, 'sha512').toString('hex'))
+  console.log(userObject.password)
+
+  return userObject.password === crypto.pbkdf2Sync(password, userObject.salt, 1000, 64, 'sha512').toString('hex')
 }
 
 // the user in strings is the name of the collection to be set in mongo db
