@@ -18,12 +18,14 @@ const ProjectLayout = ({ userParams, userName }) => {
 
           <Col>
             <p>Date Created</p>
-            <p>{new Date(userParams.createdAt).toLocaleDateString()}</p>
+            {/* <p>{new Date(userParams.createdAt).toLocaleDateString()}</p> */}
+            <p>12 - 07 - 2021</p>
           </Col>
 
           <Col>
             <p>Last Updated</p>
-            <p>{new Date(userParams.createdAt).toLocaleDateString()}</p>
+            <p> 12 - 07 - 2021 </p>            
+            {/* <p>{new Date(userParams.createdAt).toLocaleDateString()}</p> */}
           </Col>
 
           <Col>
