@@ -5,7 +5,7 @@ const Header = (props) => {
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-        <Navbar.Brand href="/">Project Explorer</Navbar.Brand>
+        <Navbar.Brand >  <Nav.Link href="/">Project Explorer</Nav.Link> </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Form inline>
