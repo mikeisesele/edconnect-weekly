@@ -84,18 +84,20 @@ const getBySocialId = async (social, id) => {
   }
 };
 
-const updateUser = async (user) => {
+const updateUser = async (id, user) => {
   try {
-    const result = await User.findOneAndUpdate({ _id: user._id }, user);
-    if (result) {
-      return [true, result];
-    } else {
-      return [false, "User not found"];
-    }
+    const thisUser = await User.findById(id);
+    
+    if (thisUser) {
+      const updatedUser = await thisUser.updateOne({ ...user });
+      return [true, updatedUser]
+    } 
+
   } catch (e) {
     return [false, helper.translateError(e)];
   }
 };
+
 
 module.exports = {
   create,

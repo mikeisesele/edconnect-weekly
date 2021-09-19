@@ -82,8 +82,8 @@ register(app).then(() => {
   app.use(express.static("public"));
 
   // listen to post when mongo connection is successful
-  app.listen(SERVER_PORT, () =>
-    console.log("Server listening on port " + SERVER_PORT)
-  );
-
+  app.listen(SERVER_PORT, () => {
+    console.log("Server listening on port " + SERVER_PORT);
+    console.log("connecting to database...");
+    });
 });

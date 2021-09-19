@@ -6,8 +6,6 @@ const ProfileDetails = (userParams) => {
   const user = userParams.user;
   const userprograms = userParams.programs;
   const usergraduationYears = userParams.graduationYears;
-  const updateSuccessful = userParams.updateSuccessful? userParams.updateSuccessful : false;
-  const updateError = userParams.updateError? true : false;
 
   // the default sattes will come from the prop
   const [firstName, setFirstName] = useState(user.firstName);
@@ -19,7 +17,7 @@ const ProfileDetails = (userParams) => {
   const [matricNumber, setMatricNmber] = useState(user.matricNumber);
   const [program, setProgram] = useState(user.program);
   const [graduationYear, setGraduationYear] = useState(user.graduationYear);
-  const [profileImage, setProfileImage] = useState(user.profilePicture? user.profilePicture : "");
+  const [profileImage, setProfileImage] = useState("");
 
   // take values from the current state and fill fields
   const [userInfo, setUserInfo] = useState({});
@@ -68,7 +66,7 @@ const ProfileDetails = (userParams) => {
       case "graduationYear":
         setGraduationYear(value);
         break;
-      case "profileImage":
+      case "profilePicture":
         setProfileImage(value);
         break;
       default:
@@ -106,9 +104,6 @@ const ProfileDetails = (userParams) => {
             {userInfo.graduationYear}
           </Col>
         </Row>
-
-        {updateSuccessful && <Alert variant="info">{updateSuccessful}</Alert>}
-        {updateError && <Alert variant="danger">{updateError}</Alert>}
         <div className="mt-3">
           <h5>Update Profile</h5>
           <br />
@@ -116,7 +111,7 @@ const ProfileDetails = (userParams) => {
             id="signupForm"
             method="post"
             className="w-30 mw-70"
-            action="/updateprofile"
+            action="/profile"
             encType="multipart/form-data"
           >
             {!(matricNumber && graduationYear && program) && (
@@ -221,6 +216,7 @@ const ProfileDetails = (userParams) => {
             </Button>
           </Form>
         </div>
+        <hr />
         <div className="mt-3">
           <h5>Change Password</h5>
           <br />

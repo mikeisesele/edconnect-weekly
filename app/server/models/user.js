@@ -13,7 +13,11 @@ const userSchema = new UserSchema(
     matricNumber: { type: String },
     program: { type: String },
     graduationYear: { type: String },
-    profilePicture: { type: String },
+    profilePicture: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dlcz32wwl/image/upload/v1632083119/project-explorer/SeekPng.com_profile-icon-png_9665493_vfozc0.png",
+    },
     facebookId: { type: String },
     googleId: { type: String },
   },

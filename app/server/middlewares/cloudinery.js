@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const transformer = new CloudinaryStorage({
+const cloudineryStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   folder: "project-explorer",
   allowedFormats: ["jpg", "png"],
@@ -17,5 +17,5 @@ const transformer = new CloudinaryStorage({
 });
 
 module.exports = {
-  transformer,
+  cloudineryStorage,
 };

@@ -24,7 +24,7 @@ const Header = (props) => {
           <Nav className="mr-auto">
             <Nav.Link href="/project">Submit</Nav.Link>
           </Nav>
-          <Nav id="every">
+          <Nav id="every" className="d-flex align-items-center">
             {props.user ? (
               <>
                 <Nav.Link id="logout" href="/logout">
@@ -34,11 +34,14 @@ const Header = (props) => {
                   id="username"
                   href="/profile"
                 >{`Hi ${props.user.firstName}`}</Nav.Link>
-                <Image
-                  src={`${props.user.profilePicture}`}
-                  roundedCircle
-                  style={{ height: 3 + "rem", width: 3 + "rem" }}
-                ></Image>
+                <Nav.Link href="/profile">
+                  <Image
+                    src={`${props.user.profilePicture}`}
+                    roundedCircle
+                    style={{ height: 3 + "rem", width: 3 + "rem" }}
+                    className="ml-2"
+                  ></Image>
+                </Nav.Link>
               </>
             ) : (
               <>

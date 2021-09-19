@@ -3,8 +3,8 @@ const { getPrograms, getGradYears } = require("../services/school");
 const User = require("../services/user");
 const isLoggedIn = require("../middlewares/auth");
 const multer = require("multer");
-const { transformer } = require("../config/cloudinery");
-const cloudineryTransformer = multer({transformer});
+const { storage } = require("../middlewares/cloudinery");
+const cloudineryStorage = multer(storage);
 
 const router = express.Router();
 
@@ -115,9 +115,32 @@ router.get("/profile", async (req, res) => {
 // @desc Handle update profile click
 // @route POST /profile
 router.post(
-  "/updateprofile",
-  cloudineryTransformer.single("profileImage"),
+  "/profile",
+  cloudineryStorage.single("profilePicture"),
   async (req, res) => {
+    // const result = "";
+
+    // if (req.file.path) {
+    //   result = await cloudinary.v2.uploader.upload(req.file.path, {
+    //     width: 50,
+    //     height: 50,
+    //     crop: "fit",
+    //   });
+    // }
+
+    console.log(req.file.path)
+    console.log(`result: ${req.file}`);
+
+    // if (req.user) {
+    //   updatedUser.profilePic = result.url;
+    //   updatedUser.profilePicCloudinaryId = result.public_id;
+    // }
+    // if (req.user?.profilePicCloudinaryId) {
+    //   await cloudinary.v2.uploader.destroy(
+    //     req.user?.profilePicCloudinaryId
+    //   );
+    // }
+
     const { firstName, lastName } = req.body;
     let graduationYear, program;
 
@@ -137,32 +160,22 @@ router.post(
       graduationYear,
       firstName,
       lastName,
-      profileImage: user.profilePicture,
+      profilePicture: user?.profilePicture,
       ...req.body,
     };
 
-    if (
-      req.file &&
-      req.file.path !==
-        "../../public/images/296-2969961_no-image-user-profile-icon.png"
-    ) {
-      user.profileImage = req.file.path;
-    }
-    // "https://www.clipartmax.com/max/m2H7H7N4b1Z5H7m2/";
+    // if (result && result.url != profilePicture) {
+    //   user.profileImage = result.url; // req.file.path;
+    // } else {
+    //   newUser.profileImage = user.profilePicture;
+    // }
 
     try {
-      const updateSuccessful = "Profile Updated!";
-      const result = await User.update({ _id: req.session.user._id }, newUser);
+      const id = req.session.user._id;
+      const result = await User.updateUser(id, newUser);
 
       if (result[0]) {
-        res.redirect("/");
-      } else {
-        res.redirect("/profile", {
-          user,
-          programs,
-          graduationYears,
-          updateSuccessful,
-        });
+        res.redirect("/profile");
       }
     } catch (err) {
       console.error(err);

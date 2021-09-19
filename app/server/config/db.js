@@ -22,3 +22,11 @@ const connectDB = async () => {
 };
 
 module.exports = { connectDB };
+
+
+// /**
+//  * Adds a reset password token to a specified user's document
+//  * @param {string} id
+//  * @param {string} token
+//  * @returns
+//  */
