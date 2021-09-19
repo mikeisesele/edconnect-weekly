@@ -1,11 +1,16 @@
 import React from "react";
-import { Button, Form, FormControl, Nav, Navbar } from "react-bootstrap";
+import { Button, Form, FormControl, Nav, Navbar, Image } from "react-bootstrap";
 
 const Header = (props) => {
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-        <Navbar.Brand >  <Nav.Link href="/">Project Explorer</Nav.Link> </Navbar.Brand>
+        <Navbar.Brand>
+          {" "}
+          <Nav.Link href="/" style={{ color: "white" }}>
+            Project Explorer
+          </Nav.Link>{" "}
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Form inline>
@@ -20,12 +25,20 @@ const Header = (props) => {
             <Nav.Link href="/project">Submit</Nav.Link>
           </Nav>
           <Nav id="every">
-            {props.us ? (
+            {props.user ? (
               <>
                 <Nav.Link id="logout" href="/logout">
                   Logout
                 </Nav.Link>
-                <Navbar.Text id="username">{`Hi ${props.us.firstName}`}</Navbar.Text>
+                <Nav.Link
+                  id="username"
+                  href="/profile"
+                >{`Hi ${props.user.firstName}`}</Nav.Link>
+                <Image
+                  src={`${props.user.profilePicture}`}
+                  roundedCircle
+                  style={{ height: 3 + "rem", width: 3 + "rem" }}
+                ></Image>
               </>
             ) : (
               <>

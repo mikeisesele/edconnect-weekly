@@ -8,6 +8,7 @@ export default class extends Document {
       <html lang="en">
         <Head>
           <title>Edconnect - Project Explorer</title>
+          
         </Head>
 
         <body>

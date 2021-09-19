@@ -1,31 +1,45 @@
 import React from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Image,
+} from "react-bootstrap";
 import Layout from "./shared/Layout";
 
-const ProjectLayout = ({ userParams, userName }) => {
-  const { name, abstract, authors, tags } = userParams;
+const ProjectLayout = (projectProperties) => {
+  const { project, projectCreator, authorImage } =
+    projectProperties.projectResponse;
   return (
     <>
       <Container>
         <Row id="project_name">
-          <h3>{name}</h3>
+          <h3>{project.name}</h3>
         </Row>
-        <Row className="bg-light">
-          <Col id="project_author">
-            <p>Created By</p>
-            <p>{`${userName.firstname} ${userName.lastname}`}</p>
+        <Row className="bg-light p-3 align-items-center">
+          <Col id="project_author" className="d-flex mb-0 align-items-center">
+            <Image
+              src={`${authorImage}`}
+              roundedCircle
+              style={{ height: 3 + "rem", width: 3 + "rem" }}
+            ></Image>
+            <div className="d-flex flex-column mb-0 align-items-center pl-3">
+              <p className="mb-0">Created By</p>
+              <p className="mb-0">{`${projectCreator.firstName} ${projectCreator.lastName}`}</p>
+            </div>
           </Col>
 
           <Col>
-            <p>Date Created</p>
-            {/* <p>{new Date(userParams.createdAt).toLocaleDateString()}</p> */}
-            <p>12 - 07 - 2021</p>
+            <p className="mb-0">Date Created</p>
+            <span>{new Date(project.createdAt).toLocaleDateString()}</span>
           </Col>
 
           <Col>
-            <p>Last Updated</p>
-            <p> 12 - 07 - 2021 </p>            
-            {/* <p>{new Date(userParams.createdAt).toLocaleDateString()}</p> */}
+            <p className="mb-0">Last Updated</p>
+            <span>{new Date(project.createdAt).toLocaleDateString()}</span>
           </Col>
 
           <Col>
@@ -43,9 +57,13 @@ const ProjectLayout = ({ userParams, userName }) => {
         <Row>
           <Col>
             <div id="project_abstract">
-              <h5>Project Abstract</h5>
-              <p>{abstract}</p>
+              <strong>
+                <h5>Project Abstract</h5>
+              </strong>
+              <p>{project.abstract}</p>
             </div>
+
+            <hr className="mb-4" />
 
             <div className="mx-auto ">
               <b>Comments</b>
@@ -58,7 +76,7 @@ const ProjectLayout = ({ userParams, userName }) => {
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" >
+                <Button variant="primary" type="submit">
                   Submit
                 </Button>
               </Form>
@@ -68,21 +86,26 @@ const ProjectLayout = ({ userParams, userName }) => {
           <Col>
             <h5>Project Details</h5>
 
+            <hr className="mb-4" />
+
             <Card className="text-center">
               <Card.Header>
                 <b>Author(s)</b>
               </Card.Header>
               <Card.Body id="project_authors">
-                {authors.map((item) => {
-                  return (
-                    <>
-                      <Card.Text key={item}>{item}</Card.Text>
-                    </>
-                  );
-                })}
+                <Card.Text id="project_authors">
+                  {project?.authors.map((author, index) => {
+                    return (
+                      <div key={index}>
+                        {index > 0 ? <hr /> : null}
+                        <p className="pr-3 pl-3">{author}</p>
+                      </div>
+                    );
+                  })}
+                </Card.Text>
               </Card.Body>
               <Card.Footer className="text-muted" id="project_tags">
-                <b>{tags}</b>
+                <b>{project.tags}</b>
               </Card.Footer>
             </Card>
 
@@ -94,7 +117,7 @@ const ProjectLayout = ({ userParams, userName }) => {
               </Card.Header>
               <Card.Body>
                 <blockquote className="blockquote mb-0">
-                  <p>No file uploaded yet</p>
+                  <p className="pr-3 pl-3">No file uploaded yet</p>
                 </blockquote>
               </Card.Body>
             </Card>
@@ -106,9 +129,8 @@ const ProjectLayout = ({ userParams, userName }) => {
 };
 
 const Project = (props) => {
-  
   return (
-    <Layout us={props.userSession}>
+    <Layout user={props.projectResponse.user}>
       <ProjectLayout {...props} />
     </Layout>
   );

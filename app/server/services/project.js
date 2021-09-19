@@ -2,10 +2,17 @@ const Project = require('../models/project');
 import helper from '../models/mongo_helper';
 
 /* Create new project */
-const create = async ({ name, abstract, authors, tags, createdBy }) => {
+const create = async ({ name, abstract, authors, tags, createdBy, authorImage }) => {
   try {
 
-    const project = new Project({ name, abstract, authors, tags, createdBy });
+    const project = new Project({
+      name,
+      abstract,
+      authors,
+      tags,
+      createdBy,
+      authorImage,
+    });
 
     if ( await project.save()){
     return [true, project] 
@@ -19,7 +26,9 @@ const create = async ({ name, abstract, authors, tags, createdBy }) => {
 const getById = async (id) => {
   try {
   // populate projects with data from file.
-  return await Project.findById(id)
+  const project = await Project.findById(id)
+  return project
+
   } catch (e) {
     console.log(e)
   }

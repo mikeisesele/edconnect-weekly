@@ -55,7 +55,7 @@ const Showcase = ({ props }) => {
 
 const Home = (props) => {
   return (
-    <Layout us={props.us}>
+    <Layout user={props.user}>
       <main className="container">
         <Jumbo />
         <Showcase {...props} />

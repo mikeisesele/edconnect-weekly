@@ -1,6 +1,12 @@
 import React from "react";
 import { Alert, Button, Col, Form } from "react-bootstrap";
 import Layout from "./shared/Layout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+
+const facebookIcon = <FontAwesomeIcon icon={faFacebook} />;
+const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
 const MainSignup = (props) => {
   const { program, graduationYear, err } = props;
@@ -82,6 +88,14 @@ const MainSignup = (props) => {
             Sign Up
           </Button>
         </Form>
+          <div className="d-flex justify-content-center">
+            <Button href="/auth/facebook" class="btn btn-primary m-3">
+              {facebookIcon} Sign up with Facebook
+            </Button>
+            <Button href="/auth/google" class=" btn btn-danger m-3">
+              {googleIcon} Sign up with Google
+            </Button>
+          </div>
       </div>
     </>
   );

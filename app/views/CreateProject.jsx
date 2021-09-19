@@ -1,79 +1,131 @@
-import React from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import React, { useState } from "react"
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Image,
+} from "react-bootstrap";
 import Layout from "./shared/Layout";
 
-const CreateProjectForm = ({ err }) => {
+
+const CreateProjectForm = ({ props, project }) => {
+  // const error = props.err;
   let showAlert = false;
-  err.length > 0 ? (showAlert = true) : (showAlert = false);
+  // error.length > 0 ? (showAlert = true) : (showAlert = false);
+
+  const [name, setName] = useState(project?.name)
+  const [abstract, setAbstract] = useState(project?.abstract)
+  const [authors, setAuthors] = useState(project?.authors || [])
+  const [tags, setTags] = useState(project?.tags || [])
+
+  const handleInput = e => {
+    const { id, value } = e.target
+    switch (id) {
+      case "name":
+        setName(value)
+        break
+      case "abstract":
+        setAbstract(value)
+        break
+      case "authors":
+        setAuthors(value.split(","))
+        break
+      case "tags":
+        setTags(value.split(","))
+        break
+      default:
+    }
+  }
 
   return (
-    <>
-      <div className="mx-auto w-50 p-3 mw-70">
+    <main>
+      <div className="mx-auto w-50 p-2 mt-5">
         <h3>Submit Project</h3>
-        <Form method="post" action="/projects/submit" id="createProjectForm">
-          <Alert
-            className="alert alert-danger"
-            variant="danger"
-            show={showAlert}
-          >
-            {err.map((text) => {
-              return (
-                <>
-                  {text}
-                  <br />
-                </>
-              );
-            })}
-          </Alert>
-          <Form.Group>
-            <Form.Label>Project Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter project name"
-              name="name"
-            />
+        <Form id="createProjectForm" method="post" action="/projects/submit">
+          {/* {error && (
+            <Alert variant="danger" show={showAlert}>
+              {error.map((error, index) => (
+                <p key={index}>{error}</p>
+              ))}
+            </Alert>
+          )} */}
+          <Form.Group as={Row}>
+            <Col>
+              <Form.Label>Project Name:</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter project name"
+                value={name}
+                onChange={handleInput}
+              />
+            </Col>
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Project Abstract</Form.Label>
-            <Form.Control as="textarea" rows={5} name="abstract" />
+          <Form.Group as={Row}>
+            <Col>
+              <Form.Label>Project Abstract:</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="abstract"
+                id="abstract"
+                rows={4}
+                cols={100}
+                value={abstract}
+                onChange={handleInput}
+              />
+            </Col>
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Author(s)</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter author names (seperated by comma)"
-              name="authors"
-            />
+          <Form.Group as={Row}>
+            <Col>
+              <Form.Label>Author(s): </Form.Label>
+              <Form.Control
+                type="text"
+                name="authors"
+                id="authors"
+                placeholder="Enter author names (seperated by comma)"
+                value={authors.join(",")}
+                onChange={handleInput}
+              />
+            </Col>
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Tag(s)</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Use # to seperate projects with different topics (e.g #javascript #mongodb) "
-              name="tags"
-            />
+          <Form.Group as={Row}>
+            <Col>
+              <Form.Label>Tag(s):</Form.Label>
+              <Form.Control
+                type="text"
+                id="tags"
+                name="tags"
+                placeholder="Use # to tag project with different topics"
+                value={tags.join(",")}
+                onChange={handleInput}
+              />
+            </Col>
           </Form.Group>
 
-          {/* <Button as="input" type="submit" value="Continue" />{' '} */}
-          <Button variant="primary" type="submit" >
+          <Button variant="primary" type="submit">
             Continue
           </Button>
         </Form>
-        <br />
       </div>
-    </>
+    </main>
   );
-};
+}
 
 const CreateProject = (props) => {
   return (
-    <Layout us={props.us}>
+    <Layout user={props.user}>
       <CreateProjectForm {...props} />
     </Layout>
   );
 };
+
 
 export default CreateProject;
