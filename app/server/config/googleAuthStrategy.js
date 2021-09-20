@@ -1,5 +1,4 @@
-
-require('dotenv').config();
+require("dotenv").config();
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 const User = require("../services/user");
@@ -10,40 +9,39 @@ const userGoogleCertificates = {
   callbackURL: process.env.GOOGLE_CALLBACK_URL,
 };
 
-const userGoogleProfile =  async (accessToken, refreshToken, profile, done) => {
-  
-  try{
-  //checks if user with provider (= google) id exist in the db
-   const checkUser = await User.getBySocialId(profile.provider, profile.id);
+const userGoogleProfile = async (accessToken, refreshToken, profile, done) => {
+  try {
+    //checks if user with provider (= google) id exist in the db
+    const checkUser = await User.getBySocialId(profile.provider, profile.id);
 
-  // if user already exist return object
-  if (checkUser) {
-    done(null, checkUser);
-  }
+    // if user already exist return object
+    if (checkUser) {
+      done(null, checkUser);
+    }
 
-  //if user does not yet exist register with data returned by provider's authenticator
-  if (!checkUser) {
-    const userDetail = {
-      firstname: profile._json.given_name,
-      lastname: profile._json.family_name,
-      password: profile._json.sub,
-      email: profile._json.email,
-      googleId: profile._json.sub,
-      profileImage: profile._json.picture,
-    };
+    //if user does not yet exist register with data returned by provider's authenticator
+    if (!checkUser) {
+      const userDetail = {
+        firstname: profile._json.given_name,
+        lastname: profile._json.family_name,
+        password: profile._json.sub,
+        email: profile._json.email,
+        googleId: profile._json.sub,
+        profileImage: profile._json.picture,
+      };
 
-    //create user
+      //create user
       const createdUser = await User.create(userDetail);
-      
-      if(createdUser[0]) {
-        done(null, createdUser);
+
+      if (createdUser[0]) {
+        done(null, createdUser[1]);
       } else {
-        return createdUser[1].message = "Error creating user";
-      }  
+        return (createdUser[1].message = "Error creating user");
+      }
     }
-    } catch(err) {
-      return done(err);
-    }
+  } catch (err) {
+    return done(err);
+  }
 };
 
 // passport passed as an argument from the app.js file means it will be used like this here
@@ -65,5 +63,4 @@ passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => done(err, user));
 });
 
-module.exports = googleStrategy
-
+module.exports = googleStrategy;

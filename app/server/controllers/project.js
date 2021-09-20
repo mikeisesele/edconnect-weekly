@@ -52,26 +52,26 @@ router.post("/projects/submit", async (req, res) => {
 
 router.get("/project/:id", async (req, res) => {
   try {
-  // const projectId = req.params.id;
-  // var id = new ObjectId(projectId);
-  // const project = await Project.getById(id);
-  // const userId = project.createdBy;
-  // const user = await User.getById(userId);
-  // const projectCreator = { firstName: user.firstName, lastName: user.lastName };
-  // const authorImage = project.authorImage;
+  const projectId = req.params.id;
+  var id = new ObjectId(projectId);
+  const project = await Project.getById(id);
+  const userId = project.createdBy;
+  const user = await User.getById(userId);
+  const projectCreator = { firstName: user.firstName, lastName: user.lastName };
+  const authorImage = project.authorImage;
 
-  // const projectResponse = {
-  //   project,
-  //   projectCreator,
-  //   authorImage,
-  //   user
-  // };
+  const projectResponse = {
+    project,
+    projectCreator,
+    authorImage,
+    user
+  };
 
-  // if (!project) {
-  //   res.redirect("/");
-  // }
+  if (!project) {
+    res.redirect("/");
+  }
   
-  // res.render("Project", { projectResponse });
+  res.render("Project", { projectResponse });
 } catch (error){
   console.log(error);
 }

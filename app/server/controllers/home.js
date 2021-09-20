@@ -7,14 +7,10 @@ const DB = require("../config/db");
 // @route GET /
 // the facebook callback is  used to get access the homepage
 router.get("/", async (req, res) => {
-  try {
-    const projects = await project.getAll();
-    const user = req.session.user;
-    
-    return res.render("Home", { props: projects, user: user });
-  } catch (err) {
-    console.log(err);
-  }
+  const projects = await project.getAll();
+  
+      const user = req.session.user;
+      return res.render("Home", { props: projects, user: user }); 
 });
 
 // @desc Logout user

@@ -9,7 +9,7 @@ const router = express.Router();
 // the email is used to get the email of the user.
 router.get(
   "/auth/google",
-  passport.authenticate('google', { scope: ["profile", "email"] })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 // @desc Google auth callback
@@ -20,8 +20,20 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/" }),
   function (req, res) {
     const { user } = req;
-    req.session.user = user[1];
-    res.redirect("/profile");
+    if (user) {
+      req.session.user = user;
+      if (
+        user.graduationYear == null &&
+        user.matricNumber == null &&
+        user.program == null
+      ) {
+        res.redirect("/profile");
+      } else {
+        res.redirect("/");
+      }
+    } else {
+      console.log(`no user ${req.session.user}`);
+    }
   }
 );
 

@@ -66,8 +66,8 @@ register(app).then(() => {
     session({
       secret: "secret",
       store,
-      resave: true,
-      saveUninitialized: false,
+      resave: false,
+      saveUninitialized: true,
     })
   );
 

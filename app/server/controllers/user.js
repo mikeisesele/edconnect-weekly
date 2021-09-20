@@ -95,12 +95,9 @@ router.get("/resetPassword", async (req, res) => {
 // @desc Show edit page
 // @route GET /profile
 router.get("/profile", async (req, res) => {
-   
-  
-
   try {
-    const user = await User.getById(req.session.user._id);
-    if (user) {
+    if (req.session) {
+      const user = await User.getById(req.session.user._id);
       res.render("ProfileDetail", { user, programs, graduationYears });
     } else {
       res.redirect("/login");
@@ -146,16 +143,17 @@ router.post("/profile", multerUploads, async (req, res) => {
         // if upload is successful
         if (result) {
           // // set the new user image to url
-           newUserProfile.profilePicture = result.url;
-           return newUserProfile.profilePicture
+          newUserProfile.profilePicture = result.url;
+          return newUserProfile.profilePicture;
         }
-      })
+      });
     }
 
     // update current user with new detail
     const result = await User.updateUser(id, newUserProfile);
 
     if (result[0]) {
+      req.session.user = result[1];
       res.redirect("/profile");
     }
   } catch (err) {

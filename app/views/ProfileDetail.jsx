@@ -262,7 +262,7 @@ const ProfileDetails = (userParams) => {
   );
 };
 
-const Project = (props) => {
+const Project = (props) => {   
   return (
     // the layout neegs the session for the header component
     <Layout user={props.user}>

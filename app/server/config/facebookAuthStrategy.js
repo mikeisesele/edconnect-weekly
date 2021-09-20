@@ -38,7 +38,7 @@ const userFacebookProfile = async (
       const createdUser = await User.create(userDetail);
 
       if(createdUser[0]) {
-        done(null, createdUser);
+        done(null, createdUser[1]);
       } else {
         return createdUser[1].message = "Error creating user";
       }

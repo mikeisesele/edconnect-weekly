@@ -26,10 +26,22 @@ router.get(
 
  function (req, res) {
     const { user } = req;
-    req.session.user = user[1];
-    res.redirect("/profile");
-  }
 
+      if (user) {
+        req.session.user = user;
+        if (
+          user.graduationYear == null &&
+          user.matricNumber == null &&
+          user.program == null
+        ) {
+          res.redirect("/profile");
+        } else {
+          res.redirect("/");
+        }
+      } else {
+        console.log(`no user ${req.session.user}`);
+      }
+  }
 );
 
 module.exports = router;
