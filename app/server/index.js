@@ -13,6 +13,7 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const facebookStrategy = require("./config/facebookAuthStrategy")
 
 
+
 DB.connectDB();
 const app = express();
 
@@ -47,6 +48,9 @@ register(app).then(() => {
       extended: true,
     })
   );
+
+  // app.use(fileupload({ useTempFiles: true }));
+
 
   // set global variable in express
   app.use(function (req, res, next) {

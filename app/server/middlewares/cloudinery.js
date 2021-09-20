@@ -18,4 +18,5 @@ const cloudineryStorage = new CloudinaryStorage({
 
 module.exports = {
   cloudineryStorage,
+  cloudinary,
 };

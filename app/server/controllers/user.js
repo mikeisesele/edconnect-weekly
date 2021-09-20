@@ -2,11 +2,9 @@ const express = require("express");
 const { getPrograms, getGradYears } = require("../services/school");
 const User = require("../services/user");
 const isLoggedIn = require("../middlewares/auth");
-const multer = require("multer");
-const { storage } = require("../middlewares/cloudinery");
-const cloudineryStorage = multer(storage);
-
+const multerUploads = require("../middlewares/multer");
 const router = express.Router();
+import { cloudinary } from "../middlewares/cloudinery";
 
 const programs = getPrograms();
 const graduationYears = getGradYears();
@@ -17,7 +15,6 @@ router.get("/signup", (req, res) => {
   // we are accessing the services here
   const programs = getPrograms();
   const graduationYears = getGradYears();
-
   const error = req.flash("error");
   const user = req.session.user;
 
@@ -92,7 +89,6 @@ router.get("/forgotPassword", async (req, res) => {
 // @route GET /resetPassword
 router.get("/resetPassword", async (req, res) => {
   const error = req.flash("error");
-
   res.render("ResetPassword", { error, user });
 });
 
@@ -114,48 +110,25 @@ router.get("/profile", async (req, res) => {
 
 // @desc Handle update profile click
 // @route POST /profile
-router.post(
-  "/profile",
-  cloudineryStorage.single("profilePicture"),
-  async (req, res) => {
-    // const result = "";
+router.post("/profile", multerUploads, async (req, res) => {
+  const id = req.session.user._id;
 
-    // if (req.file.path) {
-    //   result = await cloudinary.v2.uploader.upload(req.file.path, {
-    //     width: 50,
-    //     height: 50,
-    //     crop: "fit",
-    //   });
-    // }
+  const { firstName, lastName, graduationYear, program } = req.body;
 
-    console.log(req.file.path)
-    console.log(`result: ${req.file}`);
+  // reset graduation year and program if user does not select
+  if (graduationYear === "Select Graduation Year") {
+    graduationYear = "";
+  }
+  if (program === "Select Program") {
+    program = "";
+  }
 
-    // if (req.user) {
-    //   updatedUser.profilePic = result.url;
-    //   updatedUser.profilePicCloudinaryId = result.public_id;
-    // }
-    // if (req.user?.profilePicCloudinaryId) {
-    //   await cloudinary.v2.uploader.destroy(
-    //     req.user?.profilePicCloudinaryId
-    //   );
-    // }
+  try {
+    // get user current detail before update
+    const user = await User.getById(id);
 
-    const { firstName, lastName } = req.body;
-    let graduationYear, program;
-
-    // reset graduation year and program if user does not select
-    if (graduationYear === "Select Graduation Year") {
-      graduationYear = "";
-    }
-    if (program === "Select Program") {
-      program = "";
-    }
-
-    // get existing user
-    const user = await User.getById(req.session.user._id);
-
-    const newUser = {
+    // create a new user detail with the information provided from the request
+    const newUserProfile = {
       program,
       graduationYear,
       firstName,
@@ -164,24 +137,29 @@ router.post(
       ...req.body,
     };
 
-    // if (result && result.url != profilePicture) {
-    //   user.profileImage = result.url; // req.file.path;
-    // } else {
-    //   newUser.profileImage = user.profilePicture;
-    // }
-
-    try {
-      const id = req.session.user._id;
-      const result = await User.updateUser(id, newUser);
-
-      if (result[0]) {
-        res.redirect("/profile");
-      }
-    } catch (err) {
-      console.error(err);
+    // it there is a file
+    if (req.file) {
+      // Upload image to cloudinary
+      await cloudinary.uploader.upload(req.file.path, function (error, result) {
+        // if upload is successful
+        if (result) {
+          // // set the new user image to url
+           newUserProfile.profilePicture = result.url;
+           return newUserProfile.profilePicture
+        }
+      })
     }
+
+    // update current user with new detail
+    const result = await User.updateUser(id, newUserProfile);
+
+    if (result[0]) {
+      res.redirect("/profile");
+    }
+  } catch (err) {
+    console.error(err);
   }
-);
+});
 
 // @desc Log out a user
 // @route GET /logout

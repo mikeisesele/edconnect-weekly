@@ -10,7 +10,7 @@ const ProfileDetails = (userParams) => {
   // the default sattes will come from the prop
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
+  const [email, setEmail] = useState(user?.email);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -116,7 +116,7 @@ const ProfileDetails = (userParams) => {
           >
             {!(matricNumber && graduationYear && program) && (
               <Alert variant="warning" className="text-center">
-                Please complete your registration!
+                Please update your profile!
               </Alert>
             )}
             <Form.Row>
@@ -264,6 +264,8 @@ const ProfileDetails = (userParams) => {
 };
 
 const Project = (props) => {
+        console.log(props.user);
+
   return (
     // the layout neegs the session for the header component
     <Layout user={props.user}>
