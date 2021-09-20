@@ -18,7 +18,6 @@ router.get(
 // @route GET /auth/facebook/callback
 // the facebook callback is  used to get the user data from facebook.
 router.get(
-
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
     failureRedirect: "/login",
@@ -27,7 +26,7 @@ router.get(
 
  function (req, res) {
     const { user } = req;
-    req.session.user = user;
+    req.session.user = user[1];
     res.redirect("/profile");
   }
 

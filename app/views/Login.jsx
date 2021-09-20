@@ -51,10 +51,10 @@ const BuildForm = ({ err }) => {
           </div>
         </Form>
         <div className="d-flex justify-content-center">
-          <Button href="/auth/facebook" class="btn btn-primary m-3">
+          <Button href="/auth/facebook" className="btn btn-primary m-3">
             {facebookIcon} Login with Facebook
           </Button>
-          <Button href="/auth/google" class=" btn btn-danger m-3">
+          <Button href="/auth/google" className=" btn btn-danger m-3">
             {googleIcon} Login with Google
           </Button>
         </div>

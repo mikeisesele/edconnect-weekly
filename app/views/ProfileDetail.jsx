@@ -22,7 +22,6 @@ const ProfileDetails = (userParams) => {
   // take values from the current state and fill fields
   const [userInfo, setUserInfo] = useState({});
 
-
   // when the page first loads, set the text views to the user's info
   useEffect(() => {
     setUserInfo({
@@ -264,8 +263,6 @@ const ProfileDetails = (userParams) => {
 };
 
 const Project = (props) => {
-        console.log(props.user);
-
   return (
     // the layout neegs the session for the header component
     <Layout user={props.user}>

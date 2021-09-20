@@ -20,8 +20,8 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/" }),
   function (req, res) {
     const { user } = req;
-    req.session.user = user;
-      res.redirect("/profile");
+    req.session.user = user[1];
+    res.redirect("/profile");
   }
 );
 

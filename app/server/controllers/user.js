@@ -95,9 +95,11 @@ router.get("/resetPassword", async (req, res) => {
 // @desc Show edit page
 // @route GET /profile
 router.get("/profile", async (req, res) => {
+   
+  
+
   try {
     const user = await User.getById(req.session.user._id);
-
     if (user) {
       res.render("ProfileDetail", { user, programs, graduationYears });
     } else {
