@@ -21,9 +21,6 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    authorImage: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

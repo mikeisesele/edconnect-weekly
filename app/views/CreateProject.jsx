@@ -46,13 +46,7 @@ const CreateProjectForm = ({ props, project }) => {
       <div className="mx-auto w-50 p-2 mt-5">
         <h3>Submit Project</h3>
         <Form id="createProjectForm" method="post" action="/projects/submit">
-          {/* {error && (
-            <Alert variant="danger" show={showAlert}>
-              {error.map((error, index) => (
-                <p key={index}>{error}</p>
-              ))}
-            </Alert>
-          )} */}
+          
           <Form.Group as={Row}>
             <Col>
               <Form.Label>Project Name:</Form.Label>

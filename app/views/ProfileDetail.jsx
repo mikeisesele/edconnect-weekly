@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
-import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import ShowAlert from "./Alert";
+import isValidEmail from "./validEMail";
 
 const ProfileDetails = (userParams) => {
+  const message = userParams.message ? userParams.message : null;
   const user = userParams.user;
   const userprograms = userParams.programs;
   const usergraduationYears = userParams.graduationYears;
@@ -114,10 +117,21 @@ const ProfileDetails = (userParams) => {
             encType="multipart/form-data"
           >
             {!(matricNumber && graduationYear && program) && (
-              <Alert variant="warning" className="text-center">
-                Please update your profile!
-              </Alert>
+              <ShowAlert
+                message="Please update your profile!"
+                className="text-center"
+                variant="primary"
+              />
             )}
+
+            {email.length > 0 && !isValidEmail(email) && (
+              <ShowAlert
+                message={`${email} is not a valid email.`}
+                className="alert alert-primary"
+                variant="danger text-sm"
+              />
+            )}
+
             <Form.Row>
               <Form.Group as={Col}>
                 <Form.Label>First Name:</Form.Label>
@@ -218,13 +232,36 @@ const ProfileDetails = (userParams) => {
         <hr />
         <div className="mt-3">
           <h5>Change Password</h5>
-          <br />
           <Form id="signupForm" method="post" action="/changepassword">
+            {confirmPassword.length > 0 &&
+              !(newPassword === confirmPassword) && (
+                <ShowAlert
+                  message="Confirm new password does not match new password."
+                  className="text-center"
+                  variant="danger text-sm"
+                />
+              )}
+
+            {confirmPassword.length > 0 && confirmPassword.length < 7 && (
+              <ShowAlert
+                message="Password must be 7 letters or more."
+                className="text-center"
+                variant="danger text-sm"
+              />
+            )}
+            {message && (
+                <ShowAlert
+                  message={`${message}`}
+                  className="text-center"
+                  variant="danger text-sm"
+                />
+              )}
+
             <Form.Row>
               <Form.Group as={Col}>
                 <Form.Label>Current password</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   name="currentPassword"
                   placeholder="Current Password"
                   onChange={handleInput}
@@ -234,7 +271,7 @@ const ProfileDetails = (userParams) => {
               <Form.Group as={Col}>
                 <Form.Label>New password</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   name="newPassword"
                   placeholder="New Password"
                   value={newPassword}
@@ -244,7 +281,7 @@ const ProfileDetails = (userParams) => {
               <Form.Group as={Col}>
                 <Form.Label>Confirm new Password</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
                   value={confirmPassword}
@@ -262,7 +299,7 @@ const ProfileDetails = (userParams) => {
   );
 };
 
-const Project = (props) => {   
+const ProfileDetail = (props) => {
   return (
     // the layout neegs the session for the header component
     <Layout user={props.user}>
@@ -271,4 +308,4 @@ const Project = (props) => {
   );
 };
 
-export default Project;
+export default ProfileDetail;

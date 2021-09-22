@@ -28,6 +28,7 @@ const userGoogleProfile = async (accessToken, refreshToken, profile, done) => {
         email: profile._json.email,
         googleId: profile._json.sub,
         profileImage: profile._json.picture,
+        provider: profile.provider,
       };
 
       //create user

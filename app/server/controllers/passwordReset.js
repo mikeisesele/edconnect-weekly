@@ -17,7 +17,7 @@ router.post("/sendEmail", async (req, res) => {
        const { error } = schema.validate(req.body);
        if (error) return res.status(400).send(error.details[0].message);
        // use user email to first confirm if the user is in the database
-    const user = await User.findOne({ email: req.body.email });
+      const user = await User.findOne({ email: req.body.email });
 
     if (!user)
       return res.status(400).send("user with given email doesn't exist");

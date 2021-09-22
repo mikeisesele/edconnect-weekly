@@ -33,6 +33,7 @@ const userFacebookProfile = async (
         email: profile.emails[0].value,
         password: profile._json.id,
         facebookId: profile.id,
+        provider: profile.provider,
       };
 
       const createdUser = await User.create(userDetail);

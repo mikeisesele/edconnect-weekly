@@ -1,30 +1,67 @@
-import React from "react";
-import { Alert, Button, Col, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button, Col, Form } from "react-bootstrap";
 import Layout from "./shared/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import ShowAlert from "./Alert";
+import isValidEmail from "./validEMail";
+import "../views/styles/style.css";
 
 const facebookIcon = <FontAwesomeIcon icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
 const MainSignup = (props) => {
   const { program, graduationYear, err } = props;
-  let showAlert = false;
-  err.length > 0 ? (showAlert = true) : (showAlert = false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [matricNumber, setMatricNumber] = useState("");
+  const [remember, setRemember] = useState({});
+
+    useEffect(() => {
+      setRemember({
+        email,
+        password,
+        firstName,
+        lastName,
+        matricNumber,
+      });
+    }, []);
+
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "firstName":
+        setFirstName(value);
+        break;
+      case "lastName":
+        setLastName(value);
+        break;
+      case "matricNumber":
+        setMatricNumber(value);
+        break;
+      default:
+    }
+  };
 
   return (
     <>
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Signup</h1>
         <Form id="signupForm" method="post" action="/signup">
-          {
-            <Alert
-              className="alert alert-danger"
-              variant="danger"
-              show={showAlert}
-            >
-              {err.map((text) => {
+          {err.length > 0 && (
+            <ShowAlert
+              message={`${err.map((text) => {
                 return (
                   <>
                     {text}
@@ -32,34 +69,74 @@ const MainSignup = (props) => {
                   </>
                 );
               })}
-            </Alert>
-          }
-          <Form.Row>
-            <Form.Group as={Col}>
-              <Form.Label>First Name:</Form.Label>
-              <Form.Control type="text" name="firstName" />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>Last Name:</Form.Label>
-              <Form.Control type="text" name="lastName" />
-            </Form.Group>
-          </Form.Row>
+              `}
+              className="text-center alert alert-danger"
+              variant="danger text-sm"
+            />
+          )}
+
+          {email.length > 0 && !isValidEmail(email) && (
+            <ShowAlert
+              message={`${email} is not a valid email.`}
+              className="alert alert-primary text-center"
+              variant="danger text-sm"
+            />
+          )}
+
+          {password.length > 0 && password.length < 7 && (
+            <ShowAlert
+              message="Password must be 7 characters or more."
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
 
           <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                value={firstName}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={handleInput}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
             <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" name="email" />
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={handleInput}
+                name="email"
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" name="password" />
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={handleInput}
+              />
             </Form.Group>
           </Form.Row>
-
           <Form.Row>
             <Form.Group as={Col} xs={6}>
-              <Form.Label>Program:</Form.Label>
+              <Form.Label>Program</Form.Label>
               <Form.Control as="select" name="program">
                 <option>Select Option</option>
                 {program.map((prog) => (
@@ -69,12 +146,17 @@ const MainSignup = (props) => {
             </Form.Group>
 
             <Form.Group as={Col}>
-              <Form.Label>Matric Number:</Form.Label>
-              <Form.Control name="matricNumber" />
+              <Form.Label>Matric Number</Form.Label>
+              <Form.Control
+                name="matricNumber"
+                placeHolder="Matric Number"
+                value={matricNumber}
+                onChange={handleInput}
+              />
             </Form.Group>
 
             <Form.Group as={Col}>
-              <Form.Label>Graduation Year:</Form.Label>
+              <Form.Label>Graduation Year</Form.Label>
               <Form.Control as="select" name="graduationYear">
                 <option>Select Option</option>
                 {graduationYear.map((year) => (
@@ -83,19 +165,18 @@ const MainSignup = (props) => {
               </Form.Control>
             </Form.Group>
           </Form.Row>
-
           <Button variant="primary" type="submit">
             Sign Up
           </Button>
         </Form>
-          <div className="d-flex justify-content-center">
-            <Button href="/auth/facebook" class="btn btn-primary m-3">
-              {facebookIcon} Sign up with Facebook
-            </Button>
-            <Button href="/auth/google" class=" btn btn-danger m-3">
-              {googleIcon} Sign up with Google
-            </Button>
-          </div>
+        <div className="d-flex justify-content-center">
+          <Button href="/auth/facebook" className="btn btn-primary m-3">
+            {facebookIcon} Sign up with Facebook
+          </Button>
+          <Button href="/auth/google" className=" btn btn-danger m-3">
+            {googleIcon} Sign up with Google
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -24,23 +24,23 @@ router.get(
     session: false,
   }),
 
- function (req, res) {
+  function (req, res) {
     const { user } = req;
 
-      if (user) {
-        req.session.user = user;
-        if (
-          user.graduationYear == null &&
-          user.matricNumber == null &&
-          user.program == null
-        ) {
-          res.redirect("/profile");
-        } else {
-          res.redirect("/");
-        }
+    if (user) {
+      req.session.user = user;
+      if (
+        user.graduationYear == null &&
+        user.matricNumber == null &&
+        user.program == null
+      ) {
+        res.redirect("/profile");
       } else {
-        console.log(`no user ${req.session.user}`);
+        res.redirect("/");
       }
+    } else {
+      console.log(`no user ${req.session.user}`);
+    }
   }
 );
 

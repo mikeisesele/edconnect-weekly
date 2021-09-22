@@ -2,15 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../services/project");
 const User = require("../services/user");
-const ObjectId = require("mongodb").ObjectId; 
+const ObjectId = require("mongodb").ObjectId;
 
 router.get("/project", (req, res) => {
-  const error = req.flash("error");
   const user = req.session.user;
   if (!user) {
     res.redirect("/login");
   } else {
-    res.render("CreateProject", { err: error, user: req.session.user });
+    res.render("CreateProject", { user: req.session.user });
   }
 });
 
@@ -52,29 +51,31 @@ router.post("/projects/submit", async (req, res) => {
 
 router.get("/project/:id", async (req, res) => {
   try {
-  const projectId = req.params.id;
-  var id = new ObjectId(projectId);
-  const project = await Project.getById(id);
-  const userId = project.createdBy;
-  const user = await User.getById(userId);
-  const projectCreator = { firstName: user.firstName, lastName: user.lastName };
-  const authorImage = project.authorImage;
+    const id = req.params.id;
+    const project = await Project.getById(id);
+    console.log(`project: ${project}`);
+    const userId = project.createdBy;
+    console.log(`id: ${userId}`);
+    const user = await User.getById(userId);
+    console.log(`user: ${user}`);
+    const projectCreator = { firstName: user.firstName, lastName: user.lastName };
+    const authorImage = user.profilePicture;
 
-  const projectResponse = {
-    project,
-    projectCreator,
-    authorImage,
-    user
-  };
+    const projectResponse = {
+      project,
+      projectCreator,
+      authorImage,
+      user
+    };
 
-  if (!project) {
-    res.redirect("/");
+    if (!project) {
+      res.redirect("/");
+    }
+
+    res.render("Project", { projectResponse });
+  } catch (error) {
+    console.log(error);
   }
-  
-  res.render("Project", { projectResponse });
-} catch (error){
-  console.log(error);
-}
 });
 
 module.exports = router;

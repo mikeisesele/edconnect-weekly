@@ -1,41 +1,94 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import Layout from "./shared/Layout";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import ShowAlert from "./Alert";
+import isValidEmail from "./validEMail";
+import "../views/styles/style.css";
 
-const facebookIcon = <FontAwesomeIcon icon={faFacebook} />;
+
+const facebookIcon = <FontAwesomeIcon  className="facebook-icon" icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
 const BuildForm = ({ err }) => {
-  let showAlert = false;
-  err.length > 0 ? (showAlert = true) : (showAlert = false);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [remember, setRemember] = useState({});
+
+
+    const handleInput = (e) => {
+      const { name, value } = e.target;
+      switch (name) {
+        case "email":
+          setEmail(value);
+          break;
+        case "password":
+          setPassword(value);
+          break;
+
+        default:
+      }
+    };
+
+    useEffect(() => {
+      setRemember({
+        email,
+        password,
+      });
+    }, []);
+
 
   return (
     <>
-      <div class="mx-auto w-50 p-3 mw-70">
+      <div className="mx-auto w-50 p-3 mw-70">
         <h1>Login</h1>
         <Form id="loginForm" className="mb-3" method="post" action="/login">
-          <Alert
-            className="alert alert-danger"
-            variant="danger"
-            show={showAlert}
-          >
-            {err}
-          </Alert>
+          {err.length > 0 && (
+            <ShowAlert
+              message={`${err}`}
+              className="text-center alert alert-danger"
+              variant="danger text-sm"
+            />
+          )}
+
+          {email.length > 0 && !isValidEmail(email) && (
+            <ShowAlert
+              message={`${email} is not a valid email.`}
+              className="alert alert-primary"
+              variant="danger text-sm"
+            />
+          )}
+
+          {password.length > 0 && password.length < 7 && (
+            <ShowAlert
+              message="Password must be 7 characters or more."
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
 
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" name="email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={handleInput}
+              name="email"
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Password"
               name="password"
+              placeholder="Password"
+              value={password}
+              onChange={handleInput}
             />
           </Form.Group>
 

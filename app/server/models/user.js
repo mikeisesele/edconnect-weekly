@@ -20,6 +20,11 @@ const userSchema = new UserSchema(
     },
     facebookId: { type: String },
     googleId: { type: String },
+    provider: { type: String },
+    // passwordToken: {
+    //   data: String,
+    //   default: "",
+    // }
   },
   { timestamps: true }
 );
@@ -28,9 +33,7 @@ userSchema.methods.setPassword = function (password) {
   // encrypt the passwor
   if (password.length >= 7) {
     this.salt = crypto.randomBytes(16).toString("hex");
-    this.password = crypto
-      .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
-      .toString("hex");
+    this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, "sha512").toString("hex");
   } else {
     throw new Error("Password should have at least 7 characters");
   }

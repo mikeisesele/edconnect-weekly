@@ -79,15 +79,15 @@ register(app).then(() => {
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
   app.use("/", require("./controllers/project"));
-  app.use("/", require("./controllers/facebookAuth"));
-  app.use("/", require("./controllers/googleAuth"));
+  app.use("/", require("./controllers/facebookSSO"));
+  app.use("/", require("./controllers/googleSSO"));
 
   // set up static files
   app.use(express.static("public"));
 
   // listen to post when mongo connection is successful
   app.listen(SERVER_PORT, () => {
-    console.log("Server listening on port " + SERVER_PORT);
+    console.log("Edconnect server is live. listening on port " + SERVER_PORT);
     console.log("connecting to database...");
     });
 });

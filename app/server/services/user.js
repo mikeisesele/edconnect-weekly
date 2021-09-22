@@ -74,6 +74,20 @@ const getAll = () => {
   return User.find({});
 };
 
+const getUserByEmail = async (email) => {
+  try{
+    let user = await User.findOne({ email: email });
+
+    if (user) {
+      return [true, user];
+    } else  {
+      return [false, "this email is not associated with any user in our database"];
+    }
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+}
+
 const getBySocialId = async (social, id) => {
   switch (social) {
     case "facebook":
@@ -87,18 +101,43 @@ const getBySocialId = async (social, id) => {
 const updateUser = async (id, user) => {
   try {
     const thisUser = await User.findById(id);
-    
+
     if (thisUser) {
       await thisUser.updateOne({ ...user });
       const updatedUser = await User.findById(id);
       // return [true, updatedUser]
-      return [true, updatedUser]
-    } 
+      return [true, updatedUser];
+    }
   } catch (e) {
     return [false, helper.translateError(e)];
   }
 };
 
+const confirmPassword = async (id, password) => {
+  // logic to confirm the password of a user using id
+  try {
+    const thisUser = await User.findById(id);
+
+    if (thisUser) {
+      return thisUser.validPassword(thisUser, password)
+        ? [true, thisUser] : [false, ["Invalid password"]];
+    }
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+};
+
+const updatePassword = async (id, password) => {
+  // logic to update the password of a user using id
+  try {
+    const thisUser = await User.findById(id);
+    await thisUser.setPassword(password);
+    // thisUser.passwordToken = "";
+    thisUser.save();
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+};
 
 module.exports = {
   create,
@@ -106,5 +145,8 @@ module.exports = {
   getById,
   getAll,
   getBySocialId,
+  getUserByEmail,
   updateUser,
+  confirmPassword,
+  updatePassword,
 };
