@@ -2,18 +2,35 @@ import React from "react";
 import { Button, Card, CardGroup, Jumbotron } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
-const Jumbo = () => {
+const Jumbo = (props) => {
   return (
     <>
       <Jumbotron>
         <h1>Welcome to Project Explorer</h1>
         <p>
-          Project Explorer is a repository for final year projects across all
-          departments at your institution. You can submit your project and
-          search projects submitted by others to learn from.
+          Project Explorer is a repository for interesting projects accross all
+          fields of knowledge. An Ideal place for intellectuals! You can submit
+          your projects and search projects submitted by others to learn from.
         </p>
-        <Button variant="primary" href="/signup">Get Started</Button>{" "}
-        <Button variant="secondary" href="/login">Login</Button>
+        {props.user ? (
+          <>
+            <Button variant="primary" className="mr-3" href="/favourites">
+              Favourite Projects
+            </Button>
+            <Button variant="secondary"  href="/project">
+              Add a project
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="primary" className="mr-3" href="/signup">
+              Get Started
+            </Button>
+            <Button variant="secondary" href="/login">
+              Login
+            </Button>
+          </>
+        )}
       </Jumbotron>
     </>
   );
@@ -26,7 +43,7 @@ const Showcase = ({ props }) => {
     <>
       <CardGroup className="showcase">
         {props
-          //.reverse()
+          .reverse()
           .slice(0, 4)
           .map((project) => {
 
@@ -57,7 +74,7 @@ const Home = (props) => {
   return (
     <Layout user={props.user}>
       <main className="container">
-        <Jumbo />
+        <Jumbo user={props.user} />
         <Showcase {...props} />
       </main>
     </Layout>

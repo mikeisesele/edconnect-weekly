@@ -15,7 +15,7 @@ const create = async ({ name, abstract, authors, tags, createdBy, authorImage })
     });
 
     if ( await project.save()){
-    return [true, project] 
+      return [true, project] 
     }
   } catch (e) { 
     return [false, helper.translateError(e)]; 
@@ -43,8 +43,31 @@ const getAll = async () => {
   }
 };
 
+const updateProject = async (id, newProject) => {
+  try {
+    const oldProject = await Project.findById(id);
+
+    console.log(`OP: ${oldProject}`)
+    if (oldProject) {
+      await Project.updateOne({ ...newProject });
+      const updatedProject = await Project.findById(id);
+          console.log(`UP: ${updatedProject}`)
+          console.log(`NP: ${newProject}`);
+
+      return [true, updatedProject];
+    } else {
+      return [false, "project update failed"];
+    }
+
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+};
+
+
 module.exports = {
   getAll,
   create,
-  getById
+  getById,
+  updateProject
 };

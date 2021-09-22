@@ -1,19 +1,44 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 mongoose.set("bufferCommands", false);
+const promiseRetry = require("promise-retry");
 
 const dbURL = process.env.MONGO_URI;
+/**
+ * @desc Sets the fields necessary for the mongoose connection
+ */
+const connectionOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  reconnectTries: 60,
+  reconnectInterval: 1000,
+  poolSize: 10,
+  bufferMaxEntries: 0,
+};
 
-//Establish database connection
+/**
+ * @Desc handles the disconnection from the database
+ */
+const promiseRetryOptions = {
+  retries: connectionOptions.reconnectTries,
+  factor: 1.5,
+  minTimeout: connectionOptions.reconnectInterval,
+  maxTimeout: 5000,
+};
+
+/**
+ * @Desc connects to the database
+ */
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-
-    console.log("Database connection successful");
+    return promiseRetry( async (retry, number) => {
+      console.log(
+        `MongoClient connecting to ${dbURL} - retry number: ${number}`
+      );
+      return await mongoose.connect(dbURL, connectionOptions).catch(retry);
+    }, promiseRetryOptions )
+    
   } catch (e) {
     console.log("connection to database failed");
     console.error(e.message);
@@ -22,11 +47,3 @@ const connectDB = async () => {
 };
 
 module.exports = { connectDB };
-
-
-// /**
-//  * Adds a reset password token to a specified user's document
-//  * @param {string} id
-//  * @param {string} token
-//  * @returns
-//  */

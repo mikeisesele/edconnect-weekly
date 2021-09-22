@@ -105,7 +105,6 @@ const updateUser = async (id, user) => {
     if (thisUser) {
       await thisUser.updateOne({ ...user });
       const updatedUser = await User.findById(id);
-      // return [true, updatedUser]
       return [true, updatedUser];
     }
   } catch (e) {

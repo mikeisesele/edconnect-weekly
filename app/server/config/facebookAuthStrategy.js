@@ -3,6 +3,10 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
 const User = require("../services/user");
 
+/**
+ * @Desc Facebook authentication strategy. contains facebook credentials
+ * @param {String} FacebookCertificates.profileFields - the facebook client profile fields
+ */
 const FacebookCertificates = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -10,6 +14,12 @@ const FacebookCertificates = {
   profileFields: ["id", "first_name", "last_name", "email", "picture"],
 };
 
+/**
+ * @Desc Facebook authentication strategy
+ * @param {Object} userFacebookProfile - the facebook object 
+ * @Param {String} profile - the facebook profile
+ * @Param {Function} done - the callback function
+ */
 const userFacebookProfile = async (
   accessToken,
   refreshToken,
@@ -18,9 +28,9 @@ const userFacebookProfile = async (
 ) => {
 
   try {
+    userFacebookProfile
     // checks if user with provider (= facebook) id exist in the db
     const checkUser = await User.getBySocialId(profile.provider, profile.id);
-    // if user already exist return object
     if (checkUser) {
       done(null, checkUser);
     }
@@ -56,9 +66,9 @@ const facebookStrategy = new FacebookStrategy(
 );
 passport.use(facebookStrategy);
 
-// Each subsequent request will not contain credentials,
-// but rather the unique cookie that identifies the session.
-// In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
+/**
+ * @Desc serialize user into the session and deserialize user from the session
+ */
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

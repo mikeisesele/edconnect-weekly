@@ -6,3 +6,8 @@ svg {
 #login_btn {
     width: 70px !important;
 }
+
+#inactiveLink {
+   pointer-events: none;
+   cursor: default;
+}

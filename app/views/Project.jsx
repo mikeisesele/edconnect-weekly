@@ -9,10 +9,20 @@ import {
   Image,
 } from "react-bootstrap";
 import Layout from "./shared/Layout";
+import "./styles/style.css";
 
-const ProjectLayout = (projectProperties) => {
-  const { project, projectCreator, authorImage } =
-    projectProperties.projectResponse;
+const ProjectLayout = ( {response} ) => { 
+ 
+  const {data, result, message} = response;
+
+  const project = data.project
+  const projectCreator = data.project.createdBy
+  const authorImage = data.user.profilePicture
+  const user = data.user
+
+  const projectId = project._id;
+  const stringProjectCreatorId = user._id.toString();
+  const  stringProjectId = projectCreator.toString();
   return (
     <>
       <Container>
@@ -28,29 +38,47 @@ const ProjectLayout = (projectProperties) => {
             ></Image>
             <div className="d-flex flex-column mb-0 align-items-center pl-3">
               <p className="mb-0">Created By</p>
-              <p className="mb-0">{`${projectCreator.firstName} ${projectCreator.lastName}`}</p>
+              <p className="mb-0">{`${user.firstName} ${user.lastName}`}</p>
             </div>
           </Col>
-
           <Col>
             <p className="mb-0">Date Created</p>
             <span>{new Date(project.createdAt).toLocaleDateString()}</span>
           </Col>
-
           <Col>
             <p className="mb-0">Last Updated</p>
             <span>{new Date(project.createdAt).toLocaleDateString()}</span>
           </Col>
-
-          <Col>
-            <div className="col-sm">
-              <div className="d-flex justify-content-end">
-                <a href="#" className=" btn btn-primary">
-                  Edit Project
-                </a>
+          {stringProjectId == stringProjectCreatorId && (
+            <Col>
+              <div className="col-sm">
+                <div className="d-flex justify-content-end">
+                  <a
+                    href={`/editproject/${projectId}/${stringProjectCreatorId}`}
+                    className=" btn btn-primary"
+                  >
+                    Edit Project
+                  </a>
+                </div>
               </div>
-            </div>
-          </Col>
+            </Col>
+          )}
+
+          {stringProjectId != stringProjectCreatorId && (
+            <Col>
+              <div className="col-sm">
+                <div className="d-flex justify-content-end">
+                  <a
+                    href={`/editproject/${stringProjectId}/${stringProjectCreatorId}`}
+                    className=" btn btn-primary"
+                    id="inactiveLink"
+                  >
+                    Edit Project
+                  </a>
+                </div>
+              </div>
+            </Col>
+          )}
         </Row>
         <br />
 
@@ -130,8 +158,8 @@ const ProjectLayout = (projectProperties) => {
 
 const Project = (props) => {
   return (
-    <Layout user={props.projectResponse.user}>
-      <ProjectLayout {...props} />
+    <Layout user={props.response.data.user}>
+      <ProjectLayout response = {props.response} />
     </Layout>
   );
 };

@@ -3,6 +3,10 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 const User = require("../services/user");
 
+/**
+ * @Desc Google authentication strategy
+ * @param {Object} userGoogleCertificates - the  options for the strategy
+ */
 const userGoogleCertificates = {
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -11,10 +15,8 @@ const userGoogleCertificates = {
 
 const userGoogleProfile = async (accessToken, refreshToken, profile, done) => {
   try {
-    //checks if user with provider (= google) id exist in the db
+    //checks if user with provider (= google) id exist in the db and return user if true
     const checkUser = await User.getBySocialId(profile.provider, profile.id);
-
-    // if user already exist return object
     if (checkUser) {
       done(null, checkUser);
     }
@@ -31,7 +33,6 @@ const userGoogleProfile = async (accessToken, refreshToken, profile, done) => {
         provider: profile.provider,
       };
 
-      //create user
       const createdUser = await User.create(userDetail);
 
       if (createdUser[0]) {
@@ -52,10 +53,9 @@ const googleStrategy = new GoogleStrategy(
 );
 passport.use(googleStrategy);
 
-// Each subsequent request will not contain credentials,
-// but rather the unique cookie that identifies the session.
-// In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
-
+/**
+ * @Desc serialize user into the session and deserialize user from the session
+ */
 passport.serializeUser((user, done) => {
   done(null, user);
 });

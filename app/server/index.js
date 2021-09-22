@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const session = require("express-session");
@@ -10,24 +9,25 @@ const flash = require("express-flash");
 const passport = require("passport");
 const DB = require("../server/config/db");
 const googleStrategy = require("./config/googleAuthStrategy")
-const facebookStrategy = require("./config/facebookAuthStrategy")
 
 
-
-DB.connectDB();
 const app = express();
 
 // get server port from .env file, we will use this port to run our server
 const SERVER_PORT = process.env.SERVER_PORT;
 
-//created a mongoDB collection to be used as session store
+//created a mongoDB collection to be used as session store. 
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
 });
 
-// set headers on application
-// register is only needed for server side rencering of a react app
+/**
+ * @Desc
+ * set headers on application
+ * register enclosing the application 
+ * is only needed for server side rendering of a react app
+ */
 register(app).then(() => {
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -38,6 +38,15 @@ register(app).then(() => {
     next();
   });
 
+  /**
+   * @Desc Register applicaition middlewares
+   * bodyParser is used to parse the body of the request
+   * morgan is used to log the request
+   * session is used to store the session data
+   * flash is used to store the flash messages
+   * passport is used to authenticate the user
+   * googleStrategy is used to authenticate the user
+   */
   googleStrategy;
   app.use(passport.initialize());
   app.use(passport.session());
@@ -49,10 +58,9 @@ register(app).then(() => {
     })
   );
 
-  // app.use(fileupload({ useTempFiles: true }));
-
-
-  // set global variable in express
+  /**
+   * @Desc set global variable in express
+   */
   app.use(function (req, res, next) {
     // set global user variable to the user currnetly in this cycle
     // this allows acccess of user within our template
@@ -74,7 +82,9 @@ register(app).then(() => {
   // error handlnig module
   app.use(flash());
 
-  // set up routes
+  /**
+   * @Desc set up routes
+   */
   app.use("/api", require("./routes/api"));
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
@@ -82,12 +92,22 @@ register(app).then(() => {
   app.use("/", require("./controllers/facebookSSO"));
   app.use("/", require("./controllers/googleSSO"));
 
-  // set up static files
+  /**
+   * @Desc set up static files handling
+   */
   app.use(express.static("public"));
 
-  // listen to post when mongo connection is successful
-  app.listen(SERVER_PORT, () => {
-    console.log("Edconnect server is live. listening on port " + SERVER_PORT);
-    console.log("connecting to database...");
+  /**
+   * @Desc listen to post when mongo connection is successful
+   * @param {number} port - port number to listen to
+   * @param {function} callback - callback function to be called when server is started
+   * @returns {void}
+   */
+  if (DB.connectDB()) {
+    app.listen(SERVER_PORT, () => {
+      console.log("Edconnect server is live. listening on port " + SERVER_PORT);
+      console.log("connecting to database...");
+      console.log("database connected successfully");
     });
+  }
 });
