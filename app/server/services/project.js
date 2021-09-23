@@ -1,7 +1,9 @@
 const Project = require('../models/project');
 import helper from '../models/mongo_helper';
 
-/* Create new project */
+/**
+ * @desc  Create a new project in the database
+ */
 const create = async ({ name, abstract, authors, tags, createdBy, authorImage }) => {
   try {
 
@@ -14,6 +16,7 @@ const create = async ({ name, abstract, authors, tags, createdBy, authorImage })
       authorImage,
     });
 
+    // Save project to database and return project
     if ( await project.save()){
       return [true, project] 
     }
@@ -22,10 +25,11 @@ const create = async ({ name, abstract, authors, tags, createdBy, authorImage })
   }
 };
 
-/* Return project with specified id */
+/**
+ * @desc get a project from the database by id
+ */
 const getById = async (id) => {
   try {
-  // populate projects with data from file.
   const project = await Project.findById(id)
   return project
 
@@ -34,7 +38,9 @@ const getById = async (id) => {
   }
 };
 
-/* Return all projects */
+/**
+ * @desc Get all projects from the database
+ */
 const getAll = async () => {
   try {
     return await Project.find({})
@@ -43,17 +49,23 @@ const getAll = async () => {
   }
 };
 
+/**
+ * @desc  Update a project in the database
+ * @param {string} id - The id of the project to update
+ * @param {object} newProject - The project object to update
+ * @returns {object} - The updated project
+ */
 const updateProject = async (id, newProject) => {
   try {
+    // Find project by id
     const oldProject = await Project.findById(id);
 
-    console.log(`OP: ${oldProject}`)
+    // Update project
     if (oldProject) {
       await Project.updateOne({ ...newProject });
       const updatedProject = await Project.findById(id);
-          console.log(`UP: ${updatedProject}`)
-          console.log(`NP: ${newProject}`);
 
+      // Return updated project
       return [true, updatedProject];
     } else {
       return [false, "project update failed"];

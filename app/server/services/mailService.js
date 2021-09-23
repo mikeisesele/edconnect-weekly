@@ -1,13 +1,17 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 
+// constant values
 const REFRESH_TOKEN = process.env.GOOGLE_NODE_MAILER_REFRESH_TOKEN;
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_NODE_MAILER_REDIRECT_URI;
+const BASE_URL = process.env.BASE_URL;
 
-const baseUrl = process.env.BASE_URL;
-
+/**
+ * @desc oAuth2Client object to be used to send email
+ * @returns {object}
+ */
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
@@ -17,15 +21,20 @@ const oAuth2Client = new google.auth.OAuth2(
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 /**
- * Sends reset link containing token via email
+ * @desc Sends email to user with a link to reset password
  * @param {string} receiver email address of user
- * @param {string} token
+ * @param {string} token token to be used to reset password
+ * @param {string} name name of user
+ * @returns {Promise}
+ * @memberof MailService
  */
 const sendEmail = async (receiver, token, name) => {
   
   try {
+    // create an access token to be used at this time
       const accessToken = await oAuth2Client.getAccessToken();
 
+      // create reusable transporter object using the default SMTP transport
       const smtpConfig = {
         host: "smtp.gmail.com",
         port: 465,
@@ -41,9 +50,10 @@ const sendEmail = async (receiver, token, name) => {
         ignoreTLS: true,
       };
 
+      // create a new transporter object
       const transport = nodemailer.createTransport(smtpConfig);
 
-
+      // send mail with defined transport object
     const mail = {
       from: "Project Explorer <michael.isesele@gmail.com>",
       to: receiver,
@@ -52,17 +62,16 @@ const sendEmail = async (receiver, token, name) => {
       html: `
       <h3> Hi ${name}!</h3>
       <p> Due to your recent request to change your password, you have been provided with a secured link to complete the process.</p>
-      <a href="${baseUrl}/resetpassword/${token}"> Click Here</a> 
+      <a href="${BASE_URL}/api/passwordReset/${token}"> Click Here</a> 
       `,
     };
 
     
-
+    // get response from transporter
     const result = await transport.sendMail(mail, function(err, info) {
     if (err) {
         console.log(err);
     } else {
-        // see https://nodemailer.com/usage
         console.log("info.messageId: " + info.messageId);
         console.log("info.envelope: " + info.envelope);
         console.log("info.accepted: " + info.accepted);
@@ -70,6 +79,7 @@ const sendEmail = async (receiver, token, name) => {
         console.log("info.pending: " + info.pending);
         console.log("info.response: " + info.response);
     }
+    // close the connection pool
     transport.close();
     return result
   });

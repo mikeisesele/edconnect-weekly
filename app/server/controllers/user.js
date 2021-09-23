@@ -20,6 +20,7 @@ router.get("/signup", (req, res) => {
   const error = req.flash("error");
   const user = req.session.user;
 
+  // redirect to home page for signup
   res.render("Signup", {
     program: programs,
     graduationYear: graduationYears,
@@ -53,11 +54,10 @@ router.post("/signup", async (req, res) => {
   // if user already exists
   if (check[0]) {
     req.session.user = check[1];
-    // 
+    // redirect to dashboard
     res.redirect("/");
   } else {
-    req.flash("error", check[1]);
-    res.redirect(303, "/signup");
+    res.redirect("/signup");
   }
 });
 
@@ -67,9 +67,8 @@ router.post("/signup", async (req, res) => {
  * @route GET /login
  */
 router.get("/login", (req, res) => {
-  const error = req.flash("error");
   const user = req.session.user;
-  res.render("Login", { err: error, user: user });
+  res.render("Login", { user: user });
 });
 
 
@@ -95,9 +94,8 @@ router.post("/login", async (req, res) => {
  * @route GET /
  */
 router.get("/forgotPassword", async (req, res) => {
-  const error = req.flash("error");
   const user = req.session.user;
-  res.render("ForgotPassword", { err: error, user: user });
+  res.render("ForgotPassword", { user: user });
 });
 
 
@@ -120,6 +118,7 @@ router.get("/profile", async (req, res) => {
     if (req.session) {
       // get user details from database
       const user = await User.getById(req.session.user._id);
+      // get user details from database
       res.render("ProfileDetail", { user, programs, graduationYears });
     } else {
       res.redirect("/login");
@@ -129,8 +128,11 @@ router.get("/profile", async (req, res) => {
   }
 });
 
-// @desc Handle update profile click
-// @route POST /profile
+
+/**
+ * @desc handle update profile click
+ * @route POST /profile
+ */
 router.post("/profile", multerUploads, async (req, res) => {
   const id = req.session.user._id;
 
@@ -174,8 +176,11 @@ router.post("/profile", multerUploads, async (req, res) => {
     // update current user with new detail
     const result = await User.updateUser(id, newUserProfile);
 
+    // if update is successful
     if (result[0]) {
+      // get user details from database
       req.session.user = result[1];
+      // redirect to profile page
       res.redirect("/profile");
     }
   } catch (err) {

@@ -41,7 +41,7 @@ const BuildForm = (props) => {
           id="forgotPasswordForm"
           className="mb-5"
           method="post"
-          action="/resetpassword"
+          action="/api/passwordReset"
         >
           {confirmPassword.length > 0 && !(newPassword === confirmPassword) && (
             <ShowAlert
@@ -131,26 +131,25 @@ const BuildForm = (props) => {
               Login
             </Button>
           </>
-        ) } 
-          <>
-            <h3 className="text-center mb-5">Return to login</h3>
-            <ShowAlert
-              message={`${passwordResetSuccess}.`}
-              className="text-center mb-3"
-              variant="danger text-sm"
-            />
+        )}
+        <>
+          <h3 className="text-center mb-5">Return to login</h3>
+          <ShowAlert
+            message={`${passwordResetSuccess}.`}
+            className="text-center mb-3"
+            variant="danger text-sm"
+          />
 
-            <Button
-              id="login_btn"
-              className="d-flex align-self-center w-20 px-30 "
-              variant="primary"
-              type="submit"
-              href="/login"
-            >
-              Login
-            </Button>
-          </>
-        
+          <Button
+            id="login_btn"
+            className="d-flex align-self-center w-20 px-30 "
+            variant="primary"
+            type="submit"
+            href="/login"
+          >
+            Login
+          </Button>
+        </>
 
         {error && (
           <>
@@ -172,7 +171,7 @@ const BuildForm = (props) => {
         )}
       </div>
     </>
-  )
+  );
 };
 
 const ResetPassword = (props) => {

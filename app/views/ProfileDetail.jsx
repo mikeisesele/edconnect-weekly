@@ -232,7 +232,7 @@ const ProfileDetails = (userParams) => {
         <hr />
         <div className="mt-3">
           <h5>Change Password</h5>
-          <Form id="signupForm" method="post" action="/changepassword">
+          <Form id="signupForm" method="post" action="/api/v1/password/change">
             {confirmPassword.length > 0 &&
               !(newPassword === confirmPassword) && (
                 <ShowAlert
@@ -250,12 +250,12 @@ const ProfileDetails = (userParams) => {
               />
             )}
             {message && (
-                <ShowAlert
-                  message={`${message}`}
-                  className="text-center"
-                  variant="danger text-sm"
-                />
-              )}
+              <ShowAlert
+                message={`${message}`}
+                className="text-center"
+                variant="danger text-sm"
+              />
+            )}
 
             <Form.Row>
               <Form.Group as={Col}>

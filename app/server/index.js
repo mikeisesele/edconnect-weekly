@@ -89,6 +89,7 @@ register(app).then(() => {
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
   app.use("/", require("./controllers/project"));
+  app.use("/", require("./controllers/passwordReset"));
   app.use("/", require("./controllers/facebookSSO"));
   app.use("/", require("./controllers/googleSSO"));
 

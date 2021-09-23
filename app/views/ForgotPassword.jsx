@@ -34,7 +34,7 @@ const BuildForm = (props) => {
           id="forgotPasswordForm"
           className="mb-5"
           method="post"
-          action="/emailforresetpassword"
+          action="/api/passwordReset/sendEmailToken"
         >
           {email.length < 1 &&
             (props.message ? (
