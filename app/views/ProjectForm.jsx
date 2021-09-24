@@ -4,7 +4,10 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 const ProjectForm = ({response}) => {
 
 
-    const { project, submit } = response;
+    const { project, route } = response;
+
+    
+    console.log(response);
 
   const [name, setName] = useState(project.name);
   const [abstract, setAbstract] = useState(project.abstract);
@@ -44,9 +47,10 @@ const ProjectForm = ({response}) => {
   return (
     <main>
       <div className="mx-auto w-50 p-2 mt-3">
-        {project.name ? <h3>Edit Project</h3> : <h3>Submit Project</h3>}
+        {project.name ? <h3>Edit Project</h3> : <h3>Create Project</h3>}
 
-        <Form id="createProjectForm" method="post" action={submit}>
+        
+        <Form id="createProjectForm" method="post" action={route}>
           <Form.Group as={Row}>
             <Col>
               <Form.Label>Project Name: </Form.Label>

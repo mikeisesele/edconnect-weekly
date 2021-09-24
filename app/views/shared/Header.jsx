@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { Button, Form, FormControl, Nav, Navbar, Image } from "react-bootstrap";
 
 const Header = (props) => {
@@ -8,7 +8,15 @@ const Header = (props) => {
     ? props.response.currentUser
     : null;
            
-   
+  const [searchText, setSearchText] = useState("");
+  const [remember, setRemember] = useState({})  
+
+
+  useEffect(() => {
+    setRemember({
+      searchText
+    });
+  }, []);
 
   return (
     <>
@@ -26,13 +34,15 @@ const Header = (props) => {
               type="text"
               placeholder="Search Projects"
               className="mr-sm-2"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value.trim())}
             />
-            <Button variant="outline-light">Search</Button>
+            <Nav.Link href={`/search/${searchText}`}>
+              <Button variant="outline-light">Search</Button>
+            </Nav.Link>
           </Form>
           <Nav className="mr-auto">
-            <Nav.Link href="/projects/all">
-              All Projects
-            </Nav.Link>
+            <Nav.Link href="/projects/all">All Projects</Nav.Link>
           </Nav>
           <Nav id="every" className="d-flex align-items-center">
             {currentUser.firstName != null ? (

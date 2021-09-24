@@ -89,7 +89,6 @@ const ProfileDetails = (userParams) => {
           </Col>
         </Row>
         <Row className="bg-light m-auto pl-3 pr-3">
-         
           <Col
             id="program"
             className="d-flex flex-column mt-2 align-content-center"
@@ -234,31 +233,29 @@ const ProfileDetails = (userParams) => {
         <hr />
         <div className="mt-3">
           <h5>Change Password</h5>
+          {confirmPassword.length > 0 && !(newPassword === confirmPassword) && (
+            <ShowAlert
+              message="Confirm new password does not match new password."
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
+
+          {confirmPassword.length > 0 && confirmPassword.length < 7 && (
+            <ShowAlert
+              message="Password must be 7 letters or more."
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
+          {error && (
+            <ShowAlert
+              message={`${error}`}
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
           <Form id="signupForm" method="post" action="/api/v1/password/change">
-            {confirmPassword.length > 0 &&
-              !(newPassword === confirmPassword) && (
-                <ShowAlert
-                  message="Confirm new password does not match new password."
-                  className="text-center"
-                  variant="danger text-sm"
-                />
-              )}
-
-            {confirmPassword.length > 0 && confirmPassword.length < 7 && (
-              <ShowAlert
-                message="Password must be 7 letters or more."
-                className="text-center"
-                variant="danger text-sm"
-              />
-            )}
-            {error && (
-              <ShowAlert
-                message={`${error}`}
-                className="text-center"
-                variant="danger text-sm"
-              />
-            )}
-
             <Form.Row>
               <Form.Group as={Col}>
                 <Form.Label>Current password</Form.Label>
@@ -291,10 +288,11 @@ const ProfileDetails = (userParams) => {
                 />
               </Form.Group>
             </Form.Row>
+            
+            <Button variant="primary" type="submit">
+              Change Password
+            </Button>
           </Form>
-          <Button variant="primary" type="submit">
-            Change Password
-          </Button>
         </div>
       </Container>
     </>

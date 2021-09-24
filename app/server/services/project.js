@@ -97,8 +97,20 @@ const deleteProject = async (project) => {
 }
 
 
-const searchAll = async () => {
+const searchAll = async (text) => {
+  const result = await Project.find(
+    { $text: { $search: text } }
+  )
+  console.log(result);
   
+  // .exec(function (err, results) {
+  //   console.log(`res: ${results}`);
+  //   console.log(`error: ${error}`);
+  //     return results
+      
+  //     // callback
+  //   });
+
 }
 
 
@@ -109,4 +121,5 @@ module.exports = {
   updateProject,
   findByCreatedBy,
   deleteProject,
+  searchAll,
 };

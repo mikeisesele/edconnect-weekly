@@ -29,17 +29,14 @@ const CreateProjectForm = ({ response }) => {
         />
       )}
 
-      {result == "create" ? (
-        <ProjectForm response={{ project, submit }} />
-      ) : (
-        <ProjectForm response={{ project, update }} />
-      )}
+      {result == "create"
+        ? ( <ProjectForm response={{ project, submit }} />)
+        : ( <ProjectForm response={{ project, update }} />)}
     </div>
   );
 };
 
 const CreateProject = (props) => {
-  console.log(props)
   return (
     <Layout response={props}>
       <CreateProjectForm response={props.response} />

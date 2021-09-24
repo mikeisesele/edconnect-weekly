@@ -186,6 +186,47 @@ console.log(project)
 });
 
 
+/**
+ * @desc handles the route to search for any text in the project,
+ * @route GET /search/:text
+ * @param {string} text - the text to search for.
+ * @param {string} creatorId - the id of the creator of the project.
+ */
+router.get("/search/:text", async (req, res) => {
+  
+  try {
+    const text = req.params.text;
+    const projects = await Project.search(text);
+    
+    let currentUser = await userInSession(req);
+    const error = req.flash("error");
+
+    // render the page with the data retrieved
+    projects
+      ? render(res, "AllProjects", {
+        response: {
+          data: {
+            projects,
+          },
+          currentUser,
+          error,
+          status: true,
+          message: "data retrived successfully",
+        },
+      })
+      : render(res, "AllProjects", {
+        response: {
+          data: {},
+          currentUser,
+          error,
+          status: false,
+          message: "Project not found.",
+        },
+      });
+  } catch {
+    (error) => console.log(error);
+  }
+});
 
 /**
  * @desc handles the post request to update a project after edit.
