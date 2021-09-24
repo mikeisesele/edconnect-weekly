@@ -11,18 +11,14 @@ import {
 import Layout from "./shared/Layout";
 import "./styles/style.css";
 
-const ProjectLayout = ( {response} ) => { 
- 
-  const {data, result, message} = response;
+const ProjectLayout = ({ response }) => {
+  const { project, authorImage, projectCreator } = response.data;
+  const projectId = project._id.toString();
+  const stringProjectCreatorId = projectCreator._id.toString();
+  const stringUserId = response.currentUser._id.toString();
 
-  const project = data.project
-  const projectCreator = data.project.createdBy
-  const authorImage = data.user.profilePicture
-  const user = data.user
-
-  const projectId = project._id;
-  const stringProjectCreatorId = user._id.toString();
-  const  stringProjectId = projectCreator.toString();
+  //  console.log(stringProjectCreatorId);
+  //   console.log(stringProjectId);
   return (
     <>
       <Container>
@@ -38,7 +34,7 @@ const ProjectLayout = ( {response} ) => {
             ></Image>
             <div className="d-flex flex-column mb-0 align-items-center pl-3">
               <p className="mb-0">Created By</p>
-              <p className="mb-0">{`${user.firstName} ${user.lastName}`}</p>
+              <p className="mb-0">{`${projectCreator.firstName} ${projectCreator.lastName}`}</p>
             </div>
           </Col>
           <Col>
@@ -49,31 +45,34 @@ const ProjectLayout = ( {response} ) => {
             <p className="mb-0">Last Updated</p>
             <span>{new Date(project.createdAt).toLocaleDateString()}</span>
           </Col>
-          {stringProjectId == stringProjectCreatorId && (
-            <Col>
-              <div className="col-sm">
-                <div className="d-flex justify-content-end">
-                  <a
-                    href={`/editproject/${projectId}/${stringProjectCreatorId}`}
-                    className=" btn btn-primary"
-                  >
-                    Edit Project
-                  </a>
-                </div>
+
+          {stringUserId == stringProjectCreatorId && (
+            <Col className="d-flex justify-content-between">
+              <div className="d-flex justify-content-center col-md ">
+                <a
+                  href={`/editproject/${projectId}/${stringProjectCreatorId}`}
+                  className=" btn btn-primary"
+                >
+                  Edit
+                </a>
+              </div>
+              <div className="d-flex justify-content-centercol-md ">
+                <a
+                  href={`/delete/${projectId}/${stringProjectCreatorId}`}
+                  className=" btn btn-danger"
+                >
+                  Delete
+                </a>
               </div>
             </Col>
           )}
 
-          {stringProjectId != stringProjectCreatorId && (
+          {stringUserId != stringProjectCreatorId && (
             <Col>
               <div className="col-sm">
                 <div className="d-flex justify-content-end">
-                  <a
-                    href={`/editproject/${stringProjectId}/${stringProjectCreatorId}`}
-                    className=" btn btn-primary"
-                    id="inactiveLink"
-                  >
-                    Edit Project
+                  <a className=" btn btn-primary" id="inactiveLink">
+                    Cannot Edit Project
                   </a>
                 </div>
               </div>
@@ -158,8 +157,8 @@ const ProjectLayout = ( {response} ) => {
 
 const Project = (props) => {
   return (
-    <Layout user={props.response.data.user}>
-      <ProjectLayout response = {props.response} />
+    <Layout response={props}>
+      <ProjectLayout response={props.response} />
     </Layout>
   );
 };

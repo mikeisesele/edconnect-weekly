@@ -2,6 +2,14 @@ import React from "react";
 import { Button, Form, FormControl, Nav, Navbar, Image } from "react-bootstrap";
 
 const Header = (props) => {
+ 
+ 
+  const currentUser = props?.response?.currentUser
+    ? props.response.currentUser
+    : null;
+           
+   
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -22,10 +30,12 @@ const Header = (props) => {
             <Button variant="outline-light">Search</Button>
           </Form>
           <Nav className="mr-auto">
-            <Nav.Link href="/project">Submit</Nav.Link>
+            <Nav.Link href="/projects/all">
+              All Projects
+            </Nav.Link>
           </Nav>
           <Nav id="every" className="d-flex align-items-center">
-            {props.user ? (
+            {currentUser.firstName != null ? (
               <>
                 <Nav.Link id="logout" href="/logout">
                   Logout
@@ -33,10 +43,10 @@ const Header = (props) => {
                 <Nav.Link
                   id="username"
                   href="/profile"
-                >{`Hi ${props.user.firstName}`}</Nav.Link>
+                >{`Hi ${currentUser.firstName}`}</Nav.Link>
                 <Nav.Link href="/profile">
                   <Image
-                    src={`${props.user.profilePicture}`}
+                    src={`${currentUser.profilePicture}`}
                     roundedCircle
                     style={{ height: 3 + "rem", width: 3 + "rem" }}
                     className="ml-2"

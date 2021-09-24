@@ -9,6 +9,7 @@ const flash = require("express-flash");
 const passport = require("passport");
 const DB = require("../server/config/db");
 const googleStrategy = require("./config/googleAuthStrategy")
+const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
 const app = express();
@@ -89,7 +90,7 @@ register(app).then(() => {
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
   app.use("/", require("./controllers/project"));
-  app.use("/", require("./controllers/passwordReset"));
+  app.use("/", require("./controllers/password"));
   app.use("/", require("./controllers/facebookSSO"));
   app.use("/", require("./controllers/googleSSO"));
 

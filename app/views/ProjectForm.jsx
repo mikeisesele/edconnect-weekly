@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-const ProjectForm = (props) => {
+const ProjectForm = ({response}) => {
 
-  const { project, user, action } = props.response
 
-  const [projectName, setName] = useState(project.name);
+    const { project, submit } = response;
+
+  const [name, setName] = useState(project.name);
   const [abstract, setAbstract] = useState(project.abstract);
   const [authors, setAuthors] = useState(project.authors || []);
   const [tags, setTags] = useState(project.tags || []);
@@ -14,7 +15,7 @@ const ProjectForm = (props) => {
   // when the page first loads, set the text views to the user's info
   useEffect(() => {
     setProjectInfo({
-      projectName,
+      name,
       abstract,
       authors,
       tags,
@@ -44,17 +45,17 @@ const ProjectForm = (props) => {
     <main>
       <div className="mx-auto w-50 p-2 mt-3">
         {project.name ? <h3>Edit Project</h3> : <h3>Submit Project</h3>}
-      
-        <Form id="createProjectForm" method="post" action={`${action}`}>
+
+        <Form id="createProjectForm" method="post" action={submit}>
           <Form.Group as={Row}>
             <Col>
               <Form.Label>Project Name: </Form.Label>
               <Form.Control
                 type="text"
-                name="projectName"
-                id="projectName"
+                name="name"
+                id="name"
                 placeholder="Enter project name"
-                value={projectName}
+                value={name}
                 onChange={handleInput}
               />
             </Col>
@@ -104,7 +105,7 @@ const ProjectForm = (props) => {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Continue
+            Submit
           </Button>
         </Form>
       </div>

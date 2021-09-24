@@ -2,44 +2,47 @@ import React from "react";
 import Layout from "./shared/Layout";
 import ProjectForm from "./ProjectForm";
 import ShowAlert from "./Alert";
-import { Container } from "react-bootstrap";
+
 
 const CreateProjectForm = ({ response }) => {
 
-  const {data, result, message} = response;
-
-  const update = `/projects/update/`;
+  const {data, result, error } = response;
   const submit = `/projects/submit`;
-  const user = data.user;
   const project = data.project
-
-  const sentResponse =  { project, user, action: `${update}${project._id}` }
+  const update = `/projects/update/${project._id}`
 
   return (
     <div>
-      {!result && (
-        <Container>
-          <ShowAlert
-            message={message}
-            className="alert alert-primary"
-            variant="danger text-sm"
-          />
-        </Container>
+      {error?.length > 0 && (
+        <ShowAlert
+          message={`${error.map((text) => {
+            return (
+              <>
+                {text}
+                <br />
+              </>
+            );
+          })}
+              `}
+          className="text-center alert alert-danger"
+          variant="danger text-sm"
+        />
       )}
-      {result ? (
-        <ProjectForm response={sentResponse} />
+
+      {result == "create" ? (
+        <ProjectForm response={{ project, submit }} />
       ) : (
-        <ProjectForm response={project, submit} />
+        <ProjectForm response={{ project, update }} />
       )}
     </div>
   );
 };
 
 const CreateProject = (props) => {
-
+  console.log(props)
   return (
-    <Layout user={props.response.data.user}>
-      <CreateProjectForm response = {props.response} />
+    <Layout response={props}>
+      <CreateProjectForm response={props.response} />
     </Layout>
   );
 };

@@ -12,7 +12,8 @@ const facebookIcon = <FontAwesomeIcon icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
 const MainSignup = (props) => {
-  const { program, graduationYear, err } = props;
+
+  const { programs, graduationYears, error } = props?.response?.data ?  props.response.data : null
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,9 +60,9 @@ const MainSignup = (props) => {
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Signup</h1>
         <Form id="signupForm" method="post" action="/signup">
-          {err.length > 0 && (
+          {error.length > 0 && (
             <ShowAlert
-              message={`${err.map((text) => {
+              message={`${error.map((text) => {
                 return (
                   <>
                     {text}
@@ -139,8 +140,8 @@ const MainSignup = (props) => {
               <Form.Label>Program</Form.Label>
               <Form.Control as="select" name="program">
                 <option>Select Option</option>
-                {program.map((prog) => (
-                  <option key={prog}>{prog}</option>
+                {programs.map((program) => (
+                  <option key={program}>{program}</option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -159,7 +160,7 @@ const MainSignup = (props) => {
               <Form.Label>Graduation Year</Form.Label>
               <Form.Control as="select" name="graduationYear">
                 <option>Select Option</option>
-                {graduationYear.map((year) => (
+                {graduationYears.map((year) => (
                   <option key={year}>{year}</option>
                 ))}
               </Form.Control>
@@ -184,7 +185,7 @@ const MainSignup = (props) => {
 
 const Signup = (props) => {
   return (
-    <Layout us={props.us}>
+    <Layout response={props}>
       <MainSignup {...props} />
     </Layout>
   );

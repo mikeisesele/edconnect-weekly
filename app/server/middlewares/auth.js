@@ -4,7 +4,7 @@
  */
 const isLoggedIn = (req, res, next) => {
   // if user is authenticated in the session, carry on
-  if (req.user) {
+  if (req.session.user) {
     next();
   } else {
     // if they aren't redirect them to the home page

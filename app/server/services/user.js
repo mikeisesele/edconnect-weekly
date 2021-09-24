@@ -29,7 +29,7 @@ const create = async ({
 
     user.firstName = capitalizedName(firstname);
     user.lastName = capitalizedName(lastname);
-    user.email = email;
+    user.email = email.toLowerCase();
     user.matricNumber = matricNumber;
     user.program = program;
     user.graduationYear = graduationYear;
@@ -65,7 +65,7 @@ const create = async ({
 const authenticate = async (email, password) => {
   // create an object to auth a user
   const user = new User();
-  user.email = email;
+  user.email = email.toLowerCase()
   user.password = password;
 
   // use the email to find that user

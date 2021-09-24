@@ -9,23 +9,45 @@ import { cloudinary } from "../middlewares/cloudinery";
 const programs = getPrograms();
 const graduationYears = getGradYears();
 
+/**
+ * @desc function to render pages with data
+ */
+const render = (res, page, message) => {
+  res.render(page, message );
+};
+
+/**
+ * @desc function to get a user from the session
+ */
+ const userInSession = async (req) => {
+   const userId = req?.session?.user ? req.session.user._id : null
+   let user = {}
+   if(userId != null){
+      user = await User.getById(userId);
+   }
+   return user
+ }
 
 /**
  * @desc show sign up page
  * @route GET /signup
  */
-router.get("/signup", (req, res) => {
+router.get("/signup", async (req, res) => {
   const programs = getPrograms();
   const graduationYears = getGradYears();
+  const currentUser = await userInSession(req);
   const error = req.flash("error");
-  const user = req.session.user;
-
+ 
   // redirect to home page for signup
-  res.render("Signup", {
-    program: programs,
-    graduationYear: graduationYears,
-    err: error,
-    user: user,
+  render(res, "Signup", { error, 
+    response: {
+      data: {
+        programs,
+        graduationYears,
+      },
+      currentUser,
+      result: false,
+    },
   });
 });
 
@@ -34,9 +56,10 @@ router.get("/signup", (req, res) => {
  * @desc handle signup click
  * @route POST /signup
  */
-router.post("/signup", async (req, res) => {
+router.post("/signup",  async (req, res) => {
   const firstname = req.body.firstName;
   const lastname = req.body.lastName;
+  const error = req.flash("error");
 
   const { email, password, program, matricNumber, graduationYear } = req.body;
 
@@ -53,6 +76,7 @@ router.post("/signup", async (req, res) => {
 
   // if user already exists
   if (check[0]) {
+    // set the session
     req.session.user = check[1];
     // redirect to dashboard
     res.redirect("/");
@@ -66,9 +90,17 @@ router.post("/signup", async (req, res) => {
  * @desc show login page
  * @route GET /login
  */
-router.get("/login", (req, res) => {
-  const user = req.session.user;
-  res.render("Login", { user: user });
+router.get("/login", async (req, res) => {
+  // setthe session
+  const currentUser = await userInSession(req);
+  const error = req.flash("error");
+
+  render(res, "Login", { error, response: {
+      data: {},
+      currentUser,
+      result: false,
+    },
+  });
 });
 
 
@@ -89,23 +121,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/**
- * @desc show forgot password page
- * @route GET /
- */
-router.get("/forgotPassword", async (req, res) => {
-  const user = req.session.user;
-  res.render("ForgotPassword", { user: user });
-});
-
-
-/**
- * @desc show reset password page
- * @route GET /resetPassword
- */
-router.get("/resetPassword", async (req, res) => {
-  res.render("ResetPassword");
-});
 
 
 /**
@@ -114,15 +129,20 @@ router.get("/resetPassword", async (req, res) => {
  */
 router.get("/profile", async (req, res) => {
   try {
-    // get user details from database if user is logged in
-    if (req.session) {
+      
+    const currentUser = await userInSession(req);
+
       // get user details from database
-      const user = await User.getById(req.session.user._id);
-      // get user details from database
-      res.render("ProfileDetail", { user, programs, graduationYears });
-    } else {
-      res.redirect("/login");
-    }
+      render(res, "ProfileDetail", { 
+         response: {
+            data: {
+              programs, 
+              graduationYears 
+            },
+            currentUser,
+            result: true,
+          message: "Profile retrieval successful",  
+      }});
   } catch (err) {
     console.error(err);
   }
@@ -133,8 +153,8 @@ router.get("/profile", async (req, res) => {
  * @desc handle update profile click
  * @route POST /profile
  */
-router.post("/profile", multerUploads, async (req, res) => {
-  const id = req.session.user._id;
+router.post("/profile", isLoggedIn, multerUploads, async (req, res) => {
+  const currentUser = await userInSession(req);
 
   const { firstName, lastName, graduationYear, program } = req.body;
 
@@ -147,8 +167,7 @@ router.post("/profile", multerUploads, async (req, res) => {
   }
 
   try {
-    // get user current detail before update
-    const user = await User.getById(id);
+    
 
     // create a new user detail with the information provided from the request
     const newUserProfile = {
@@ -156,7 +175,7 @@ router.post("/profile", multerUploads, async (req, res) => {
       graduationYear,
       firstName,
       lastName,
-      profilePicture: user?.profilePicture,
+      profilePicture: currentUser?.profilePicture,
       ...req.body,
     };
 
@@ -178,8 +197,7 @@ router.post("/profile", multerUploads, async (req, res) => {
 
     // if update is successful
     if (result[0]) {
-      // get user details from database
-      req.session.user = result[1];
+      
       // redirect to profile page
       res.redirect("/profile");
     }
@@ -189,7 +207,6 @@ router.post("/profile", multerUploads, async (req, res) => {
 });
 
 // @desc Changes the Password of a user
-
 // @desc Log out a user
 // @route GET /logout
 router.get("/logout", isLoggedIn, (req, res) => {

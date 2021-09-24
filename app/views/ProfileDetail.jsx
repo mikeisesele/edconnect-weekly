@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col,Image, Container, Form, Row } from "react-bootstrap";
 import ShowAlert from "./Alert";
 import isValidEmail from "./validEMail";
 
 const ProfileDetails = (userParams) => {
-  const message = userParams.message ? userParams.message : null;
-  const user = userParams.user;
-  const userprograms = userParams.programs;
-  const usergraduationYears = userParams.graduationYears;
+
+  const error = userParams.error ? userParams.error : null
+  const user = userParams.message.response.currentUser;
+  const userprograms = userParams.message.response.data.programs;
+  const usergraduationYears = userParams.message.response.data.graduationYears;
 
   // the default sattes will come from the prop
   const [firstName, setFirstName] = useState(user.firstName);
@@ -34,7 +35,7 @@ const ProfileDetails = (userParams) => {
       program,
       matricNumber,
       graduationYear,
-    });
+    })
   }, []);
 
   // when the user changes the text, update the state
@@ -88,6 +89,7 @@ const ProfileDetails = (userParams) => {
           </Col>
         </Row>
         <Row className="bg-light m-auto pl-3 pr-3">
+         
           <Col
             id="program"
             className="d-flex flex-column mt-2 align-content-center"
@@ -249,9 +251,9 @@ const ProfileDetails = (userParams) => {
                 variant="danger text-sm"
               />
             )}
-            {message && (
+            {error && (
               <ShowAlert
-                message={`${message}`}
+                message={`${error}`}
                 className="text-center"
                 variant="danger text-sm"
               />
@@ -301,9 +303,8 @@ const ProfileDetails = (userParams) => {
 
 const ProfileDetail = (props) => {
   return (
-    // the layout neegs the session for the header component
-    <Layout user={props.user}>
-      <ProfileDetails {...props} />
+    <Layout response={props}>
+      <ProfileDetails message={props} />
     </Layout>
   );
 };

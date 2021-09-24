@@ -6,7 +6,9 @@ import isValidEmail from "./validEMail";
 import "./styles/style.css";
 
 const BuildForm = (props) => {
-  console.log(props);
+
+  const status = props?.message?.status ? props.message.status : "blue"
+  const message = props?.message?.message ? props.message.message : null
   const [email, setEmail] = useState("");
   const [remember, setRemember] = useState(false);
 
@@ -16,9 +18,9 @@ const BuildForm = (props) => {
       case "email":
         setEmail(value);
         break;
-      default:
     }
   };
+
 
   useEffect(() => {
     setRemember({
@@ -30,35 +32,47 @@ const BuildForm = (props) => {
     <>
       <div className="mx-auto w-50 p-3 mw-70">
         <h3 className="text-center">Forgot Password?</h3>
+
+        {status == "green" && (
+          <>
+            <ShowAlert
+              message={`${message}`}
+              className="alert alert-primary text-center"
+              variant="success text-sm"
+            />
+          </>
+        )}
+
+        {email.length < 1 && status == "red" && (
+          <ShowAlert
+            message={`${message}`}
+            className="alert alert-primary text-center"
+            variant="danger text-sm"
+          />
+        )}
+
+        {email.length < 1 && status == "blue" && (
+          <ShowAlert
+            message="Enter your email address to begin the password reset process"
+            className="alert alert-primary text-center"
+            variant="primary text-sm"
+          />
+        )}
+
+        {email.length > 0 && !isValidEmail(email) && (
+          <ShowAlert
+            message={`${email} is not a valid email.`}
+            className="alert alert-primary text-center"
+            variant="danger text-sm"
+          />
+        )}
+
         <Form
+        className="mb-5"
           id="forgotPasswordForm"
-          className="mb-5"
           method="post"
           action="/api/passwordReset/sendEmailToken"
         >
-          {email.length < 1 &&
-            (props.message ? (
-              <ShowAlert
-                message={`${props.message}`}
-                className="alert alert-primary text-center"
-                variant="danger text-sm"
-              />
-            ) : (
-              <ShowAlert
-                message="Enter your email address to begin the password reset process"
-                className="alert alert-primary text-center"
-                variant="primary text-sm"
-              />
-            ))}
-
-          {email.length > 0 && !isValidEmail(email) && (
-            <ShowAlert
-              message={`${email} is not a valid email.`}
-              className="alert alert-primary text-center"
-              variant="danger text-sm"
-            />
-          )}
-
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -74,7 +88,7 @@ const BuildForm = (props) => {
               Submit
             </Button>
             <p className="ml-3 mb-0 pb-0">
-              <a href="/login" classname="text-decoration-none">
+              <a href="/login" className="text-decoration-none">
                 Login
               </a>
             </p>
@@ -85,10 +99,12 @@ const BuildForm = (props) => {
   );
 };
 
+const EmailForm = (email) => { }
+
 const ForgotPassword = (props) => {
   return (
-    <Layout user={props.user}>
-      <BuildForm {...props} />
+    <Layout response={props}>
+      <BuildForm message={props.response.data} />
     </Layout>
   );
 };

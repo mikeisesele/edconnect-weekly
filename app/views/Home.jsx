@@ -3,6 +3,10 @@ import { Button, Card, CardGroup, Jumbotron } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
 const Jumbo = (props) => {
+  console.log(props)
+  const currentUser = props ? props: null;
+
+
   return (
     <>
       <Jumbotron>
@@ -12,12 +16,12 @@ const Jumbo = (props) => {
           fields of knowledge. An Ideal place for intellectuals! You can submit
           your projects and search projects submitted by others to learn from.
         </p>
-        {props.user ? (
+        {currentUser ? (
           <>
-            <Button variant="primary" className="mr-3" href="/favourites">
-              Favourite Projects
+            <Button variant="primary" className="mr-3" href="/projects/mine">
+              My Projects
             </Button>
-            <Button variant="secondary"  href="/project">
+            <Button variant="secondary" href="/project/create">
               Add a project
             </Button>
           </>
@@ -37,16 +41,18 @@ const Jumbo = (props) => {
 };
 
 
-const Showcase = ({ props }) => {
+const Showcase = ( props ) => {
   
+  const projects = props.response.data.projects;
+
+
   return (
     <>
       <CardGroup className="showcase">
-        {props
+        {projects
           .reverse()
           .slice(0, 4)
           .map((project) => {
-
             const { abstract, authors, id, name, tags } = project;
 
             return (
@@ -58,7 +64,7 @@ const Showcase = ({ props }) => {
                   <Card.Subtitle className="mb-2 text-muted">
                     {authors}
                   </Card.Subtitle>
-                  <Card.Text>{ ` ${ abstract } ` }</Card.Text>
+                  <Card.Text>{` ${abstract} `}</Card.Text>
                   <Card.Link href="#">{tags}</Card.Link>
                 </Card.Body>
               </Card>
@@ -72,9 +78,9 @@ const Showcase = ({ props }) => {
 
 const Home = (props) => {
   return (
-    <Layout user={props.user}>
+    <Layout response={props}>
       <main className="container">
-        <Jumbo user={props.user} />
+        <Jumbo user={props.response.currentUser} />
         <Showcase {...props} />
       </main>
     </Layout>

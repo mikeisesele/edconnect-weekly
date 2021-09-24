@@ -12,7 +12,7 @@ import "../views/styles/style.css";
 const facebookIcon = <FontAwesomeIcon  className="facebook-icon" icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
-const BuildForm = ({ err }) => {
+const BuildForm = ({ error }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -46,14 +46,6 @@ const BuildForm = ({ err }) => {
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Login</h1>
         <Form id="loginForm" className="mb-3" method="post" action="/login">
-          {err.length > 0 && (
-            <ShowAlert
-              message={`${err}`}
-              className="text-center alert alert-danger"
-              variant="danger text-sm"
-            />
-          )}
-
           {email.length > 0 && !isValidEmail(email) && (
             <ShowAlert
               message={`${email} is not a valid email.`}
@@ -65,6 +57,14 @@ const BuildForm = ({ err }) => {
           {password.length > 0 && password.length < 7 && (
             <ShowAlert
               message="Password must be 7 characters or more."
+              className="text-center"
+              variant="danger text-sm"
+            />
+          )}
+
+          {error.length > 0 && (
+            <ShowAlert
+              message={`${error}`}
               className="text-center"
               variant="danger text-sm"
             />
@@ -117,8 +117,9 @@ const BuildForm = ({ err }) => {
 };
 
 const Login = (props) => {
+  console.log(props)
   return (
-    <Layout user={props.user}>
+    <Layout response={props}>
       <BuildForm {...props} />
     </Layout>
   );

@@ -3,9 +3,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const Layout = (props) => {
+   
   return (
     <>
-      <Header user={props.user} />
+      <Header {...props.response} />
       <main className="mx-auto">{props.children}</main>
       <Footer />
     </>
