@@ -12,13 +12,11 @@ import Layout from "./shared/Layout";
 import "./styles/style.css";
 
 const ProjectLayout = ({ response }) => {
-  const { project, authorImage, projectCreator } = response.data;
+  const project  = response.data.project;
+  const projectCreator = response.currentUser;    
   const projectId = project._id.toString();
   const stringProjectCreatorId = projectCreator._id.toString();
-  const stringUserId = response.currentUser._id.toString();
-
-  //  console.log(stringProjectCreatorId);
-  //   console.log(stringProjectId);
+  const stringUserId = response?.currentUser._id.toString()
   return (
     <>
       <Container>
@@ -28,7 +26,7 @@ const ProjectLayout = ({ response }) => {
         <Row className="bg-light p-3 align-items-center">
           <Col id="project_author" className="d-flex mb-0 align-items-center">
             <Image
-              src={`${authorImage}`}
+              src={`${projectCreator.profilePicture}`}
               roundedCircle
               style={{ height: 3 + "rem", width: 3 + "rem" }}
             ></Image>
@@ -50,7 +48,7 @@ const ProjectLayout = ({ response }) => {
             <Col className="d-flex justify-content-between">
               <div className="d-flex justify-content-center col-md ">
                 <a
-                  href={`/editproject/${projectId}/${stringProjectCreatorId}`}
+                  href={`/editproject/${projectId}`}
                   className=" btn btn-primary"
                 >
                   Edit
@@ -58,7 +56,7 @@ const ProjectLayout = ({ response }) => {
               </div>
               <div className="d-flex justify-content-centercol-md ">
                 <a
-                  href={`/delete/${projectId}/${stringProjectCreatorId}`}
+                  href={`/deleteproject/${projectId}`}
                   className=" btn btn-danger"
                 >
                   Delete
@@ -156,6 +154,7 @@ const ProjectLayout = ({ response }) => {
 };
 
 const Project = (props) => {
+  
   return (
     <Layout response={props}>
       <ProjectLayout response={props.response} />

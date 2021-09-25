@@ -20,6 +20,12 @@ const userSchema = new UserSchema(
     facebookId: { type: String },
     googleId: { type: String },
     provider: { type: String },
+    favouriteProjects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project",
+      }
+    ],
   },
   { timestamps: true }
 );

@@ -48,6 +48,8 @@ const getAll = async () => {
   }
 };
 
+
+
 /**
  * @desc  Update a project in the database
  * @param {string} id - The id of the project to update
@@ -110,7 +112,6 @@ const searchAll = async (text) => {
       
   //     // callback
   //   });
-
 }
 
 

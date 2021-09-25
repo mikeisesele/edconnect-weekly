@@ -3,7 +3,6 @@ import { Button, Card, CardGroup, Jumbotron } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
 const Jumbo = (props) => {
-  console.log(props)
   const currentUser = props ? props: null;
 
 
@@ -19,7 +18,14 @@ const Jumbo = (props) => {
         {currentUser ? (
           <>
             <Button variant="primary" className="mr-3" href="/projects/mine">
-              My Projects
+              Created Projects
+            </Button>
+            <Button
+              variant="primary"
+              className="mr-3"
+              href="/projects/favourites"
+            >
+              Favourite Projects
             </Button>
             <Button variant="secondary" href="/project/create">
               Add a project

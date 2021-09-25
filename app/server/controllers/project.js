@@ -30,7 +30,6 @@ const userInSession = async (req) => {
 router.get("/project/create", isLoggedIn, async (req, res) => {
   let currentUser = await userInSession(req);
   const error = req.flash("error");
-
   !currentUser
     ? res.redirect("/login")
     : render(res, "CreateProject", {
@@ -39,7 +38,7 @@ router.get("/project/create", isLoggedIn, async (req, res) => {
           project: {},
         },
         currentUser,
-        result: "create",
+        result: "Create",
         message: "",
         error,
       },
@@ -123,42 +122,30 @@ router.get("/project/:id", async (req, res) => {
 });
 
 
-
-
 /**
- * @desc handles the get request to retrieve a project and its creator for edit.
+ * @desc handles the get request to retrieve a project and its creator for view and edit.
  * @route GET /editproject/:id/:creatorId
  * @param {string} id - the id of the project.
  * @param {string} creatorId - the id of the creator of the project.
  */
-router.get("/editproject/:id/:creatorId", isLoggedIn, async (req, res) => {
+router.get("/editproject/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
-    const creatorId = req.params.creatorId;
     const project = await Project.getById(id);
-    const user = await User.getById(creatorId);
+    const user = await User.getById(project.createdBy);
     let currentUser = await userInSession(req)
 
-    project && user
-      ? render(res, "CreateProject", {
-        response: {
-          data: {
-            project: project,
-            user: user,
-          },
-          currentUser,
-          result: "edit",
-          message: "data retrived successfully",
+
+    render(res, "EditProject", {
+      response: {
+        data: {
+          project,
+          user
         },
-      })
-      : render(res, "CreateProject", {
-        response: {
-          data: {},
-          currentUser,
-          result: false,
-          message: "Project not found.",
-        },
-      });
+        currentUser,
+        message: "data retrived successfully",
+      },
+    })
   } catch {
     (error) => console.log(error);
   }
@@ -166,20 +153,20 @@ router.get("/editproject/:id/:creatorId", isLoggedIn, async (req, res) => {
 
 
 /**
- * @desc handles the get request to retrieve a project and its creator for edit.
- * @route GET /editproject/:id/:creatorId
+ * @desc handles the get request to retrieve a project and its creator for delete.
+ * @route GET /deleteproject/:id/:creatorId
  * @param {string} id - the id of the project.
  * @param {string} creatorId - the id of the creator of the project.
  */
-router.get("/delete/:id/:creatorId", isLoggedIn, async (req, res) => {
+router.get("/deleteproject/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
     const project = await Project.getById(id);
-console.log(project)
+
     // delete project by id
     await Project.deleteProject(project);
     res.redirect("/projects/mine");
-    
+
   } catch {
     (error) => console.log(error);
   }
@@ -193,11 +180,11 @@ console.log(project)
  * @param {string} creatorId - the id of the creator of the project.
  */
 router.get("/search/:text", async (req, res) => {
-  
+
   try {
     const text = req.params.text;
     const projects = await Project.search(text);
-    
+
     let currentUser = await userInSession(req);
     const error = req.flash("error");
 
@@ -233,46 +220,99 @@ router.get("/search/:text", async (req, res) => {
  * @route POST /projects/update/:id
  * @param {string} id - the id of the project.
  */
-router.post("/projects/update/:id", isLoggedIn, async (req, res) => {
-
+router.post("/editproject/project/update/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
     let currentUser = await userInSession(req);
 
-    const { projectName, abstract, authors, tags } = req.body;
+    const { name, abstract, authors, tags } = req.body;
 
     const project = {
-      name: projectName,
-      abstract: abstract,
-      authors: authors,
-      tags: tags,
+      name,
+      abstract,
+      authors,
+      tags
     };
 
     const updatedProject = await Project.updateProject(id, project);
 
-    updatedProject[0]
-      ? render(res, "Project", {
-        response: {
-          data: {
-            project: updatedProject[1],
-          },
-          currentUser,
-          result: true,
-          message: "project updated successfully",
-        },
-      })
-      : render(res, "Project", {
-        response: {
-          data: {},
-          currentUser,
-          result: false,
-          message: "Project update failed",
-        },
-      });
+    if (updatedProject[0]) {
+      res.redirect(`/project/${id}`);
+    }
+
+
   } catch {
     (error) => console.log(error);
   }
 });
+
+/**
+ * @desc adds a project as favourite for a user
+ * @Route POST /projects/favourite/:id
+ */
+router.get("/favourites/add/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const project = await Project.getById(id);
+    const user = await userInSession(req);
+
+    // add project to the user favourite projects
+    await User.addFavouriteProject(user._id, project._id);
+  } catch {
+    (error) => console.log(error);
+  }
+});
+
+/** 
+ * @desc handles the route to delete a specific project from a user list of favourites.
+ * @Route POST /projects/delete/:id
+ * @param {string} id - the id of the project.
+ * @param {string} userId - the id of the user.
+*/
+router.get("/favourites/delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userInSession(req);
+    const project = await Project.getById(id);
+
+    // delete project from the user favourite projects
+    await User.removeFromFavouriteProjects(user._id, project._id);
+    res.redirect("/projects/favourites");
+
+  } catch {
+    (error) => console.log(error);
+  }
+});
+
+
+/**
+ * @desc handles the route to get all the favourite projects of a user.
+ * @Route GET /projects/favourites
+ * @param {string} userId - the id of the user.
+ */
+router.get("/projects/favourites", async (req, res) => {
+  try {
+    const currentUser = await userInSession(req);
+    const userObject = await User.getFavouriteProjects(currentUser._id);
+
+    userObject[1].forEach((projects) => {
+     
+      if (projects._id.toString() === currentUser._id.toString()) {
+       
+        render(res, "Favourites", {
+          response: {
+            data: projects.favourites,
+            currentUser
+          }          
+         })
+      }
+    });
+  } catch {
+    (error) => console.log(error);
+  }
+});
+
+
 
 /**
  * @desc handles the post request to get all projects createdby the user (display for view).

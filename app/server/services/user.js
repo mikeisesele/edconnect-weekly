@@ -24,7 +24,7 @@ const create = async ({
   profileImage,
 }) => {
   try {
-    
+
     const user = new User();
 
     user.firstName = capitalizedName(firstname);
@@ -102,14 +102,14 @@ const getAll = () => {
  * @returns {object} - The user object
  */
 const getUserByEmail = async (email) => {
-  try{
+  try {
     // find the user by email
     let user = await User.findOne({ email: email });
 
     // if the user exists, return the user
     if (user) {
       return [true, user];
-    } else  {
+    } else {
       // if the user does not exist, return an error
       return [false, "this email is not associated with any user in our database"];
     }
@@ -129,7 +129,7 @@ const getBySocialId = async (social, id) => {
       // find the user by facebook id 
       return await User.findOne({ facebookId: id });
 
-      // if the social is google
+    // if the social is google
     case "google":
       // find the user by google id
       return await User.findOne({ googleId: id });
@@ -201,6 +201,85 @@ const updatePassword = async (id, password) => {
   }
 };
 
+
+/**
+ * @desc  Save a project as a user favourite
+ * @param {string} id - The id of the user
+ * @param {string} projectId - The id of the project
+ */
+const addFavouriteProject = async (id, projectId) => {
+  try {
+    // find the user by id
+    const thisUser = await User.findById(id);
+    thisUser.favouriteProjects.push(projectId);
+    await thisUser.save();
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+}
+
+/**
+ * @desc  Remove a project as a user favourite
+ * @param {string} id - The id of the user
+ * @param {string} projectId - The id of the project
+ */
+const removeFromFavouriteProjects = async (id, projectId) => {
+  try {
+    // find the user by id
+    const thisUser = await User.findById(id);
+    thisUser.favouriteProjects.pull(projectId);
+    await thisUser.save();
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+}
+
+/**
+ * @desc Returns a user's favourite projects
+ * @param {string} id - The id of the user
+ * @returns {Array} - Array of the projects object
+ * @returns {boolean} - Whether the user's favourite projects were found or not
+ * @returns {string} - The error message
+ * @returns {object} - The user object
+ */
+const getFavouriteProjects = async (id) => {
+  try {
+    // find the user by id
+    const thisUser = await User.findById(id);
+    // if the user exists, return the user's favourite projects
+
+    const projects = await User.aggregate([
+      {
+        $lookup: {
+          from: "projects",
+          localField: "favouriteProjects",
+          foreignField: "_id",
+          as: "favourites",
+        }, 
+      },
+      
+      // Deconstructs the array field from the
+      // input document to output a document
+      // for each element
+      // {
+      //   $unwind: "$favouriteProjects",
+      // },
+    ]).then((projects) => {
+      return projects 
+    });
+
+     if (projects) {
+       return [true, projects];
+     } else {
+       return [false, "Projects not found"];
+     }
+
+
+  } catch (e) {
+    return [false, helper.translateError(e)];
+  }
+}
+
 module.exports = {
   create,
   authenticate,
@@ -211,4 +290,7 @@ module.exports = {
   updateUser,
   confirmPassword,
   updatePassword,
+  addFavouriteProject,
+  removeFromFavouriteProjects,
+  getFavouriteProjects,
 };

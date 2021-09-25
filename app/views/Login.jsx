@@ -117,7 +117,6 @@ const BuildForm = ({ error }) => {
 };
 
 const Login = (props) => {
-  console.log(props)
   return (
     <Layout response={props}>
       <BuildForm {...props} />

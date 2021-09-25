@@ -206,6 +206,8 @@ router.post("/profile", isLoggedIn, multerUploads, async (req, res) => {
   }
 });
 
+
+
 // @desc Changes the Password of a user
 // @desc Log out a user
 // @route GET /logout
