@@ -13,16 +13,9 @@ const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
 const app = express();
-// if (process.env.NODE_ENV === "test") {
-//   // connect in memory server 
-  
-// } else {
-//   DB.connect();
 
-// }
-
-// get server port from .env file, we will use this port to run our server
-const SERVER_PORT = process.env.SERVER_PORT;
+// get server port for production or 8080 for development
+const SERVER_PORT = process.env.PORT || 80 ;
 
 //created a mongoDB collection to be used as session store. 
 const store = new MongoDBStore({
