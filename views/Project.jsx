@@ -12,6 +12,7 @@ import Layout from "./shared/Layout";
 import "./styles/style.css";
 
 const ProjectLayout = ({ response }) => {
+  console.log(response);
   const project  = response?.data?.project ? response.data.project : null;
   const projectCreator = response?.currentUser ? response.currentUser : "";    
   const projectId = project?._id ? projectId._id.toString() : "";
