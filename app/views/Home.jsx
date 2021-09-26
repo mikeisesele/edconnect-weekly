@@ -3,19 +3,17 @@ import { Button, Card, CardGroup, Jumbotron } from "react-bootstrap";
 import Layout from "./shared/Layout";
 
 const Jumbo = (props) => {
-  const currentUser = props ? props: null;
-
-
+  const currentUser = props.user
   return (
     <>
       <Jumbotron>
-        <h1>Welcome to Project Explorer</h1>
+        <h1 data-testid="welcomeMessage">Welcome to Project Explorer</h1>
         <p>
           Project Explorer is a repository for interesting projects accross all
           fields of knowledge. An Ideal place for intellectuals! You can submit
           your projects and search projects submitted by others to learn from.
         </p>
-        {currentUser ? (
+        {currentUser.email != null || undefined ? (
           <>
             <Button variant="primary" className="mr-3" href="/projects/mine">
               Created Projects
@@ -51,10 +49,9 @@ const Showcase = ( props ) => {
   
   const projects = props.response.data.projects;
 
-
   return (
     <>
-      <CardGroup className="showcase">
+      <CardGroup data-testid="project-cards" className="showcase">
         {projects
           .reverse()
           .slice(0, 4)

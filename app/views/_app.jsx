@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
 
 // If you have a custom css file in addition to the
 
@@ -12,7 +13,6 @@ const App = (props) => {
   const { children, ...rest } = props;
 
   const PageComponent = children;
-
   return <PageComponent {...rest} />;
 };
 

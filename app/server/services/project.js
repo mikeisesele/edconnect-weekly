@@ -1,5 +1,5 @@
 const Project = require('../models/project');
-import helper from '../models/mongo_helper';
+const { translateError } = require('../models/mongo_helper');
 
 /**
  * @desc  Create a new project in the database
@@ -16,11 +16,12 @@ const create = async ({ name, abstract, authors, tags, createdBy, authorImage })
     });
 
     // Save project to database and return project
-    if ( await project.save()){
+   
+    if (await project.save()){
       return [true, project] 
     }
   } catch (e) { 
-    return [false, helper.translateError(e)]; 
+    return [false, translateError(e)]; 
   }
 };
 
@@ -73,7 +74,7 @@ const updateProject = async (id, newProject) => {
     }
 
   } catch (e) {
-    return [false, helper.translateError(e)];
+    return [false, translateError(e)];
   }
 };
 
@@ -101,18 +102,14 @@ const deleteProject = async (project) => {
 
 const searchAll = async (text) => {
   const result = await Project.find(
-    { $text: { $search: text } }
-  )
-  console.log(result);
-  
-  // .exec(function (err, results) {
-  //   console.log(`res: ${results}`);
-  //   console.log(`error: ${error}`);
-  //     return results
-      
-  //     // callback
-  //   });
+    { $text: { $search: text } },
+    { score: { $meta: "textScore" } },
+  ).sort({ score: { $meta: "textScore" } });
+
+  return result
 }
+
+
 
 
 module.exports = {

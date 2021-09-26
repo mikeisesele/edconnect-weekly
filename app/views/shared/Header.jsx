@@ -20,10 +20,16 @@ const Header = (props) => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Navbar
+        data-testid="navigationBar"
+        collapseOnSelect
+        expand="lg"
+        bg="primary"
+        variant="dark"
+      >
         <Navbar.Brand>
           {" "}
-          <Nav.Link href="/" style={{ color: "white" }}>
+          <Nav.Link className = "project-explorer-nav" href="/" style={{ color: "white" }}>
             Project Explorer
           </Nav.Link>{" "}
         </Navbar.Brand>
@@ -51,11 +57,13 @@ const Header = (props) => {
                   Logout
                 </Nav.Link>
                 <Nav.Link
+                  data-testid="username"
                   id="username"
                   href="/profile"
                 >{`Hi ${currentUser.firstName}`}</Nav.Link>
                 <Nav.Link href="/profile">
                   <Image
+                    data-testid="profile-picture"
                     src={`${currentUser.profilePicture}`}
                     roundedCircle
                     style={{ height: 3 + "rem", width: 3 + "rem" }}

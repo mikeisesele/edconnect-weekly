@@ -39,10 +39,11 @@ const Header = () => {
 };
 
 const Favourites = (props) => {
+  console.log(props);
   return (
     <Layout response={props}>
       <Header />
-      <FavProjects response={props.response.data} />
+      <FavProjects response={props.response.data.project} />
     </Layout>
   );
 };

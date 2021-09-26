@@ -255,7 +255,7 @@ const getFavouriteProjects = async (id) => {
           localField: "favouriteProjects",
           foreignField: "_id",
           as: "favourites",
-        }, 
+        } 
       },
       
       // Deconstructs the array field from the

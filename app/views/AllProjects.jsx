@@ -7,7 +7,7 @@ const Projects = (data) => {
       const [favourite, setFavourite] = useState("Add to favourites");
 
           const handleSubmit = (e) => {
-            // e.preventDefault();
+            e.preventDefault();
             const { name, value } = e.target;
             switch (name) {
               case `${project._id}`:
@@ -40,22 +40,7 @@ const Projects = (data) => {
             >
               {favourite}
             </Button>
-            {/* <Form
-              id="loginForm"
-              className="mb-3 float-right"
-              method="post"
-              action="/login"
-            >
-              <Form.Group >
-                <Form.Label className="text-secondary">Add to favourites</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={email}
-                  onClick={handleInput}
-                  name="favourite"
-                />
-              </Form.Group>
-            </Form> */}
+          
           </Card.Header>
           <Card.Body>
             <Card.Title>{name}</Card.Title>

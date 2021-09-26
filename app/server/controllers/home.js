@@ -44,7 +44,7 @@ router.get("/", async (req, res) => {
   });
 });
 
-
+        
 /**
  * @desc Logout user
  * @route GET /logout

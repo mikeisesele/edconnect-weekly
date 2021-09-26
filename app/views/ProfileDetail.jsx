@@ -78,10 +78,10 @@ const ProfileDetails = (userParams) => {
 
   return (
     <>
-      <Container>
+      <Container data-testid="profile-details">
         <Row id="project_name" className="d-flex align-items-end mt-3">
           <Col className="d-flex align-items-end">
-            <h3>
+            <h3 data-testid="fullName">
               {`${userInfo.firstName} 
               ${userInfo.lastName}`}
             </h3>
@@ -113,6 +113,7 @@ const ProfileDetails = (userParams) => {
           <Form
             id="signupForm"
             method="post"
+            data-testid="user-details"
             className="w-30 mw-70"
             action="/profile"
             encType="multipart/form-data"
@@ -288,7 +289,7 @@ const ProfileDetails = (userParams) => {
                 />
               </Form.Group>
             </Form.Row>
-            
+
             <Button variant="primary" type="submit">
               Change Password
             </Button>

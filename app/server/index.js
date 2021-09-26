@@ -13,6 +13,13 @@ const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
 const app = express();
+// if (process.env.NODE_ENV === "test") {
+//   // connect in memory server 
+  
+// } else {
+//   DB.connect();
+
+// }
 
 // get server port from .env file, we will use this port to run our server
 const SERVER_PORT = process.env.SERVER_PORT;

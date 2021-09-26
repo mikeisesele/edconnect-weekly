@@ -165,7 +165,7 @@ router.get("/deleteproject/:id", isLoggedIn, async (req, res) => {
 
     // delete project by id
     await Project.deleteProject(project);
-    res.redirect("/projects/mine");
+    res.redirect("/");
 
   } catch {
     (error) => console.log(error);
@@ -223,8 +223,6 @@ router.get("/search/:text", async (req, res) => {
 router.post("/editproject/project/update/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
-    let currentUser = await userInSession(req);
-
     const { name, abstract, authors, tags } = req.body;
 
     const project = {
@@ -250,7 +248,7 @@ router.post("/editproject/project/update/:id", isLoggedIn, async (req, res) => {
  * @desc adds a project as favourite for a user
  * @Route POST /projects/favourite/:id
  */
-router.get("/favourites/add/:id", async (req, res) => {
+router.get("/favourites/add/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
     const project = await Project.getById(id);
@@ -269,7 +267,7 @@ router.get("/favourites/add/:id", async (req, res) => {
  * @param {string} id - the id of the project.
  * @param {string} userId - the id of the user.
 */
-router.get("/favourites/delete/:id", async (req, res) => {
+router.get("/favourites/delete/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await userInSession(req);
@@ -290,29 +288,29 @@ router.get("/favourites/delete/:id", async (req, res) => {
  * @Route GET /projects/favourites
  * @param {string} userId - the id of the user.
  */
-router.get("/projects/favourites", async (req, res) => {
+router.get("/projects/favourites", isLoggedIn, async (req, res) => {
+
   try {
     const currentUser = await userInSession(req);
-    const userObject = await User.getFavouriteProjects(currentUser._id);
+    const userObject = await User.getFavouriteProjects(currentUser._id)
 
     userObject[1].forEach((projects) => {
-     
       if (projects._id.toString() === currentUser._id.toString()) {
-       
         render(res, "Favourites", {
           response: {
-            data: projects.favourites,
-            currentUser
-          }          
-         })
+            data: {
+              project: projects.favourites,
+            },
+            currentUser,
+          },
+         
+        });
       }
     });
   } catch {
     (error) => console.log(error);
   }
 });
-
-
 
 /**
  * @desc handles the post request to get all projects createdby the user (display for view).
@@ -352,8 +350,10 @@ router.get("/projects/mine", isLoggedIn, async (req, res) => {
  * @param {string} id - the id of the user.
  */
 router.get("/projects/all", async (req, res) => {
-  const projects = await Project.getAll();
   let currentUser = await userInSession(req);
+
+  const projects = await Project.getAll()
+
 
   projects
     ? render(res, "AllProjects", {
