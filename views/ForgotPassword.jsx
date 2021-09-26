@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
 import { Button, Form } from "react-bootstrap";
 import ShowAlert from "./Alert";
-import isValidEmail from "./validEMail";
+const isValidEmail = require("./validEmail.js");
+
 import "./styles/style.css";
 
 const BuildForm = (props) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
 import { Button, Col,Image, Container, Form, Row } from "react-bootstrap";
 import ShowAlert from "./Alert";
-import isValidEmail from "./validEMail";
+const isValidEmail = require("./validEmail.js");
 
 const ProfileDetails = (userParams) => {
 

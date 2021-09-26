@@ -7,5 +7,9 @@ const isValidEmail = (email) => {
   return re.test(String(email).toLowerCase());
 };
 
+
+//export this file
 // module.exports is the way to make this function accessible from the outside because it is a module
-module.exports = isValidEmail;
+export default isValidEmail
+
+

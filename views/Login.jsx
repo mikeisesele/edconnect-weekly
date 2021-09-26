@@ -4,8 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import ShowAlert from "./Alert";
-import isValidEmail from "./validEMail";
+const isValidEmail = require("./validEmail.js");
 import "../views/styles/style.css";
 
 
