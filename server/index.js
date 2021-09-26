@@ -52,7 +52,7 @@ register(app).then(() => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(morgan("combined"));
-  app.use(bodyParser.json());
+  app.use(express.json());
   app.use(
     bodyParser.urlencoded({
       extended: true,
