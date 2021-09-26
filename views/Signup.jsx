@@ -12,7 +12,8 @@ const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
 
 const MainSignup = (props) => {
 
-  const { programs, graduationYears, error } = props?.response?.data ?  props.response.data : null
+  const { programs, graduationYears } = props?.response?.data ?  props.response.data : null
+  const error = props.error ? props.error : null
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +31,6 @@ const MainSignup = (props) => {
         matricNumber,
       });
     }, []);
-
 
   const handleInput = (e) => {
     const { name, value } = e.target;

@@ -12,11 +12,11 @@ import Layout from "./shared/Layout";
 import "./styles/style.css";
 
 const ProjectLayout = ({ response }) => {
-  const project  = response.data.project;
-  const projectCreator = response.currentUser;    
-  const projectId = project._id.toString();
-  const stringProjectCreatorId = projectCreator._id.toString();
-  const stringUserId = response?.currentUser._id.toString()
+  const project  = response?.data?.project ? response.data.project : null;
+  const projectCreator = response?.currentUser ? response.currentUser : "";    
+  const projectId = project?._id ? projectId._id.toString() : "";
+  const stringProjectCreatorId = projectCreator?._id? projectCreator._id.toString() : "";
+  const stringUserId = response?.currentUser?._id ?  response.current.user._id.toString() : "";
   return (
     <>
       <Container>
