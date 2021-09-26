@@ -15,7 +15,7 @@ const faceBookStrategy = require("./config/facebookAuthStrategy")
 const app = express();
 
 // get server port for production or 8080 for development
-const SERVER_PORT = process.env.PORT || 80 ;
+const SERVER_PORT = process.env.PORT || 8080 ;
 
 //created a mongoDB collection to be used as session store. 
 const store = new MongoDBStore({
@@ -58,6 +58,9 @@ register(app).then(() => {
       extended: true,
     })
   );
+
+  // connect database
+  DB.connectDB()
 
   /**
    * @Desc set global variable in express
@@ -105,11 +108,9 @@ register(app).then(() => {
    * @param {function} callback - callback function to be called when server is started
    * @returns {void}
    */
-  if (DB.connectDB()) {
     app.listen(SERVER_PORT, () => {
       console.log("Edconnect server is live. listening on port " + SERVER_PORT);
       console.log("connecting to database...");
       console.log("database connected successfully");
     });
-  }
 });

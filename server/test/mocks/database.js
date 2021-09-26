@@ -1,10 +1,3 @@
-// // get database from the config file
-// const db = require('../../config/db');
-
-// module.exports = db;
-
-
-// tests/db-handler.js
 
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
