@@ -183,8 +183,10 @@ router.get("/search/:text", async (req, res) => {
 
   try {
     const text = req.params.text;
-    const projects = await Project.search(text);
 
+    const projects = await Project.searchAll(text.toLowerCase());
+
+     console.log(projects);
     let currentUser = await userInSession(req);
     const error = req.flash("error");
 
@@ -246,9 +248,9 @@ router.post("/editproject/project/update/:id", isLoggedIn, async (req, res) => {
 
 /**
  * @desc adds a project as favourite for a user
- * @Route POST /projects/favourite/:id
+ * @Route POST /favourites/add/:id
  */
-router.get("/favourites/add/:id", isLoggedIn, async (req, res) => {
+router.post("/favourites/add/:id", isLoggedIn, async (req, res) => {
   try {
     const id = req.params.id;
     const project = await Project.getById(id);
@@ -256,6 +258,10 @@ router.get("/favourites/add/:id", isLoggedIn, async (req, res) => {
 
     // add project to the user favourite projects
     await User.addFavouriteProject(user._id, project._id);
+    res.status(201).json({
+      message: "project added to favourites",
+      project: project,
+    });
   } catch {
     (error) => console.log(error);
   }

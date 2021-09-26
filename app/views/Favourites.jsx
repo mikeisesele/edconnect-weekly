@@ -1,33 +1,22 @@
 import React from "react";
 import Layout from "./shared/Layout";
-import { Button, Card, Container } from "react-bootstrap";
+import SingleProject from "./SingleProject";
+
 
 const FavProjects = (props) => {
-  const projects = props.response
+  
+const projects = props.response.data.project;
+const currentUser = props.response.currentUser;
 
-  return projects.map((project) => {
-    const { abstract, authors, _id, name, tags, createdBy } = project;
-
-    return (
-      <Container className="mb-3 pl-5 pr-5">
-        <Card key={project._id}>
-          <Card.Header>{`By: ${authors}`}</Card.Header>
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>{abstract}</Card.Text>
-            <Button
-              className="float-right"
-              variant="primary"
-              href={`/favourites/delete/${_id}`}
-            >
-              Remove from favourites
-            </Button>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  });
-};
+return projects.map((project) => (
+  <SingleProject
+    project={project}
+    key={project._id}
+    currentUser={currentUser}
+    title="Remove from favourites"
+  />
+));
+}
 
 const Header = () => {
   return (
@@ -39,11 +28,11 @@ const Header = () => {
 };
 
 const Favourites = (props) => {
-  console.log(props);
+  
   return (
     <Layout response={props}>
       <Header />
-      <FavProjects response={props.response.data.project} />
+      <FavProjects {...props} />
     </Layout>
   );
 };

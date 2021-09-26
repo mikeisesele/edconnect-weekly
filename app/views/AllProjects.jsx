@@ -1,70 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Layout from "./shared/Layout";
-import { Button, Card, Row, Form, Container } from "react-bootstrap";
+import SingleProject from "./SingleProject";
 
 const Projects = (data) => {
 
-      const [favourite, setFavourite] = useState("Add to favourites");
-
-          const handleSubmit = (e) => {
-            e.preventDefault();
-            const { name, value } = e.target;
-            switch (name) {
-              case `${project._id}`:
-                setFavourite(value);
-                break;
-              default:
-            }
-          };
-
-
   const projects = data.response.data.projects;
+  const currentUser = data.response.currentUser;
 
-  
-  return projects.map((project) => {
-    const { abstract, authors, _id, name, tags, createdBy } = project;
-
-    return (
-      <Container className="mb-3 pl-5 pr-5">
-        <Card key={project._id}>
-          <Card.Header>
-            {`By: ${authors}`}
-
-            <Button
-              variant="outline-primary"
-              name={`${project._id}`}
-              href={`/projects/favourites/${project._id}`}
-              className="mr-3 float-right"
-              value="Added to favourites"
-              onClick={handleSubmit}
-            >
-              {favourite}
-            </Button>
-          
-          </Card.Header>
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>{abstract}</Card.Text>
-            <Button
-              className="float-right"
-              variant="primary"
-              href={`/project/${_id}`}
-            >
-              Read More
-            </Button>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  });
+  return projects.map((project) => (
+    <SingleProject
+      project={project}
+      key={project._id}
+      currentUser={currentUser}
+      title="Read more"
+    />
+  ));
 };
 
 const Header =()=> {
     return ( 
         <div className="text-center mx-auto mb-3">
-            <h1 >All Projects</h1>
-            <p>Find all projects in our repository</p>
-    </div>
+            <h1 >Projects</h1>
+        </div>
     )
 }
 

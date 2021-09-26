@@ -101,16 +101,19 @@ const deleteProject = async (project) => {
 
 
 const searchAll = async (text) => {
+  console.log(text, "**");
   const result = await Project.find(
-    { $text: { $search: text } },
-    { score: { $meta: "textScore" } },
-  ).sort({ score: { $meta: "textScore" } });
-
+   { $text: { $search: text } });
   return result
+
+  // { $text: { $search: text } },
+  //   { score: { $meta: "textScore" } }
+  // )
+  //   .sort({ score: { $meta: "textScore" } })
+  //   .exec(function (err, results) {
+  //     return results
+  //   }
 }
-
-
-
 
 module.exports = {
   getAll,

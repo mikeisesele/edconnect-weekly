@@ -18,6 +18,8 @@ const Header = (props) => {
     });
   }, []);
 
+
+
   return (
     <>
       <Navbar
@@ -44,7 +46,9 @@ const Header = (props) => {
               onChange={(e) => setSearchText(e.target.value.trim())}
             />
             <Nav.Link href={`/search/${searchText}`}>
-              <Button variant="outline-light">Search</Button>
+              <Button 
+             
+              variant="outline-light">Search</Button>
             </Nav.Link>
           </Form>
           <Nav className="mr-auto">

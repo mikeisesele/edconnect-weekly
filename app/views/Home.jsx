@@ -7,7 +7,7 @@ const Jumbo = (props) => {
   return (
     <>
       <Jumbotron>
-        <h1 data-testid="welcomeMessage">Welcome to Project Explorer</h1>
+        <h1>Welcome to Project Explorer</h1>
         <p>
           Project Explorer is a repository for interesting projects accross all
           fields of knowledge. An Ideal place for intellectuals! You can submit
@@ -51,7 +51,7 @@ const Showcase = ( props ) => {
 
   return (
     <>
-      <CardGroup data-testid="project-cards" className="showcase">
+      <CardGroup className="showcase">
         {projects
           .reverse()
           .slice(0, 4)

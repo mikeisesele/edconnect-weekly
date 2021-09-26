@@ -85,7 +85,12 @@ const ProfileDetails = (userParams) => {
               {`${userInfo.firstName} 
               ${userInfo.lastName}`}
             </h3>
-            <h5 className="ml-2 text-secondary text-md">{userInfo.email}</h5>
+            <h5
+              className="ml-2 text-secondary text-md"
+              data-testid="email"
+            >
+              {userInfo.email}
+            </h5>
           </Col>
         </Row>
         <Row className="bg-light m-auto pl-3 pr-3">
@@ -94,15 +99,18 @@ const ProfileDetails = (userParams) => {
             className="d-flex flex-column mt-2 align-content-center"
           >
             <p className="mb-0">Program</p>
-            <p>{userInfo.program}</p>
+            <p data-testid="program">{userInfo.program}</p>
           </Col>
 
           <Col className="d-flex flex-column mt-2 align-content-center">
             <p className="mb-0">Matriculation number</p>
-            {userInfo.matricNumber}
+            <p data-testid="matriculation-number">{userInfo.matricNumber}</p>
           </Col>
 
-          <Col className="d-flex flex-column mt-2 align-content-center">
+          <Col
+            data-testid="graduation-year"
+            className="d-flex flex-column mt-2 align-content-center"
+          >
             <p className="mb-0">Graduation year</p>
             {userInfo.graduationYear}
           </Col>
@@ -111,6 +119,7 @@ const ProfileDetails = (userParams) => {
           <h5>Update Profile</h5>
           <br />
           <Form
+            data-testid="profile-form"
             id="signupForm"
             method="post"
             data-testid="user-details"
@@ -135,7 +144,7 @@ const ProfileDetails = (userParams) => {
             )}
 
             <Form.Row>
-              <Form.Group as={Col}>
+              <Form.Group data-testid="fullname" as={Col}>
                 <Form.Label>First Name:</Form.Label>
                 <Form.Control
                   type="text"
@@ -161,6 +170,7 @@ const ProfileDetails = (userParams) => {
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -190,6 +200,7 @@ const ProfileDetails = (userParams) => {
               <Form.Group as={Col}>
                 <Form.Label>Matric Number:</Form.Label>
                 <Form.Control
+               
                   name="matricNumber"
                   value={matricNumber}
                   placeholder="Matric Number"
@@ -201,6 +212,7 @@ const ProfileDetails = (userParams) => {
                 <Form.Label>Graduation Year:</Form.Label>
                 <Form.Control
                   as="select"
+                  data-testid="grad"
                   name="graduationYear"
                   placeholder="Graduation Year"
                   onChange={handleInput}
@@ -256,7 +268,12 @@ const ProfileDetails = (userParams) => {
               variant="danger text-sm"
             />
           )}
-          <Form id="signupForm" method="post" action="/api/v1/password/change">
+          <Form
+            data-testid="password-form"
+            id="signupForm"
+            method="post"
+            action="/api/v1/password/change"
+          >
             <Form.Row>
               <Form.Group as={Col}>
                 <Form.Label>Current password</Form.Label>

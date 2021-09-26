@@ -2,7 +2,6 @@
 // create an array of 10 objects with the above properties
 const projects = [
     {
-        _id: "614b19723f43a1fd47956f63",
         name: "Project 1",
         description: "This is the first project",
         tag: "tag1",
@@ -10,15 +9,13 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f64",
         name: "Project 2",
-                description: "This is the second project",
+        description: "This is the second project",
         tag: "tag2",
         abstract: "This is the second project",
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f65",
         name: "Project 3",
         description: "This is the third project",
         tag: "tag3",
@@ -26,7 +23,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f66",
         name: "Project 4",
         description: "This is the fourth project",
         tag: "tag4",
@@ -34,7 +30,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f67",
         name: "Project 5",
         description: "This is the fifth project",
         tag: "tag5",
@@ -42,7 +37,7 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-                _id: "614b19723f43a1fd47956f68",
+    
         name: "Project 6",
         description: "This is the sixth project",
         tag: "tag6",
@@ -50,7 +45,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f69",
         name: "Project 7",
         description: "This is the seventh project",
         tag: "tag7",
@@ -58,7 +52,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f70",
         name: "Project 8",
         description: "This is the eighth project",
         tag: "tag8",
@@ -66,7 +59,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f71",
         name: "Project 9",
         description: "This is the ninth project",
         tag: "tag9",
@@ -74,7 +66,6 @@ const projects = [
         createdBy: "614b19723f43a1fd47956f63",
     },
     {
-        _id: "614b19723f43a1fd47956f72",
         name: "Project 10",
         description: "This is the tenth project",
         tag: "tag10",

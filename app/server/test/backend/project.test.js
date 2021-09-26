@@ -29,8 +29,6 @@ describe("Project Service", () => {
     // test createProject
     test("createProject", async () => {
         const project = await Project.create(projects[3]);
-        console.log(projects[3])
-        console.log(project[1]);
         expect(project).toBeTruthy();
     });
         
