@@ -15,7 +15,7 @@ const ProjectLayout = ({ response }) => {
   console.log(response);
   const project  = response?.data?.project ? response.data.project : null;
   const projectCreator = response?.currentUser ? response.currentUser : "";    
-  const projectId = project?._id ? projectId._id.toString() : "";
+  const projectId = project?._id ? project._id.toString() : "";
   const stringProjectCreatorId = projectCreator?._id? projectCreator._id.toString() : "";
   const stringUserId = response?.currentUser?._id ?  response.current.user._id.toString() : "";
   return (
