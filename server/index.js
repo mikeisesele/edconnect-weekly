@@ -111,6 +111,5 @@ register(app).then(() => {
     app.listen(SERVER_PORT, () => {
       console.log("Edconnect server is live. listening on port " + SERVER_PORT);
       console.log("connecting to database...");
-      console.log("database connected successfully");
     });
 });
