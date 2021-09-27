@@ -149,7 +149,7 @@ const MainSignup = (props) => {
               <Form.Label>Matric Number</Form.Label>
               <Form.Control
                 name="matricNumber"
-                placeHolder="Matric Number"
+                placeholder="Matric Number"
                 value={matricNumber}
                 onChange={handleInput}
               />

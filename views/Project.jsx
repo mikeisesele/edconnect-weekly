@@ -12,7 +12,6 @@ import Layout from "./shared/Layout";
 import "./styles/style.css";
 
 const ProjectLayout = ({ response }) => {
-  console.log(response)
   const project  = response?.data?.project ? response.data.project : null;
   const projectCreator = response?.data?.projectCreator ? response.data.projectCreator : {};    
   const projectId = project?._id ? project._id.toString() : "";
@@ -70,7 +69,7 @@ const ProjectLayout = ({ response }) => {
             <Col>
               <div className="col-sm">
                 <div className="d-flex justify-content-end">
-                  <a className=" btn btn-primary" id="inactiveLink">
+                  <a className=" btn btn-secondary" id="inactiveLink">
                     Cannot Edit Project
                   </a>
                 </div>
