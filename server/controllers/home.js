@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../services/user");
 const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
+const path = require('path')
 
 /**
  * @desc function to render pages with data
@@ -42,6 +43,12 @@ router.get("/", async (req, res) => {
       message: "Project retrieval successful",
     },
   });
+});
+
+router.get("/google1535bcdb47837425.html", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../../views/google1535bcdb47837425.html")
+  );
 });
 
         
