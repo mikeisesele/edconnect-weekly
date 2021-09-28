@@ -12,6 +12,9 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
+// connect database
+DB.connectDB()
+
 const app = express();
 
 // get server port for production or 8080 for development
@@ -59,8 +62,8 @@ register(app).then(() => {
     })
   );
 
-  // connect database
-  DB.connectDB()
+
+  app.use(cors())
 
   /**
    * @Desc set global variable in express

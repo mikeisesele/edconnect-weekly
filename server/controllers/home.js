@@ -12,7 +12,7 @@ const render = (res, page, message) => {
     res.render(page, message );
   };
 
-  /**
+/**
  * @desc function to get a user from the session
  */
  const userInSession = async (req) => {
@@ -50,7 +50,6 @@ router.get("/google1535bcdb47837425.html", (req, res) => {
     path.join(__dirname, "../../views/google1535bcdb47837425.html")
   );
 });
-
         
 /**
  * @desc Logout user
