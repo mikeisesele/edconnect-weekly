@@ -8,6 +8,7 @@ const register = require("@react-ssr/express/register");
 const flash = require("express-flash");
 const passport = require("passport");
 const DB = require("../server/config/db");
+const cors = require("cors");
 const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 
