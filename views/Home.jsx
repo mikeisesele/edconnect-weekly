@@ -47,7 +47,6 @@ const Jumbo = (props) => {
 
 const Showcase = ( props ) => {
   
-  console.log(props)
   const projects = props.response.data.projects;
 
   return (
