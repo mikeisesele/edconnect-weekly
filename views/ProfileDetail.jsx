@@ -210,7 +210,7 @@ const ProfileDetails = (userParams) => {
                   value={graduationYear}
                 >
                   <option>Select Graduation Year</option>
-                  {usergraduationYears.map((year, index) => (
+                  {usergraduationYears?.map((year, index) => (
                     <option key={index}>{year}</option>
                   ))}
                 </Form.Control>
