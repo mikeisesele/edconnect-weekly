@@ -23,10 +23,10 @@ const create = async ({
   googleId,
   profileImage,
 }) => {
+
   try {
 
     const user = new User();
-
     user.firstName = capitalizedName(firstname);
     user.lastName = capitalizedName(lastname);
     user.email = email.toLowerCase();

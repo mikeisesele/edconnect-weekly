@@ -274,6 +274,7 @@ router.post("/favourites/add/:id", isLoggedIn, async (req, res) => {
  * @param {string} userId - the id of the user.
 */
 router.get("/favourites/delete/:id", isLoggedIn, async (req, res) => {
+  
   try {
     const id = req.params.id;
     const user = await userInSession(req);
