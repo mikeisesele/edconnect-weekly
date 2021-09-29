@@ -6,7 +6,7 @@ import ShowAlert from "./Alert";
 const ProfileDetails = (userParams) => {
 
 
-  console.log(userParams)
+  console.log(userParams.message.response.data)
   const error = userParams.error ? userParams.error : null
   const user = userParams.message.response.currentUser;
   const userprograms = userParams.message.response.data.programs;
