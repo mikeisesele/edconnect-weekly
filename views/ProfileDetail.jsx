@@ -135,7 +135,7 @@ const ProfileDetails = (userParams) => {
               />
             )}
 
-            {email.length > 0 && !isValidEmail(email) && (
+            {(email.length > 0 && !(isValidEmail(email))) && (
               <ShowAlert
                 message={`${email} is not a valid email.`}
                 className="alert alert-primary"
