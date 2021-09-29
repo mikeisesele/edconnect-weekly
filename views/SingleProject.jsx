@@ -5,6 +5,7 @@ import axios from "axios";
 
 // create a complete functiomal component
 const SingleProject = (props) => {
+  
   const { abstract, authors, _id, name, tags, createdBy } = props.project;
   const [isFavorite, setIsFavorite] = React.useState(false);
   const favourites = props.currentUser.favouriteProjects;
@@ -71,4 +72,4 @@ const SingleProject = (props) => {
     </Container>
   );
     }
-        export default SingleProject;
+export default SingleProject;
