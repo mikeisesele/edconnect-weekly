@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
 import { Button, Col,Image, Container, Form, Row } from "react-bootstrap";
 import ShowAlert from "./Alert";
-// const isValidEmail = require("./validEmail.js");
 
 const ProfileDetails = (userParams) => {
 
@@ -134,14 +133,6 @@ const ProfileDetails = (userParams) => {
                 variant="primary"
               />
             )}
-
-            {/* {(email.length > 0 && !(isValidEmail(email))) && (
-              <ShowAlert
-                message={`${email} is not a valid email.`}
-                className="alert alert-primary"
-                variant="danger text-sm"
-              />
-            )} */}
 
             <Form.Row>
               <Form.Group data-testid="fullname" as={Col}>

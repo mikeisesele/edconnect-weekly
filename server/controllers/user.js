@@ -193,7 +193,7 @@ router.post("/profile", isLoggedIn, multerUploads, async (req, res) => {
     }
 
     // update current user with new detail
-    const result = await User.updateUser(id, newUserProfile);
+    const result = await User.updateUser(currentUser._id, newUserProfile);
 
     // if update is successful
     if (result[0]) {
