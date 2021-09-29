@@ -180,7 +180,7 @@ const ProfileDetails = (userParams) => {
                   value={program}
                 >
                   <option>Select Program</option>
-                  {userprograms.map((program) => (
+                  {userprograms?.map((program) => (
                     <option key={program}>{program}</option>
                   ))}
                 </Form.Control>
