@@ -13,10 +13,11 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
- // connect database
-DB.connectDB()
 
 const app = express();
+
+ // connect database
+DB.connectDB()
 
 
 // // get server port for production or 8080 for development
@@ -107,9 +108,8 @@ register(app).then(() => {
    */
   app.use(express.static("public"));
 
-});
 
-/**
+  /**
  * @Desc listen to post when mongo connection is successful
  * @param {number} port - port number to listen to
  * @param {function} callback - callback function to be called when server is started
@@ -119,3 +119,5 @@ register(app).then(() => {
     console.log("Edconnect server is live. listening on port " + SERVER_PORT);
     console.log("connecting to database...");
   });
+});
+
