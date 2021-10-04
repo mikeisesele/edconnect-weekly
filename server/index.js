@@ -11,8 +11,6 @@ const DB = require("../server/config/db");
 const cors = require("cors");
 const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
-
-
 const app = express();
 
  // connect database
