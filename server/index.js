@@ -15,8 +15,10 @@ const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 const app = express();
 
-// get server port for production or 8080 for development
-const SERVER_PORT = process.env.PORT || 8080 ;
+app.set("port", process.env.PORT || 8080);
+
+// // get server port for production or 8080 for development
+// const SERVER_PORT = process.env.PORT || 8080 ;
 
 //created a mongoDB collection to be used as session store. 
 const store = new MongoDBStore({
