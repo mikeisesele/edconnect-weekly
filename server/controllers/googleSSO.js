@@ -31,8 +31,6 @@ router.get(
       } else {
         res.redirect("/");
       }
-    } else {
-      console.log(`no user ${req.session.user}`);
     }
   }
 );
