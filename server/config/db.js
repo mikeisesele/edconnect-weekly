@@ -17,7 +17,9 @@ const connectionOptions = {
  */
 const connectDB = async () => {
   try {
-      return await mongoose.connect(dbURL, connectionOptions)    
+      return await mongoose.connect(dbURL, connectionOptions).then(
+                  console.log("connection successful")
+      )    
   } catch (e) {
     console.log("connection to database failed");
     console.error(e.message);
