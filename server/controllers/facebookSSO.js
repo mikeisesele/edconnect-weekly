@@ -30,7 +30,6 @@ router.get(
 
   function (req, res) {
     const { user } = req;
-
     /**
      * @desc creates a new user if one does not exist
      */

@@ -45,12 +45,6 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/auth/google/callback/google1535bcdb47837425.html", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../../views/google1535bcdb47837425.html")
-  );
-});
-
 
 router.get("/google1535bcdb47837425.html", (req, res) => {
   res.sendFile(
