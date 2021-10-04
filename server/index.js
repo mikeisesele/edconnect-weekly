@@ -13,7 +13,6 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
-
 const app = express();
 
  // connect database
@@ -28,6 +27,17 @@ const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
 });
+
+  /**
+ * @Desc listen to post when mongo connection is successful
+ * @param {number} port - port number to listen to
+ * @param {function} callback - callback function to be called when server is started
+ * @returns {void}
+ */
+  app.listen(SERVER_PORT, () => {
+    console.log("Edconnect server is live. listening on port " + SERVER_PORT);
+    console.log("connecting to database...");
+  });
 
 /**
  * @Desc
@@ -107,17 +117,5 @@ register(app).then(() => {
    * @Desc set up static files handling
    */
   app.use(express.static("public"));
-
-
-  /**
- * @Desc listen to post when mongo connection is successful
- * @param {number} port - port number to listen to
- * @param {function} callback - callback function to be called when server is started
- * @returns {void}
- */
-  app.listen(SERVER_PORT, () => {
-    console.log("Edconnect server is live. listening on port " + SERVER_PORT);
-    console.log("connecting to database...");
-  });
 });
 
