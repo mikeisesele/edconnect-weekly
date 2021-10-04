@@ -13,6 +13,9 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 
 
+ // connect database
+DB.connectDB()
+
 const app = express();
 
 
@@ -110,13 +113,8 @@ register(app).then(() => {
    * @param {function} callback - callback function to be called when server is started
    * @returns {void}
    */
-  if (
-    // connect database
-    DB.connectDB()
-  ) {
     app.listen(SERVER_PORT, () => {
       console.log("Edconnect server is live. listening on port " + SERVER_PORT);
       console.log("connecting to database...");
     });
-  }
 });
