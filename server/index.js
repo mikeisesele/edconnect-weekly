@@ -15,7 +15,8 @@ const app = express();
 
  // connect database
 DB.connectDB()
-
+  .then(() => console.log("Database connected"))
+  .catch(err => console.log(err));
 
 // // get server port for production or 8080 for development
 const SERVER_PORT = process.env.PORT || 8080 ;
@@ -108,7 +109,6 @@ register(app).then(() => {
    */
   app.listen(SERVER_PORT, () => {
     console.log("Edconnect server is live. listening on port " + SERVER_PORT);
-    console.log("connecting to database...");
   });
 });
 
