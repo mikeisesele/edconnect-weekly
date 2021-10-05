@@ -64,19 +64,6 @@ register(app).then(() => {
     })
   );
 
-
-  /**
-   * @Desc set global variable in express
-   */
-  app.use(function (req, res, next) {
-    // set global user variable to the user currnetly in this cycle
-    // this allows acccess of user within our template
-    // create a new variable res.locals.user, save a user to it.
-    // this is ised in the index.hbs, line 12, -> (the ../user)
-    res.locals.user = req.user || null;
-    next();
-  });
-
   app.use(
     session({
       secret: "secret",
