@@ -99,11 +99,7 @@ register(app).then(() => {
   app.use("/", require("./controllers/facebookSSO"));
   app.use("/", require("./controllers/googleSSO"));
 
-  /**
-   * @Desc set up static files handling
-   */
-  app.use(express.static("public"));
-
+  
   /**
    * @Desc listen to post when mongo connection is successful
    * @param {number} port - port number to listen to
