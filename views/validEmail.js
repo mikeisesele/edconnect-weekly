@@ -11,5 +11,3 @@ const isValidEmail = (email) => {
 //export this file
 // module.exports is the way to make this function accessible from the outside because it is a module
 export default isValidEmail
-
-

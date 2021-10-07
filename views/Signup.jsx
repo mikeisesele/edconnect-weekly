@@ -75,21 +75,21 @@ const MainSignup = (props) => {
             />
           )}
 
-          {email.length > 0 && !isValidEmail(email) && (
+          {/* {email.length > 0 && !isValidEmail(email) && (
             <ShowAlert
               message={`${email} is not a valid email.`}
               className="alert alert-primary text-center"
               variant="danger text-sm"
             />
-          )}
+          )} */}
 
-          {password.length > 0 && password.length < 7 && (
+          {/* {password.length > 0 && password.length < 7 && (
             <ShowAlert
               message="Password must be 7 characters or more."
               className="text-center"
               variant="danger text-sm"
             />
-          )}
+          )} */}
 
           <Form.Row>
             <Form.Group as={Col}>
