@@ -4,8 +4,10 @@ import Layout from "./shared/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-const isValidEmail = require("./validEmail.js");
+import isValidEmail from "../utils/validEmail";
 import "../views/styles/style.css";
+import ShowAlert from "./Alert";
+
 
 const facebookIcon = <FontAwesomeIcon icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
@@ -75,21 +77,21 @@ const MainSignup = (props) => {
             />
           )}
 
-          {/* {email.length > 0 && !isValidEmail(email) && (
+          {email.length > 0 && !isValidEmail(email) && (
             <ShowAlert
               message={`${email} is not a valid email.`}
               className="alert alert-primary text-center"
               variant="danger text-sm"
             />
-          )} */}
+          )}
 
-          {/* {password.length > 0 && password.length < 7 && (
+          {password.length > 0 && password.length < 7 && (
             <ShowAlert
               message="Password must be 7 characters or more."
               className="text-center"
               variant="danger text-sm"
             />
-          )} */}
+          )}
 
           <Form.Row>
             <Form.Group as={Col}>

@@ -83,8 +83,7 @@ register(app).then(() => {
   app.use("/", require("./controllers/user"));
   app.use("/", require("./controllers/project"));
   app.use("/", require("./controllers/password"));
-  app.use("/", require("./controllers/facebookSSO"));
-  app.use("/", require("./controllers/googleSSO"));
+  app.use("/", require("./controllers/sociallogin"));
 
   
   /**

@@ -4,9 +4,9 @@ import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-const isValidEmail = require("./validEmail.js");
+import isValidEmail  from "../utils/validEmail";
+import ShowAlert from "./Alert"
 import "../views/styles/style.css";
-
 
 const facebookIcon = <FontAwesomeIcon  className="facebook-icon" icon={faFacebook} />;
 const googleIcon = <FontAwesomeIcon icon={faGoogle} />;
@@ -16,7 +16,6 @@ const BuildForm = ({ error }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [remember, setRemember] = useState({});
-
 
     const handleInput = (e) => {
       const { name, value } = e.target;
@@ -39,36 +38,35 @@ const BuildForm = ({ error }) => {
       });
     }, []);
 
-
   return (
     <>
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Login</h1>
+        {email.length > 0 && !isValidEmail(email) && (
+          <ShowAlert
+            message={`${email} is not a valid email.`}
+            className="alert alert-primary"
+            variant="danger text-sm"
+          />
+        )}
+
+        {password.length > 0 && password.length < 7 && (
+          <ShowAlert
+            message="Password must be 7 characters or more."
+            className="text-center"
+            variant="danger text-sm"
+          />
+        )}
+
+        {error.length > 0 && (
+          <ShowAlert
+            message={`${error}`}
+            className="text-center"
+            variant="danger text-sm"
+          />
+        )}
+
         <Form id="loginForm" className="mb-3" method="post" action="/login">
-          {email.length > 0 && !isValidEmail(email) && (
-            <ShowAlert
-              message={`${email} is not a valid email.`}
-              className="alert alert-primary"
-              variant="danger text-sm"
-            />
-          )}
-
-          {password.length > 0 && password.length < 7 && (
-            <ShowAlert
-              message="Password must be 7 characters or more."
-              className="text-center"
-              variant="danger text-sm"
-            />
-          )}
-
-          {error.length > 0 && (
-            <ShowAlert
-              message={`${error}`}
-              className="text-center"
-              variant="danger text-sm"
-            />
-          )}
-
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control

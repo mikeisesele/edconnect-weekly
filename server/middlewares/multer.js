@@ -16,15 +16,16 @@ const storage = multer.diskStorage({
 const upload = multer({
   // Set storage size 
   limits: {
-    fileSize: 1000000,
+    fileSize: 100000000,
   },
 
   // Set file type
   fileFilter(req, file, cb) {
     // Check file type 
-    if (!file.originalname.match(/\.(gif|jpg|png)$/)) {
+    if (!file.originalname.match(/\.(jpg|png)$/)) {
+
       // Return error if file type is not supported
-      return cb(new Error("please upload a valid file"));
+      req.fileValidationError = true;
     }
     // Return no error if file type is supported
     return cb(undefined, true);

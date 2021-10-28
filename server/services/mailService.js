@@ -16,7 +16,7 @@ const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
   REDIRECT_URI
-);
+); 
 
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
@@ -33,6 +33,8 @@ const sendEmail = async (receiver, token, name) => {
   try {
     // create an access token to be used at this time
       const accessToken = await oAuth2Client.getAccessToken();
+
+      console.log(accessToken);
 
       // create reusable transporter object using the default SMTP transport
       const smtpConfig = {

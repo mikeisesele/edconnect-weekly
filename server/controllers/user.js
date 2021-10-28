@@ -8,25 +8,8 @@ import { cloudinary } from "../middlewares/cloudinery";
 
 const programs = getPrograms();
 const graduationYears = getGradYears();
-
-/**
- * @desc function to render pages with data
- */
-const render = (res, page, message) => {
-  res.render(page, message );
-};
-
-/**
- * @desc function to get a user from the session
- */
- const userInSession = async (req) => {
-   const userId = req?.session?.user ? req.session.user._id : null
-   let user = {}
-   if(userId != null){
-      user = await User.getById(userId);
-   }
-   return user
- }
+const userInSession = require("../../utils/userInSession");
+const render = require("../../utils/renderView");
 
 /**
  * @desc show sign up page
@@ -85,7 +68,6 @@ router.post("/signup",  async (req, res) => {
   }
 });
 
-
 /**
  * @desc show login page
  * @route GET /login
@@ -103,7 +85,6 @@ router.get("/login", async (req, res) => {
   });
 });
 
-
 /**
  * @desc handle login click
  * @route POST /login
@@ -120,8 +101,6 @@ router.post("/login", async (req, res) => {
     res.redirect(303, "/login");
   }
 });
-
-
 
 /**
  * @desc show profile page
@@ -148,65 +127,82 @@ router.get("/profile", async (req, res) => {
   }
 });
 
-
 /**
  * @desc handle update profile click
  * @route POST /profile
  */
 router.post("/profile", isLoggedIn, multerUploads, async (req, res) => {
-  const currentUser = await userInSession(req);
 
-  const { firstName, lastName, graduationYear, program } = req.body;
+  if(req.fileValidationError){
+   
+    render(res, "ProfileDetail", { 
+      response: {
+        data: {
+          programs, 
+          graduationYears 
+        },
+        currentUser: req.session.user,
+        result: false,
+        message: "Please upload a valid file. Images usually have .jpg or .png extensions.",  
+      }});
 
-  // reset graduation year and program if user does not select
-  if (graduationYear === "Select Graduation Year") {
-    graduationYear = "";
-  }
-  if (program === "Select Program") {
-    program = "";
-  }
+  } else {
+    const currentUser = await userInSession(req);
 
-  try {
-    
+    const { firstName, lastName, graduationYear, program } = req.body;
 
-    // create a new user detail with the information provided from the request
-    const newUserProfile = {
-      program,
-      graduationYear,
-      firstName,
-      lastName,
-      profilePicture: currentUser?.profilePicture,
-      ...req.body,
-    };
-
-    // it there is a file
-    if (req.file) {
-      // Upload image to cloudinary
-      await cloudinary.uploader.upload(req.file.path, function (error, result) {
-        // if upload is successful
-        if (result) {
-          // // set the new user image to url
-          newUserProfile.profilePicture = result.url;
-          return newUserProfile.profilePicture;
-        }
-      });
+    // reset graduation year and program if user does not select
+    if (graduationYear === "Select Graduation Year") {
+      graduationYear = "";
+    }
+    if (program === "Select Program") {
+      program = "";
     }
 
-    // update current user with new detail
-    const result = await User.updateUser(currentUser._id, newUserProfile);
+    try {
+      // create a new user detail with the information provided from the request
+      const newUserProfile = {
+        program,
+        graduationYear,
+        firstName,
+        lastName,
+        profilePicture: currentUser?.profilePicture,
+        ...req.body,
+      };
 
-    // if update is successful
-    if (result[0]) {
-      
-      // redirect to profile page
-      res.redirect("/profile");
+      // it there is a file
+      if (req.file) {
+        // Upload image to cloudinary
+        await cloudinary.uploader.upload(
+          req.file.path,
+          function (error, result) {
+            // if upload is successful
+            if (result) {
+              // // set the new user image to url
+              newUserProfile.profilePicture = result.url;
+              return newUserProfile.profilePicture;
+            } else {
+              // if upload is unsuccessful
+              console.log(error);
+            }
+          }
+        );
+      }
+
+      // update current user with new detail
+      const result = await User.updateUser(currentUser._id, newUserProfile);
+
+      // if update is successful
+      if (result[0]) {
+        // redirect to profile page
+        res.redirect("/profile");
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
   }
+
 });
-
-
 
 // @desc Changes the Password of a user
 // @desc Log out a user

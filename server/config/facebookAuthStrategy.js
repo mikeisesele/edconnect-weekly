@@ -1,7 +1,7 @@
 require("dotenv").config();
 const FacebookStrategy = require("passport-facebook").Strategy;
+const { serializeUser, deserializeUser } = require("../../utils/serializer");
 const passport = require("passport");
-const User = require("../services/user");
 
 /**
  * @Desc Facebook authentication strategy. contains facebook credentials
@@ -66,15 +66,7 @@ const facebookStrategy = new FacebookStrategy(
 );
 passport.use(facebookStrategy);
 
-/**
- * @Desc serialize user into the session and deserialize user from the session
- */
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => done(err, user));
-});
+serializeUser
+deserializeUser
 
 module.exports = facebookStrategy;

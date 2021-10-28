@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
 import { Button, Form } from "react-bootstrap";
 import ShowAlert from "./Alert";
-const isValidEmail = require("./validEmail.js");
+const isValidEmail = require("../utils/validEmail.js");
 
 import "./styles/style.css";
 
@@ -60,13 +60,13 @@ const BuildForm = (props) => {
           />
         )}
 
-        {/* {email.length > 0 && !isValidEmail(email) && (
+        {email.length > 0 && !isValidEmail(email) && (
           <ShowAlert
             message={`${email} is not a valid email.`}
             className="alert alert-primary text-center"
             variant="danger text-sm"
           />
-        )} */}
+        )}
 
         <Form
         className="mb-5"

@@ -4,25 +4,9 @@ const isLoggedIn = require("../middlewares/auth");
 const router = express.Router();
 const jwt = require("jwt-simple");
 import sendMail from "../services/mailService";
+const userInSession = require("../../utils/userInSession");
+const render = require("../../utils/renderView");
 
-/**
- * @desc function to render pages with data
- */
-const render = (res, page, message) => {
-  res.render(page, message);
-};
-
-/**
-* @desc function to get a user from the session
-*/
-const userInSession = async (req) => {
-  const userId = req?.session?.user ? req.session.user._id : null
-  let user = {}
-  if (userId != null) {
-    user = await User.getById(userId);
-  }
-  return user
-};
 
 /**
 * @desc show forgot password page
@@ -40,7 +24,6 @@ router.get("/forgotPassword", async (req, res) => {
   });
 });
 
-
 /**
  * @desc show reset password page
  * @route GET /resetPassword
@@ -55,7 +38,7 @@ router.get("/resetPassword", async (req, res) => {
         currentUser,
       },
       currentUser,
-      result: fal
+      result: false
     },
   });
 });
@@ -67,7 +50,6 @@ router.get("/resetPassword", async (req, res) => {
  */
 router.post("/api/v1/password/change", isLoggedIn, async (req, res) => {
   // function to render pages
-
   try {
     const currentUser = await userInSession(req);
     // check if user registered with email or social media
@@ -132,7 +114,6 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
       if (req.body.email) {
 
-
         var emailAddress = req.body.email;
 
         // check if user exists
@@ -141,7 +122,6 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
         // if user exists then send email token
         if (user[0]) {
-
 
           // gget user credentials
           const id = user[1]._id;
@@ -171,9 +151,9 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
                   status: "green",
                 },
                 currentUser,
-
               },
             });
+            
           });
         } else {
 

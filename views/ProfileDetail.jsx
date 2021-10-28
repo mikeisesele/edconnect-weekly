@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
-import { Button, Col,Image, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import ShowAlert from "./Alert";
 
 const ProfileDetails = (userParams) => {
 
+  const message = userParams.message.response.message? userParams.message.response.message : null;
+                
+  const result = userParams.message.response.result
   const error = userParams.message.response.data.error 
-    const user = userParams.message.response.currentUser;
+  const user = userParams.message.response.currentUser;
   const userprograms = userParams.message.response.data.programs;
   const usergraduationYears = userParams.message.response.data.graduationYears;
 
@@ -100,12 +103,10 @@ const ProfileDetails = (userParams) => {
             <p className="mb-0">Program</p>
             <p data-testid="program">{userInfo.program}</p>
           </Col>
-
           <Col className="d-flex flex-column mt-2 align-content-center">
             <p className="mb-0">Matriculation number</p>
             <p data-testid="matriculation-number">{userInfo.matricNumber}</p>
           </Col>
-
           <Col
             data-testid="graduation-year"
             className="d-flex flex-column mt-2 align-content-center"
@@ -131,6 +132,14 @@ const ProfileDetails = (userParams) => {
                 message="Please update your profile!"
                 className="text-center"
                 variant="primary"
+              />
+            )}
+            { 
+            result == false && (
+              <ShowAlert
+                message={message}
+                className="text-center"
+                variant="danger"
               />
             )}
 

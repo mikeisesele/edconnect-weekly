@@ -2,6 +2,8 @@ require("dotenv").config();
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 const User = require("../services/user");
+const { serializeUser, deserializeUser } = require("../../utils/serializer");
+
 
 /**
  * @Desc Google authentication strategy
@@ -53,15 +55,7 @@ const googleStrategy = new GoogleStrategy(
 );
 passport.use(googleStrategy);
 
-/**
- * @Desc serialize user into the session and deserialize user from the session
- */
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => done(err, user));
-});
+serializeUser;
+deserializeUser;
 
 module.exports = googleStrategy;
