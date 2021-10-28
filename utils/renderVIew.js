@@ -5,5 +5,7 @@ const render  = (res, page, message) => {
   res.render(page, message);
 };
 
+exports = {
+  render
+}
 
-module.exports = render
