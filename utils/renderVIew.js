@@ -3,9 +3,7 @@
  */
 
 const render = (res, page, message) => {
-    res.render(page, message);
-  }
+  res.render(page, message);
+};
 
-
-  module.exports = { render };
-
+module.exports = { render };
