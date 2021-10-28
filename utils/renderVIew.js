@@ -1,6 +1,9 @@
 /**
  * @desc function to render pages with data
  */
-module.exports = function render (res, page, message) {
+const render  = (res, page, message) => {
   res.render(page, message);
 };
+
+
+module.exports = render
