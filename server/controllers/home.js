@@ -5,7 +5,9 @@ const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
 const userInSession = require("../../utils/userInSession");
-const {render} = require("../../utils/renderView");
+// const {render} = require("../../utils/renderView")
+const {render} = require(path.join(__dirname, "../../utils/renderView"));
+
 // import { render }  from "../../utils/renderView"
 
 /**
