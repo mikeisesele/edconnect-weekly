@@ -5,5 +5,5 @@ const render = (res, page, message) => {
   res.render(page, message);
 };
 
-export default render;
-// module.exports =
+// export default render;
+module.exports = render
