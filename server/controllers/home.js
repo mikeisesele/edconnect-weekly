@@ -5,7 +5,7 @@ const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
 const userInSession = require("../../utils/userInSession");
-import render from "../../utils.renderView"
+import render from "../../utils/renderView"
 
 /**
  * @desc homepage route
