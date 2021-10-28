@@ -8,8 +8,28 @@ import { cloudinary } from "../middlewares/cloudinery";
 
 const programs = getPrograms();
 const graduationYears = getGradYears();
-const userInSession = require("../../utils/userInSession");
-const render = require("../../utils/renderView");
+// const userInSession = require("../../utils/userInSession");
+// const render = require("../../utils/renderView");
+
+
+/**
+ * @desc function to render pages with data
+ */
+const render = (res, page, message) => {
+  res.render(page, message );
+};
+
+/**
+ * @desc function to get a user from the session
+ */
+ const userInSession = async (req) => {
+   const userId = req?.session?.user ? req.session.user._id : null
+   let user = {}
+   if(userId != null){
+      user = await User.getById(userId);
+   }
+   return user
+ }
 
 /**
  * @desc show sign up page
