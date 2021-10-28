@@ -5,7 +5,7 @@ const render  = (res, page, message) => {
   res.render(page, message);
 };
 
-exports = {
+module.exports = {
   render
 }
 
