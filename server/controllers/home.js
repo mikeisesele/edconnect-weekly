@@ -4,13 +4,16 @@ const User = require("../services/user");
 const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
+// const userInSession = require("../../utils/userInSession");
+const view = require("../../utils/renderView");
 
-/**
- * @desc function to render pages with data
- */
-const render = (res, page, message) => {
-  res.render(page, message );
-};
+
+// /**
+//  * @desc function to render pages with data
+//  */
+// const render = (res, page, message) => {
+//   res.render(page, message );
+// };
 
 /**
  * @desc function to get a user from the session
@@ -24,7 +27,6 @@ const render = (res, page, message) => {
    return user
  }
 
- 
 /**
  * @desc homepage route
  * @route GET /
@@ -34,7 +36,7 @@ router.get("/", async (req, res) => {
 
   let currentUser = await userInSession(req);
   
-  render(res, "Home", {
+  view.render(res, "Home", {
     response: {
       data: {
         projects,
