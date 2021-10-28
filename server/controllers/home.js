@@ -5,7 +5,7 @@ const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
 // const userInSession = require("../../utils/userInSession");
-const view = require("../../utils/renderView");
+const render = require("../../utils/renderView");
 
 
 // /**
@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
   let currentUser = await userInSession(req);
   
-  view.render(res, "Home", {
+  render(res, "Home", {
     response: {
       data: {
         projects,
