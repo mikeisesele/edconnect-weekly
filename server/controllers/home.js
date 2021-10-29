@@ -4,7 +4,7 @@ const User = require("../services/user");
 const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
-const userInSession, { render } = require("../../utils/controllerUtils");
+const { userSession, render } = require("../../utils/controllerUtils");
 // const  = require("../../utils/renderView");{ render }
 
 
