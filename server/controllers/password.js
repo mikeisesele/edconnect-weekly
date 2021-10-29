@@ -5,6 +5,9 @@ const router = express.Router();
 const jwt = require("jwt-simple");
 import sendMail from "../services/mailService";
 const { userInSession, render } = require("../../utils/controllerUtils");
+// const userInSession = require("../../utils/userInSession");
+// const render = require("../../utils/renderView");
+
 
 /**
 * @desc show forgot password page
@@ -105,6 +108,7 @@ router.post("/api/v1/password/change", isLoggedIn, async (req, res) => {
  */
 router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
+  const currentUser = await userInSession(req);
   try {
     // get user email from request body
     if (req.body) {
@@ -115,9 +119,8 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
         // check if user exists
         const user = await User.getUserByEmail(emailAddress);
-  const currentUser = await userInSession(req);
+        const currentUser = await userInSession(req);
 
-  
         // if user exists then send email token
         if (user[0]) {
 
@@ -211,10 +214,10 @@ router.get("/api/passwordReset/:id/:token", async (req, res) => {
   const id = req.params.id;
   const paramsToken = req.params.token;
 
+  const currentUser = await userInSession(req);
+
   // get user by id
   const user = await User.getById(id);
-
-      console.log(user);
   if (user) {
     // Decrypt one-time-use token using the user's
     // current password hash from the database and combine it
