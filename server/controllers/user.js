@@ -11,7 +11,6 @@ const graduationYears = getGradYears();
 // const userInSession = require("../../utils/userInSession");
 // const render = require("../../utils/renderView");
 
-
 /**
  * @desc function to render pages with data
  */
@@ -67,7 +66,7 @@ router.post("/signup",  async (req, res) => {
   const { email, password, program, matricNumber, graduationYear } = req.body;
 
   // check if user already exists
-  const check = await User.create({
+  const check = await User.create(
     firstname,
     lastname,
     email,
@@ -75,7 +74,7 @@ router.post("/signup",  async (req, res) => {
     matricNumber,
     program,
     graduationYear,
-  });
+  );
 
   // if user already exists
   if (check[0]) {

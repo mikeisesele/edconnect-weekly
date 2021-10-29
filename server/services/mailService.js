@@ -57,7 +57,7 @@ const sendEmail = async (receiver, token, name) => {
 
       // send mail with defined transport object
     const mail = {
-      from: "Project Explorer <michael.isesele@gmail.com>",
+      from: "Project Explorer <michaelisesele@gmail.com>",
       to: receiver,
       subject: "Reset Your Password",
       text: `Hello ${name} from Project Explorer`,

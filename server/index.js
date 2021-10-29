@@ -12,7 +12,7 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 const app = express();
 
- // connect database
+// connect database
 DB.connectDB()
   .then(() => console.log("Database connected"))
   .catch(err => console.log(err));
@@ -25,7 +25,6 @@ const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
 });
-
 
 /**
  * @Desc
@@ -85,7 +84,6 @@ register(app).then(() => {
   app.use("/", require("./controllers/password"));
   app.use("/", require("./controllers/sociallogin"));
 
-  
   /**
    * @Desc listen to post when mongo connection is successful
    * @param {number} port - port number to listen to

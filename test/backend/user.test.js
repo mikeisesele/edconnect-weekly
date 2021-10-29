@@ -7,9 +7,7 @@ require('dotenv').config();
 const regeneratorRuntime = require("regenerator-runtime");
 const User = require ("../../server/services/user.js")
 const users = require("../mocks/user")
-const mongoose = require("mongoose");
 const dbHandler = require("../mocks/database");
-
 const _DEVELOPMENT_ = process.env;
 
 //setup for testing
@@ -27,16 +25,26 @@ beforeAll( async () => {
 
 // test all methods in the user service
 describe("User Service", () => {
+  const randomUser = Math.floor(Math.random() * users.length);
+
      // select a randon user from the list of users
+    it("should create and retrieve that user", async () => {
+      const createdUser = await User.create(
+        randomUser.firstName,
+        randomUser.lastName,
+        randomUser.email,
+        randomUser.password,
+        randomUser.matricNumber,
+        randomUser.program,
+        randomUser.graduationYear,
+        randomUser.profilePicture,
+      );
 
-    it("should create a user", async () => {
-        const user = await User.create(users[3])
-        expect(user).toBeTruthy()
-    })
 
-    it("should find a user by email", async () => {
-        const user = await User.getUserByEmail(users[3].email);
-        expect(user).toBeTruthy()
+      const user = await User.getUserByEmail(randomUser.email);
+
+      expect(createdUser.firstName).toEqual(user.firstName);
+      expect(createdUser.email).toEqual(user.firstName);
     })
 })
 
@@ -44,7 +52,6 @@ describe("User Service", () => {
  * Clear all test data after every test.
  */
 afterEach(async () => await dbHandler.clearDatabase())
-
 
 // after all cleanUp
 afterAll(() => {

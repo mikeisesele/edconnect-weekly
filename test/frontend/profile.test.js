@@ -4,7 +4,7 @@
 
 const regeneratorRuntime = require("regenerator-runtime");
 import React from "react";
-import ProfileDetail from "../../../views/ProfileDetail";
+import ProfileDetail from "../../views/ProfileDetail";
 import { render, screen, fireEvent, cleanUp } from "@testing-library/react";
 const prop = require("../mocks/props");
 
@@ -15,7 +15,7 @@ describe("Profile Detail Page", () => {
   });
 
   it("should render the email detail", () => {
-    expect(screen.getByTestId("email").textContent).toEqual("email2@gmail");
+    expect(screen.getByTestId("email").textContent).toEqual("email2@gmail.com");
   });
 
   it("should render the matriculation number", () => {

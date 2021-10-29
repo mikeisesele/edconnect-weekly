@@ -11,7 +11,7 @@ const capitalizedName = (name) => {
 /**
  * @desc  Creates a user
  */
-const create = async ({
+const create = async (
   firstname,
   lastname,
   email,
@@ -22,7 +22,7 @@ const create = async ({
   facebookId,
   googleId,
   profileImage,
-}) => {
+) => {
 
   try {
 

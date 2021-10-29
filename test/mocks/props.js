@@ -1,6 +1,6 @@
 const users = require("../mocks/user");
 const projects = require("../mocks/props");
-const { getPrograms, getGradYears } = require("../../services/school");
+const { getPrograms, getGradYears } = require("../../server/services/school");
 const programs = getPrograms();
 const graduationYears = getGradYears();
 

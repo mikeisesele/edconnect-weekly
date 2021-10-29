@@ -4,8 +4,7 @@
 
 require('dotenv').config();
 const regeneratorRuntime = require("regenerator-runtime");
-const Project = require("../../services/project.js");
-const mongoose = require("mongoose");
+const Project = require("../../server/services/project");
 const dbHandler = require("../mocks/database");
 const projects = require("../mocks/project.js");
 
@@ -25,18 +24,16 @@ beforeAll( async () => {
 
 
 // test all methods in the project service
-describe("Project Service", () => {
+describe("createa and retrive Projects", () => {
+    const randomProject = Math.floor(Math.random() * projects.length);
+
     // test createProject
-    test("createProject", async () => {
-        const project = await Project.create(projects[3]);
-        expect(project).toBeTruthy();
-    });
-        
-    // test getProjects
-    test("getProjects", async () => {
-        const projects = await Project.getAll();
-        expect(projects).toBeTruthy();
-    });
+    test("create and retrieve project", async () => {
+        const project = await Project.create(randomProject);
+
+        expect(project.name).toEqual(randomProject.name);
+        expect(project.description).toEqual(randomProject.description);
+    });        
 });
 
 /**
