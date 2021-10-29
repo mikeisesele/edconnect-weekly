@@ -115,7 +115,9 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
         // check if user exists
         const user = await User.getUserByEmail(emailAddress);
+  const currentUser = await userInSession(req);
 
+  
         // if user exists then send email token
         if (user[0]) {
 
