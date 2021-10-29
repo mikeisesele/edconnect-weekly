@@ -11,7 +11,7 @@ exports.render = (res, page, message) => {
 /**
  * @desc function to get a user from the session
  */
-exports.userSession = async (req) => {
+exports.userInSession = async (req) => {
   const userId = req?.session?.user ? req.session.user._id : null;
   let user = {};
   if (userId != null) {
