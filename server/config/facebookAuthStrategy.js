@@ -2,6 +2,8 @@ require("dotenv").config();
 const FacebookStrategy = require("passport-facebook").Strategy;
 const { serializeUser, deserializeUser } = require("../../utils/serializer");
 const passport = require("passport");
+const User = require("../services/user");
+
 
 /**
  * @Desc Facebook authentication strategy. contains facebook credentials

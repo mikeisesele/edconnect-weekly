@@ -5,27 +5,6 @@ const Project = require("../services/project");
 const isLoggedIn = require("../middlewares/auth");
 const path = require('path')
 const { userInSession, render } = require("../../utils/controllerUtils");
-// const  = require("../../utils/renderView");{ render }
-
-
-// /**
-//  * @desc function to render pages with data
-//  */
-// const render = (res, page, message) => {
-//   res.render(page, message );
-// };
-
-// /**
-//  * @desc function to get a user from the session
-//  */
-//  const userInSession = async (req) => {
-//    const userId = req?.session?.user ? req.session.user._id : null
-//    let user = {}
-//    if(userId != null){
-//       user = await User.getById(userId);
-//    }
-//    return user
-//  }
 
 /**
  * @desc homepage route
