@@ -39,7 +39,7 @@ const sendEmail = async (receiver, token, name) => {
       const smtpConfig = {
         host: "smtp.gmail.com",
         port: 465,
-        secure: true, // use SSL
+        secure: false, // use SSL
         auth: {
           type: "OAuth2",
           user: process.env.MY_GMAIL_ADDRESS,
