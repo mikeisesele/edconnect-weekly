@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./styles/style.css";
+import ShowAlert from "./Alert";
 
 
 const passwordResetForm = (props) => {
 
-    const token  = props?.token?.message ? props.token.message : null
+    const token = props
 
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,7 +25,7 @@ const passwordResetForm = (props) => {
             case "password":
             setNewPassword(value);
             break;
-            case "confirmpassword":
+            case "confirmPassword":
             setConfirmPassword(value);
             break;
             default: 
@@ -41,18 +42,17 @@ const passwordResetForm = (props) => {
             method="post"
             action="/api/passwordReset"
           >
-            {confirmPassword.length > 0 &&
-              !(newPassword === confirmPassword) && (
-                <ShowAlert
-                  message="Confirm new password does not match new password."
-                  className="text-center"
-                  variant="danger text-sm"
-                />
-              )}
-
             {newPassword.length > 0 && newPassword.length < 7 && (
               <ShowAlert
                 message="Password must be 7 letters or more."
+                className="text-center"
+                variant="danger text-sm"
+              />
+            )}
+
+            {confirmPassword.length > 0 && newPassword != confirmPassword && (
+              <ShowAlert
+                message="Confirm new password does not match new password."
                 className="text-center"
                 variant="danger text-sm"
               />
@@ -104,7 +104,6 @@ const passwordResetForm = (props) => {
               className="d-flex align-self-center"
               variant="primary"
               type="submit"
-              
             >
               Submit
             </Button>

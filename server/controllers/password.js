@@ -6,11 +6,10 @@ const jwt = require("jwt-simple");
 import sendMail from "../services/mailService";
 const { userInSession, render } = require("../../utils/controllerUtils");
 
-
 /**
-* @desc show forgot password page
-* @route GET /
-*/
+ * @desc show forgot password page
+ * @route GET /
+ */
 router.get("/forgotPassword", async (req, res) => {
   const currentUser = await userInSession(req);
   res.render("ForgotPassword", {
@@ -28,7 +27,6 @@ router.get("/forgotPassword", async (req, res) => {
  * @route GET /resetPassword
  */
 router.get("/resetPassword", async (req, res) => {
-
   const currentUser = await userInSession(req);
 
   res.render(res, "ResetPassword", {
@@ -37,7 +35,7 @@ router.get("/resetPassword", async (req, res) => {
         currentUser,
       },
       currentUser,
-      result: false
+      result: false,
     },
   });
 });
@@ -45,7 +43,7 @@ router.get("/resetPassword", async (req, res) => {
 /**
  * @desc change current password by edit from profile page
  * @route POST /api/v1/password/change
- * @access private 
+ * @access private
  */
 router.post("/api/v1/password/change", isLoggedIn, async (req, res) => {
   // function to render pages
@@ -105,14 +103,11 @@ router.post("/api/v1/password/change", isLoggedIn, async (req, res) => {
  * @route GET /api/passwordReset/sendEmailToken
  */
 router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
-
   const currentUser = await userInSession(req);
   try {
     // get user email from request body
     if (req.body) {
-
       if (req.body.email) {
-
         var emailAddress = req.body.email;
 
         // check if user exists
@@ -121,7 +116,6 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
 
         // if user exists then send email token
         if (user[0]) {
-
           // gget user credentials
           const id = user[1]._id;
           const hash = user[1].password;
@@ -139,10 +133,8 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
            * @param {string} link - token
            * @returns {string} message - success or error message
            */
-           sendMail(email, link, user[1].firstName).then((result) => {
-                            
+          sendMail(email, link, user[1].firstName).then((result) => {
             render(res, "ForgotPassword", {
-
               response: {
                 data: {
                   message: "Password reset link has been sent to your email.",
@@ -151,12 +143,9 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
                 currentUser,
               },
             });
-            
           });
         } else {
-
           render(res, "ForgotPassword", {
-
             response: {
               data: {
                 message: "No user with this email found in our database",
@@ -167,10 +156,7 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
           });
         }
       } else {
-
-
         render(res, "ForgotPassword", {
-
           response: {
             data: {
               message: "Please enter your email address",
@@ -181,32 +167,28 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
         });
       }
     } else {
-
       render(res, "ResetPassword", {
         response: {
           data: {
             message: "Not enough information to render page",
-            status: "red"
+            status: "red",
           },
           currentUser,
         },
       });
-    };
-
+    }
   } catch (err) {
     console.error(err);
   }
 });
 
 /**
- * @desc display the page to input new password 
+ * @desc display the page to input new password
  * @route GET /api/passwordReset/:id/:token
- * @Param {string} id - user id 
+ * @Param {string} id - user id
  * @Param {string} token - token
  */
 router.get("/api/passwordReset/:id/:token", async (req, res) => {
-
-
   // Using the ID from the URL parameters, we fetch and validate that the user exists in our database.
   const id = req.params.id;
   const paramsToken = req.params.token;
@@ -218,61 +200,115 @@ router.get("/api/passwordReset/:id/:token", async (req, res) => {
   if (user) {
     // Decrypt one-time-use token using the user's
     // current password hash from the database and combine it
-    // get user password hash from database and combine it with user created date
+    // get user password hash from database
     // this will make the token a one time token since changing the password will change the hash
     const hash = user.password;
     const jwtsecret = hash;
-    const payload = jwt.decode(paramsToken, jwtsecret);
-    const payloadId = payload.id;
-    const token = { payloadId, paramsToken };
+    try {
+      const payload = jwt.decode(paramsToken, jwtsecret);
+      const payloadId = payload.id;
+      const token = { payloadId, paramsToken };
 
-    render(res, "Home", {
-      response: {
-        data: {
-          message: token,
-          status: true,
-          token: true
+      render(res, "ResetPassword", {
+        response: {
+          data: {
+            message: token,
+            status: true,
+            token: true,
+          },
+          currentUser,
         },
-        currentUser,
-      },
-    });
+      });
+    } catch (e) {
+      res.redirect("/forgotPassword");
+    }
+
   }
-}
-);
+});
 
 /**
  * @desc update user password
  * @route POST /api/passwordReset
  */
 router.post("/api/passwordReset", async (req, res) => {
-
   const currentUser = await userInSession(req);
 
   try {
-
     // Fetch user from database using id and token
     const id = req.body.id;
     const token = req.body.token;
-    const newPassword = req.body.confirmPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
 
-    // get user by id
-    const user = await User.getById(id);
+    if (newPassword === confirmPassword) {
+      // get user by id
+      const user = await User.getById(id);
 
-    if (user) {
-      // Decrypt one-time-use token using the user's
-      // current password hash from the database and combining it
-      const hash = user.password;
-      const createdAt = user.createdAt;
-      const jwtsecret = hash + `-` + createdAt;
-      try {
-        // Decode the token and check if it's valid and not expired using the secret key
-        const payload = jwt.decode(token, jwtsecret);
-        const id = payload.id;
-      } catch (err) {
-        console.log(err);
+      if (user) {
+        // Decrypt one-time-use token using the user's
+        // current password hash from the database and combining it
+        const hash = user.password;
+        const createdAt = user.createdAt;
+        const jwtsecret = hash + `-` + createdAt;
+        try {
+          // Decode the token and check if it's valid and not expired using the secret key
+          const payload = jwt.decode(token, jwtsecret);
+          const id = payload.id;
+        } catch (err) {
 
+          render(res, "ResetPassword", {
+            response: {
+              data: {
+                message: "Invalid token",
+                status: false,
+              },
+              currentUser,
+            },
+          });
+        }
+      } else {
         render(res, "ResetPassword", {
+          response: {
+            data: {
+              message: "User not found",
+              status: false,
+            },
+            currentUser,
+          },
+        });
+      }
 
+      // if token is valid then update password
+      if (id == user._id) {
+        // check if new password is same as confirm password
+        if (user.validPassword(user, newPassword)) {
+          render(res, "ResetPassword", {
+            response: {
+              data: {
+                message:
+                  "Your cannot use your last pasword anymore. Please change it.",
+                status: false,
+              },
+              currentUser,
+            },
+          });
+        } else {
+          // update password
+          user.setPassword(newPassword);
+          user.save();
+
+          render(res, "ResetPassword", {
+            response: {
+              data: {
+                message: "Your password has been successfully changed.",
+                status: true,
+              },
+              currentUser,
+            },
+          });
+        }
+      } else {
+        render(res, "ResetPassword", {
           response: {
             data: {
               message: "Invalid token",
@@ -281,45 +317,13 @@ router.post("/api/passwordReset", async (req, res) => {
             currentUser,
           },
         });
-
-      };
-    }
-
-
-    // if token is valid then update password
-    if (id == user._id) {
-      // check if new password is same as confirm password
-      if (user.validPassword(user, newPassword)) {
-        render(res, "ResetPassword", {
-          response: {
-            data: {
-              message:
-                "Your cannot use your last pasword anymore. Please change it.",
-              status: false,
-            },
-            currentUser,
-          },
-        });
-      } else {
-        // update password
-        user.setPassword(newPassword);
-        user.save();
-
-        render(res, "ResetPassword", {
-          response: {
-            data: {
-              message: "Your password has been successfully changed.",
-              status: true,
-
-            },
-            currentUser,
-          },
-        });
       }
+    } else {
+    res.redirect("/forgotPassword");
     }
   } catch (err) {
     console.error(err);
   }
-})
+});
 
 module.exports = router;
