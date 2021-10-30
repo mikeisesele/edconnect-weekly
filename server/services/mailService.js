@@ -83,8 +83,9 @@ const sendEmail = async (receiver, token, name) => {
     }
     // close the connection pool
     transport.close();
-    return result
+   
   });
+   return result;
   } catch (error) {
     console.log(error);
   }
