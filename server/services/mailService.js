@@ -34,8 +34,7 @@ const sendEmail = async (receiver, token, name) => {
     // create an access token to be used at this time
       const accessToken = await oAuth2Client.getAccessToken();
 
-      console.log(accessToken);
-
+    
       // create reusable transporter object using the default SMTP transport
       const smtpConfig = {
         host: "smtp.gmail.com",
@@ -68,14 +67,12 @@ const sendEmail = async (receiver, token, name) => {
       `,
     };
 
-    
+
     // get response from transporter
     const result = await transport.sendMail(mail, function(err, info) {
     if (err) {
         console.log(err);
     } else {
-        console.log("info.messageId: " + info.messageId);
-        console.log("info.envelope: " + info.envelope);
         console.log("info.accepted: " + info.accepted);
         console.log("info.rejected: " + info.rejected);
         console.log("info.pending: " + info.pending);
@@ -83,10 +80,9 @@ const sendEmail = async (receiver, token, name) => {
     }
     // close the connection pool
     transport.close();
-   
+   return info
   });
    return result;
-   console.log(result);
   } catch (error) {
     console.log(error);
   }

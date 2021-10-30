@@ -139,9 +139,8 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
            * @param {string} link - token
            * @returns {string} message - success or error message
            */
-          sendMail(email, link, user[1].firstName).then((result) => {
-
-            
+           sendMail(email, link, user[1].firstName).then((result) => {
+                            
             render(res, "ForgotPassword", {
 
               response: {
