@@ -218,19 +218,15 @@ router.get("/api/passwordReset/:id/:token", async (req, res) => {
   if (user) {
     // Decrypt one-time-use token using the user's
     // current password hash from the database and combine it
-
-
     // get user password hash from database and combine it with user created date
     // this will make the token a one time token since changing the password will change the hash
     const hash = user.password;
     const jwtsecret = hash;
-    console.log(jwtsecret);
     const payload = jwt.decode(paramsToken, jwtsecret);
-    console.log(payload);
     const payloadId = payload.id;
     const token = { payloadId, paramsToken };
 
-
+    console.log(token);
 
     render(res, "ResetPassword", {
       response: {

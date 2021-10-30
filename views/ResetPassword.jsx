@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import Layout from "./shared/Layout";
 import { Button } from "react-bootstrap";
 import ShowAlert from "./Alert";
-import PasswordResetForm from "./PasswordChangeForm";
+import PasswordResetForm from "./PasswordResetForm";
 import "./styles/style.css";
 
 const BuildForm = (props) => {
-
   
   const message = props.message.info ? props.message.info : null;
   const status = props.message.status;
@@ -72,7 +71,7 @@ const BuildForm = (props) => {
 };
 
 const ResetPassword = (props) => {
-  
+  cosole.log(props);
   return (
     <Layout message={props.message}>
       <BuildForm {...props} />
