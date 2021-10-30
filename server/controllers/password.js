@@ -226,9 +226,7 @@ router.get("/api/passwordReset/:id/:token", async (req, res) => {
     const payloadId = payload.id;
     const token = { payloadId, paramsToken };
 
-    console.log(token);
-
-    render(res, "ResetPassword", {
+    render(res, "Home", {
       response: {
         data: {
           message: token,
