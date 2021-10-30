@@ -126,11 +126,10 @@ router.post("/api/passwordReset/sendEmailToken", async (req, res) => {
           const id = user[1]._id;
           const hash = user[1].password;
           const email = user[1].email;
-          const createdAt = user[1].createdAt;
 
           // create token for user using user credentials
           const payload = { id, email };
-          const jwtsecret = hash + `-` + createdAt;
+          const jwtsecret = hash;
           const token = jwt.encode(payload, jwtsecret);
           const link = `${payload.id}/${token}`;
 
@@ -219,13 +218,12 @@ router.get("/api/passwordReset/:id/:token", async (req, res) => {
   if (user) {
     // Decrypt one-time-use token using the user's
     // current password hash from the database and combine it
-    // with the user's created date to make a very unique secret key.
-    const createdAt = user.createdAt;
+
 
     // get user password hash from database and combine it with user created date
     // this will make the token a one time token since changing the password will change the hash
     const hash = user.password;
-    const jwtsecret = hash + `-` + createdAt;
+    const jwtsecret = hash;
     console.log(jwtsecret);
     const payload = jwt.decode(paramsToken, jwtsecret);
     console.log(payload);
