@@ -86,6 +86,7 @@ const sendEmail = async (receiver, token, name) => {
    
   });
    return result;
+   console.log(result);
   } catch (error) {
     console.log(error);
   }
