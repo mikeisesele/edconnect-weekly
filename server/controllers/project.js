@@ -74,6 +74,7 @@ router.get("/project/:id", async (req, res) => {
     const id = req.params.id;
     const project = await Project.getById(id);
     const userId = project.createdBy;
+    
     const projectCreator = await User.getById(userId);
     let currentUser = await userInSession(req);
     const authorImage = projectCreator.profilePicture;
