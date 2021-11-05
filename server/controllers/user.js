@@ -194,7 +194,11 @@ router.post("/profile", isLoggedIn, multerUploads, async (req, res) => {
       if (result[0]) {
         // redirect to profile page
         res.redirect("/profile");
-      }
+      } else {
+        // if update is unsuccessful
+        req.flash("error", result[1][0]);
+        res.redirect("/profile");
+      } 
     } catch (err) {
       console.error(err);
     }

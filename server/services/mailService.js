@@ -79,7 +79,7 @@ const sendEmail = async (receiver, token, name) => {
         console.log("info.response: " + info.response);
     }
     // close the connection pool
-    transport.close();
+    // transport.close();
    return info
   });
    return result;
