@@ -13,7 +13,6 @@ const { userInSession, render } = require("../../utils/controllerUtils");
 router.get("/", async (req, res) => {
   const projects = await Project.getAll();
 
-  console.log(projects);
   let currentUser = await userInSession(req);
   
   
