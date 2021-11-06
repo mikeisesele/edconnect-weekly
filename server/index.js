@@ -12,19 +12,27 @@ const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
 const app = express();
 
+
+function log(text){
+    console.log(text);
+}
 // connect database
 DB.connectDB()
   .then(() => console.log("Database connected"))
   .catch(err => console.log(err));
 
+
+log("Starting server");
 // // get server port for production or 8080 for development
 const SERVER_PORT = process.env.PORT || 8080 ;
 
+log(`Server is running on port ${SERVER_PORT}`);
 //created a mongoDB collection to be used as session store. 
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
 });
+log("Session store created");
 
 /**
  * @Desc
@@ -33,6 +41,7 @@ const store = new MongoDBStore({
  * is only needed for server side rendering of a react app
  */
 register(app).then(() => {
+  log("React application registered");
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -51,7 +60,7 @@ register(app).then(() => {
    * passport is used to authenticate the user
    * googleStrategy is used to authenticate the user
    */
-  console.log("Registering middlewares");
+  log("Registering middlewares");
   googleStrategy;
   app.use(passport.initialize());
   app.use(passport.session());
@@ -63,7 +72,7 @@ register(app).then(() => {
     })
   );
 
-  console.log("Registering session middleware");
+  log("Registering session middleware");
   app.use(
     session({
       secret: "secret",
@@ -73,19 +82,21 @@ register(app).then(() => {
     })
   );
 
+  log("Registering flash middleware");
   // error handlnig module
   app.use(flash());
 
   /**
    * @Desc set up routes
    */
+  log("Registering routes");
   app.use("/api", require("./routes/api"));
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
   app.use("/", require("./controllers/project"));
   app.use("/", require("./controllers/password"));
   app.use("/", require("./controllers/sociallogin"));
-
+    log("Routes registered");
   /**
    * @Desc listen to post when mongo connection is successful
    * @param {number} port - port number to listen to
