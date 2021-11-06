@@ -16,8 +16,9 @@ const auth = (req, res)=>{
       } else {
         res.redirect("/");
       }
+    } else {
+      res.redirect("/");
     }
-
 }
 
 /**
@@ -75,7 +76,5 @@ router.get(
     auth(req,res);
   }
 )
-
-
 
 module.exports = router;

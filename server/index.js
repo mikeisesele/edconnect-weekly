@@ -51,6 +51,7 @@ register(app).then(() => {
    * passport is used to authenticate the user
    * googleStrategy is used to authenticate the user
    */
+  console.log("Registering middlewares");
   googleStrategy;
   app.use(passport.initialize());
   app.use(passport.session());
@@ -62,6 +63,7 @@ register(app).then(() => {
     })
   );
 
+  console.log("Registering session middleware");
   app.use(
     session({
       secret: "secret",
