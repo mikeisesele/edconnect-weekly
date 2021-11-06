@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const session = require("express-session");
@@ -10,7 +11,7 @@ const passport = require("passport");
 const DB = require("../server/config/db");
 const googleStrategy = require("./config/googleAuthStrategy")
 const faceBookStrategy = require("./config/facebookAuthStrategy")
-const app = express();
+
 
 
 function log(text){
@@ -40,6 +41,7 @@ log("Session store created");
  * register enclosing the application 
  * is only needed for server side rendering of a react app
  */
+log("Setting headers");
 register(app).then(() => {
   log("React application registered");
   app.use((req, res, next) => {
